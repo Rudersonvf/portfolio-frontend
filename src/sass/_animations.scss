@@ -1,0 +1,27 @@
+// _animations.scss
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+.animateDown {
+  animation: slideDown 0.5s ease forwards;
+}
+
+.animateUp {
+  animation: slideUp 0.5s ease forwards;
+}

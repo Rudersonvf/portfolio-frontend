@@ -1,4 +1,4 @@
-@import "./vars.scss";
+@import "./_vars.scss";
 
 @mixin reset() {
   box-sizing: border-box;
@@ -15,5 +15,20 @@
   html,
   body {
     background-color: $rf-bg-1;
+  }
+}
+
+////////////////
+/// Media
+
+@mixin mobile {
+  @media screen and (max-width: $screen-mobile) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $screen-desktop) {
+    @content;
   }
 }

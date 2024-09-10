@@ -1,9 +1,10 @@
+import ClientHeader from "../../components/ClientHeader";
 import styles from "./styles.module.scss";
 
 function Client() {
   return (
     <>
-      <div>Header</div>
+      <ClientHeader />
       <main>
         <div className="container">
           <div>Client</div>
