@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Client from "./pages/Client";
+import "./sass/app.scss";
 
 function App() {
   return (

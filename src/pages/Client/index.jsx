@@ -4,7 +4,11 @@ function Client() {
   return (
     <>
       <div>Header</div>
-      <div>Client</div>
+      <main>
+        <div className="container">
+          <div>Client</div>
+        </div>
+      </main>
       <div>Footer</div>
     </>
   );
