@@ -1,0 +1,11 @@
+{
+  "menu-home": "home",
+  "menu-about": "sobre",
+  "menu-skills": "habilidades",
+  "menu-projects": "projetos",
+  "menu-contact": "contacto",
+  "welcome-title": "Olá, eu sou",
+  "welcome-name": "Ruderson Florentino",
+  "welcome-position": "Desenvolvedor Full-stack",
+  "welcome-txt": "Com foco no backend, eu transformo desafios complexos em soluções eficientes, funcionais e escaláveis"
+}
