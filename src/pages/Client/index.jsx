@@ -13,7 +13,14 @@ const Client = () => {
           <div className="container">
             <div className="row">
               <div className="col">
-                <h1>{t("welcome-title")}</h1>
+                <h1 className="display-1 text-nowrap">{t("welcome-title")}</h1>
+                <h1 className="display-1 text-nowrap">{t("welcome-name")}</h1>
+                <h4 className="display-5">{t("welcome-position")}</h4>
+                <p>
+                  {t("welcome-txt-1")} <span>{t("welcome-txt-2")}</span>,{" "}
+                  <span>{t("welcome-txt-3")}</span> {t("welcome-txt-4")}{" "}
+                  <span>{t("welcome-txt-5")}</span>
+                </p>
               </div>
               <div className="col">esq</div>
             </div>

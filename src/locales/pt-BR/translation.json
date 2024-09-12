@@ -7,5 +7,9 @@
   "welcome-title": "Olá, eu sou",
   "welcome-name": "Ruderson Florentino",
   "welcome-position": "Desenvolvedor Full-stack",
-  "welcome-txt": "Com foco no backend, eu transformo desafios complexos em soluções eficientes, funcionais e escaláveis"
+  "welcome-txt-1": "Com foco no backend, eu transformo desafios complexos em soluções",
+  "welcome-txt-2": "eficientes",
+  "welcome-txt-3": "funcionais",
+  "welcome-txt-4": "e",
+  "welcome-txt-5": "escaláveis"
 }
