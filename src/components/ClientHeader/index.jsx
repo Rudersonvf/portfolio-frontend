@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import logoIcon from "../../assets/icon.svg";
 import styles from "./styles.module.scss";
 
-function ClientHeader() {
+const ClientHeader = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
@@ -127,6 +127,6 @@ function ClientHeader() {
       </header>
     </>
   );
-}
+};
 
 export default ClientHeader;

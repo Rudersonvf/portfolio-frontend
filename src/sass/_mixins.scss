@@ -4,12 +4,18 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: $font-primary;
-  color: $font-primary-color;
+
   a,
   a:hover {
-    text-decoration: none;
-    color: unset;
+    text-decoration: none !important;
+    color: unset !important;
+  }
+
+  ul,
+  li {
+    list-style-type: none;
+    padding-bottom: 0;
+    margin: 0;
   }
 
   html,
@@ -22,7 +28,13 @@
 /// Media
 
 @mixin mobile {
-  @media screen and (max-width: $screen-mobile) {
+  @media screen and (max-width: $screen-mobile-up) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $screen-tablet) and (max-width: $screen-tablet-up) {
     @content;
   }
 }

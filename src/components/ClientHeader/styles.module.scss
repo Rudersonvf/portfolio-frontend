@@ -18,8 +18,8 @@
     top: 0;
     width: 100%;
     z-index: 1000;
-    background-color: blue;
-    box-shadow: 0 5px 10px #843bce93;
+    background-color: $rf-bg-2;
+    box-shadow: 0 5px 10px #fcfcfc93;
   }
 }
 
@@ -60,7 +60,7 @@
           bottom: -2px;
           width: 0;
           height: 2px;
-          background-color: red;
+          background-color: $font-secondary-color;
           transition: width 0.3s ease;
         }
 
@@ -70,7 +70,7 @@
       }
 
       .active {
-        color: green;
+        color: $font-secondary-color;
       }
     }
   }
@@ -79,8 +79,7 @@
     display: none;
   }
 }
-
-@include mobile {
+@mixin shared-styles() {
   .component-client-header {
     height: 80px;
     background-color: grey;
@@ -158,4 +157,12 @@
       }
     }
   }
+}
+
+@include tablet() {
+  @include shared-styles();
+}
+
+@include mobile() {
+  @include shared-styles();
 }
