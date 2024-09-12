@@ -26,7 +26,7 @@ main {
   height: 2000px;
 }
 
-////////////
+//////////
 /// Fonts
 h1,
 h2,
@@ -35,4 +35,33 @@ h4,
 h5,
 h6 {
   font-family: $font-primary;
+  margin: 0 !important;
+  line-height: 1 !important;
+}
+
+///////////
+/// Button
+.btn-primary {
+  background-color: $btn-color-primary;
+}
+
+.btn-circle {
+  border-radius: 50% !important;
+  width: 54px;
+  height: 54px;
+}
+
+@mixin shared-styles() {
+  .btn-circle {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+@include tablet() {
+  @include shared-styles();
+}
+
+@include mobile() {
+  @include shared-styles();
 }

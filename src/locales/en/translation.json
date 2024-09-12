@@ -7,5 +7,9 @@
   "welcome-title": "Hi, I Am",
   "welcome-name": "Ruderson Florentino",
   "welcome-position": "Full-stack Developer",
-  "welcome-txt": "Focusing on the backend, I turn complex challenges into efficient, functional, and scalable solutions."
+  "welcome-txt-1": "Focusing on the backend, I turn complex challenges into",
+  "welcome-txt-2": "efficient",
+  "welcome-txt-3": "functional",
+  "welcome-txt-4": "and",
+  "welcome-txt-5": "scalable solutions"
 }
