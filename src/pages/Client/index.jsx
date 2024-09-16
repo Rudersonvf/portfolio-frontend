@@ -5,6 +5,7 @@ import Button from "../../components/Button";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import ExperienceCard from "../../components/ExperienceCard";
 import EducationCard from "../../components/EducationCard";
+import SkillCard from "../../components/SkillCard";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -91,6 +92,22 @@ const Client = () => {
                   certificateUrl={
                     "https://learn.devsuperior.com/certificados/7774880"
                   }
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="habilidades" className={styles["skills-section"]}>
+          <div className="container">
+            <h1 className="display-2 text-nowrap">{t("skill-title")}</h1>
+            <p>{t("skill-paragraph")}</p>
+            <div className="row g-5">
+              <div className="col-2">
+                <SkillCard
+                  name={"java"}
+                  icon={"DiJava"}
+                  level={"50"}
+                  docUrl={"https://docs.oracle.com/en/java/"}
                 />
               </div>
             </div>
