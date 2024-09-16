@@ -1,0 +1,42 @@
+@import "../../sass/_vars";
+@import "../../sass/_mixins";
+
+.component-button-link {
+  display: flex;
+  width: fit-content;
+  border-bottom: 2px solid;
+  font-size: 14px;
+  color: $font-secondary-color;
+
+  a {
+    .text {
+      font-weight: 600;
+      text-transform: uppercase;
+      color: $font-secondary-color;
+      margin-right: 5px;
+    }
+  }
+
+  svg {
+    fill: $font-secondary-color;
+  }
+
+  path {
+    transform: scale(1.4);
+    transform-origin: center;
+  }
+
+  &:hover {
+    color: $font-secondary-color-hover;
+
+    a {
+      .text {
+        color: $font-secondary-color-hover;
+      }
+    }
+
+    svg {
+      fill: $font-secondary-color-hover;
+    }
+  }
+}

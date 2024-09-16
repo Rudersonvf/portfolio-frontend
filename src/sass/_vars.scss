@@ -12,24 +12,26 @@ $font-secondary: "Manrope", "Open Sans", sans-serif;
 ------------------------  COLORS  ------------------------
 ======================================================= */
 // Background
-$rf-bg-1: #0a0a0a;
-$rf-bg-2: #222222;
+$rf-bg-1: #212121;
+$rf-bg-alter: #262626;
+$rf-bg-2: #3a3a3a;
 $rf-bg-3: #36303a;
 
 // Fonts
 $font-primary-color: #f6f3fc;
 $font-secondary-color: #853bce;
+$font-secondary-color-hover: #6d30aa;
 $font-paragraph-color: #c7c7c7;
 
 // Buttons
 $btn-border-primary: #853bce;
 $btn-border-secondary: #222222;
 $btn-color-primary: #853bce;
-$btn-color-primary-hover: #853bce;
-$btn-color-primary-active: #853bce;
-$btn-color-secondary: #222222;
-$btn-color-secondary-hover: #222222;
-$btn-color-secondary-active: #222222;
+$btn-color-primary-hover: #6d30aa;
+$btn-color-primary-active: #9241e4;
+$btn-color-secondary: #2e2e2e;
+$btn-color-secondary-hover: #1d1d1d;
+$btn-color-secondary-active: #272626;
 $btn-content-primary: #222222;
 $btn-content-secondary: #853bce;
 

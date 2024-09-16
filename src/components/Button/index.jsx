@@ -8,8 +8,7 @@ const Button = ({
   shape,
   disable,
 }) => {
-  const className =
-    classBtn !== "primary" ? `btn-outline-${classBtn}` : "btn-primary";
+  const className = classBtn !== "primary" ? `btn-${classBtn}` : "btn-primary";
   const buttonClasses = `btn ${className} ${shape ? `btn-${shape}` : ""}`;
 
   if (type !== "link") {
@@ -28,7 +27,7 @@ const Button = ({
 };
 
 Button.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.any.isRequired,
   type: PropTypes.oneOf(["button", "submit", "reset", "link"]),
   link: PropTypes.string,
   classBtn: PropTypes.oneOf([

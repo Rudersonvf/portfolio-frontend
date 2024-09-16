@@ -1,0 +1,41 @@
+@import "../../sass/_vars";
+@import "../../sass/_mixins";
+
+.component-experience-card {
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  background-color: $rf-bg-1;
+
+  .position {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .date {
+    text-transform: capitalize;
+  }
+
+  .company {
+    font-weight: 600;
+    font-size: 20px;
+    color: $font-secondary-color;
+    margin-bottom: 10px;
+  }
+
+  @include mobile {
+    .position {
+      font-size: 20px;
+    }
+
+    .date {
+      font-size: 16px;
+    }
+
+    .company {
+      font-size: 18px;
+    }
+  }
+}
