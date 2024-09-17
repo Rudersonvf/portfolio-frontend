@@ -9,6 +9,10 @@
   }
 }
 
+.animateDown {
+  animation: slideDown 0.5s ease forwards;
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(0);
@@ -18,10 +22,32 @@
   }
 }
 
-.animateDown {
-  animation: slideDown 0.5s ease forwards;
-}
-
 .animateUp {
   animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes skillSlideUp {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 30%;
+  }
+}
+
+.animateSkillUp {
+  animation: skillSlideUp 0.5s ease-out forwards;
+}
+
+@keyframes skillSlideDown {
+  from {
+    height: 30%;
+  }
+  to {
+    height: 0;
+  }
+}
+
+.animateSkillDown {
+  animation: skillSlideDown 0.5s ease-out forwards;
 }

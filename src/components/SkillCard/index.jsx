@@ -1,18 +1,34 @@
 import PropTypes from "prop-types";
-import * as DiIcons from "react-icons/di";
-import styles from "./styles.module.scss";
+import { useTranslation } from "react-i18next";
 import ProgressBar from "../ProgressBar";
+import styles from "./styles.module.scss";
+import { useState } from "react";
 
 const SkillCard = ({ icon, name, level, docUrl }) => {
-  const IconComponent = DiIcons[icon];
+  const [isMouseOver, setIsMouseOver] = useState();
+  const { t } = useTranslation();
 
   return (
-    <div className={styles["component-skill-card"]}>
+    <div
+      className={styles["component-skill-card"]}
+      onMouseEnter={() => setIsMouseOver(true)}
+      onMouseLeave={() => setIsMouseOver(false)}
+    >
       <div className={styles["logo-container"]}>
-        <IconComponent alt={name} />
+        <img src={icon} alt={name} />
       </div>
-      <span>{name}</span>
+      <h4>{name}</h4>
       <ProgressBar value={level} />
+      <a
+        href={docUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${styles["skill-doc"]} ${
+          isMouseOver ? styles["animateSkillUp"] : styles["animateSkillDown"]
+        }`}
+      >
+        <h5>{t("skill-doc")}</h5>
+      </a>
     </div>
   );
 };

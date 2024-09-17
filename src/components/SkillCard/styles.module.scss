@@ -1,27 +1,53 @@
 @import "../../sass/_vars";
 @import "../../sass/_mixins";
+@import "../../sass/_animations";
 
 .component-skill-card {
-  border: 1px solid $rf-bg-2;
-  border-radius: 5px;
-  padding: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  position: relative;
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.5s ease;
   height: 100%;
+  background-color: $rf-bg-alter;
 
   .logo-container {
     margin-bottom: 10px;
+    padding: 10px;
 
     img {
       object-fit: cover;
     }
   }
 
-  span {
-    display: block;
-    font-size: 14px;
+  h4 {
     text-transform: uppercase;
     text-align: center;
-    color: $font-secondary-color;
+    margin-bottom: 5px !important;
+    white-space: nowrap;
+  }
+
+  .skill-doc {
+    display: flex; // Ensure the link is visible
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    background-color: $font-secondary-color;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    font-size: 14px;
+
+    &:hover {
+      background-color: $font-secondary-color-hover;
+    }
+  }
+
+  &:hover {
+    transform: translateY(10px);
+    box-shadow: 4px 4px 10px #843bce5e;
   }
 }

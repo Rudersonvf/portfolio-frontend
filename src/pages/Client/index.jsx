@@ -102,11 +102,93 @@ const Client = () => {
             <h1 className="display-2 text-nowrap">{t("skill-title")}</h1>
             <p>{t("skill-paragraph")}</p>
             <div className="row g-5">
-              <div className="col-2">
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"java script"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"type script"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"kubernetes"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"python"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
                 <SkillCard
                   name={"java"}
-                  icon={"DiJava"}
-                  level={"50"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"java"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"java"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"java"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
+                  docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
+                <SkillCard
+                  name={"java"}
+                  icon={
+                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+                  }
+                  level={50}
                   docUrl={"https://docs.oracle.com/en/java/"}
                 />
               </div>
