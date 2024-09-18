@@ -9,6 +9,7 @@ import SkillCard from "../../components/SkillCard";
 import Carousel from "../../components/Carousel";
 import * as data from "../../utils/data";
 import ProjectCard from "../../components/ProjectCard";
+import ContactForm from "../../components/ContactForm";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -219,6 +220,21 @@ const Client = () => {
                   technologies={data.project.technologies}
                 />
               </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="projetos"
+          className={styles["project-section"]}
+        >
+          <div className="container">
+            <h1 className="display-2 text-nowrap">{t("projects-title")}</h1>
+            <p>{t("projects-paragraph")}</p>
+            <div className="row">
+              <div className="col-md-6">
+                <ContactForm />
+              </div>
+              <div className="col-md-6"></div>
             </div>
           </div>
         </section>
