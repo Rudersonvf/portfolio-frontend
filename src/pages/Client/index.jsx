@@ -6,6 +6,9 @@ import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import ExperienceCard from "../../components/ExperienceCard";
 import EducationCard from "../../components/EducationCard";
 import SkillCard from "../../components/SkillCard";
+import Carousel from "../../components/Carousel";
+import * as data from "../../utils/data";
+import ProjectCard from "../../components/ProjectCard";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -190,6 +193,30 @@ const Client = () => {
                   }
                   level={50}
                   docUrl={"https://docs.oracle.com/en/java/"}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="projetos"
+          className={`${styles["project-section"]} bg-alter`}
+        >
+          <div className="container">
+            <h1 className="display-2 text-nowrap">{t("projects-title")}</h1>
+            <p>{t("projects-paragraph")}</p>
+            <div className="row gy-5">
+              <div className="col-md-6">
+                <Carousel projectName={"projeto 01"} images={data.images} />
+              </div>
+              <div className="col-md-6 d-flex align-items-center">
+                <ProjectCard
+                  projectName={data.project.name}
+                  description={data.project.description}
+                  gitUrl={data.project.gitUrl}
+                  liveUrl={data.project.liveUrl}
+                  categories={data.project.categories}
+                  technologies={data.project.technologies}
                 />
               </div>
             </div>

@@ -13,7 +13,7 @@
   "welcome-txt-4": "e",
   "welcome-txt-5": "escaláveis",
   "about-title": "sobre",
-  "about-subtitle": "Sou desenvolvedor full-stack com foco no back-end com experiência em API's escaláveis e funcionais",
+  "about-subtitle": "Sou desenvolvedor full-stack com foco no back-end e experiência em API's escaláveis e funcionais",
   "about-paragraph": "Sou Ruderson Florentino, desenvolvedor full stack com foco no back-end. Sou apaixonado por programação e tenho Java como linguagem principal. Sou dinâmico, proativo e sempre em busca de novos desafios e aprendizados. Estou atualmente explorando novas oportunidades na área de tecnologia para expandir ainda mais minhas habilidades e contribuir para projetos inovadores. Vamos nos conectar e ver como posso agregar valor à sua equipe ou projeto!",
   "experiences-title": "experiências",
   "education-title": "educação",
@@ -21,5 +21,12 @@
   "education-workload": "horas",
   "skill-title": "Habilidades",
   "skill-paragraph": "Tenho experiência com diversas tecnologias que uso para desenvolver soluções eficazes. Estas são algumas das que tenho maior afinidade e conhecimento",
-  "skill-doc": "Documentação"
+  "skill-doc": "Documentação",
+  "projects-title": "Projetos",
+  "projects-paragraph": "Abaixo está uma seleção de projetos que destacam as minhas competências como desenvolvedor",
+  "project-info": "info projeto",
+  "project-cat" : "categorias",
+  "project-tec": "tecnologias",
+  "project-live-btn": "ver projeto",
+  "project-git-btn": "repositório"
 }

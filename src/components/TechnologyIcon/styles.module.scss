@@ -1,0 +1,8 @@
+@import "../../sass/_mixins.scss";
+@import "../../sass/_vars.scss";
+
+.component-technology-icon {
+  img {
+    object-fit: cover;
+  }
+}

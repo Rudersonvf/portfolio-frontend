@@ -1,0 +1,39 @@
+@import "../../sass/_mixins.scss";
+@import "../../sass/_vars.scss";
+
+.component-project-card {
+  .info-container {
+    border-bottom: 1px solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+
+    span {
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .info {
+      font-size: 18px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .wrapper {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      span {
+        font-size: 14px;
+        font-weight: normal;
+        border: 1px solid;
+        padding: 0 10px;
+        border-radius: 10px;
+      }
+    }
+  }
+}

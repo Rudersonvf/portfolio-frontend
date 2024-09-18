@@ -143,3 +143,22 @@ p {
 @include mobile() {
   @include shared-styles();
 }
+
+/////////////
+/// Carousel
+.carousel {
+  height: 100%;
+}
+
+.carousel-inner {
+  height: 100%;
+  .carousel-item {
+    height: 100%;
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+    }
+  }
+}

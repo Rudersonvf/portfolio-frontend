@@ -5,7 +5,6 @@
   display: flex;
   width: fit-content;
   border-bottom: 2px solid;
-  font-size: 14px;
   color: $font-secondary-color;
   transition: all 0.2s ease !important;
   display: pointer;
@@ -22,6 +21,7 @@
 
   svg {
     fill: $font-secondary-color;
+    transition: all 0.2s ease !important;
   }
 
   path {

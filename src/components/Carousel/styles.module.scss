@@ -1,0 +1,11 @@
+@import "../../sass/_mixins.scss";
+@import "../../sass/_vars.scss";
+
+.component-carousel {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  padding: 100px 48px;
+  border-radius: 16px;
+  background-color: $rf-bg-1;
+}
