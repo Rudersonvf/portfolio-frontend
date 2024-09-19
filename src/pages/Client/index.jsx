@@ -2,7 +2,15 @@ import { useTranslation } from "react-i18next";
 import ClientHeader from "../../components/ClientHeader";
 import styles from "./styles.module.scss";
 import Button from "../../components/Button";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import {
+  FaLinkedinIn,
+  FaInstagram,
+  FaGithub,
+  FaWhatsapp,
+  FaPhone,
+  FaEnvelope,
+  FaLocationDot,
+} from "react-icons/fa6";
 import ExperienceCard from "../../components/ExperienceCard";
 import EducationCard from "../../components/EducationCard";
 import SkillCard from "../../components/SkillCard";
@@ -10,6 +18,7 @@ import Carousel from "../../components/Carousel";
 import * as data from "../../utils/data";
 import ProjectCard from "../../components/ProjectCard";
 import ContactForm from "../../components/ContactForm";
+import ContactCard from "../../components/ContactCard";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -221,7 +230,25 @@ const Client = () => {
               <div className="col-md-6">
                 <ContactForm />
               </div>
-              <div className="col-md-6"></div>
+              <div className="col-md-6">
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <span className="h3 mb-0">{"(44) 99105-7251"}</span>
+                </div>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <span className="h3 mb-0">{"contato@ruderson.com.br"}</span>
+                </div>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <span className="h4 mb-0">
+                    R. Prof. Samuel Moura, 450 - Judith, <br />
+                    Londrina - PR, 86061-060
+                  </span>
+                </div>
+                <span className={styles["social-text"]}>
+                  Confira algumas das minhas redes sociais
+                </span>
+                <ContactCard
+                />
+              </div>
             </div>
           </div>
         </section>

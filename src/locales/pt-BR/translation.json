@@ -25,14 +25,13 @@
   "projects-title": "Projetos",
   "projects-paragraph": "Abaixo está uma seleção de projetos que destacam as minhas competências como desenvolvedor",
   "project-info": "info projeto",
-  "project-cat" : "categorias",
+  "project-cat": "categorias",
   "project-tec": "tecnologias",
   "project-live-btn": "ver projeto",
   "project-git-btn": "repositório",
   "contact-title": "contato",
   "contact-paragraph": "Vamos conversar? Envie-me uma mensagem!",
   "form-field-name": "Nome",
-  "form-field-email": "Email",
   "form-field-subject": "Assunto",
   "form-field-message": "Mensagem",
   "form-error": "Campo obrigatório",
@@ -40,5 +39,4 @@
   "form-field-max-length": "Deve conter no máximo 80 caracteres",
   "form-textarea-min-lenght": "Deve conter ao menos 15 caracteres",
   "form-textarea-max-lenght": "Deve conter no maximo 500 caracteres"
-
 }
