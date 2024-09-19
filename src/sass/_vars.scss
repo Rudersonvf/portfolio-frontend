@@ -13,7 +13,7 @@ $font-secondary: "Manrope", "Open Sans", sans-serif;
 ======================================================= */
 // Background
 $rf-bg-1: #212121;
-$rf-bg-alter: #262626;
+$rf-bg-alter: #2e2e2e;
 $rf-bg-2: #3a3a3a;
 $rf-bg-3: #36303a;
 
@@ -34,6 +34,15 @@ $btn-color-secondary-hover: #1d1d1d;
 $btn-color-secondary-active: #272626;
 $btn-content-primary: #222222;
 $btn-content-secondary: #853bce;
+
+// Forms
+$form-color-bg: #2e2e2e;
+$autofill-bg: #2e2e2e; // cor de fundo para o autofill
+$autofill-text-color: #f6f3fc; // cor do texto para o autofill
+
+// Scrollbar
+$sc-bg-color: #3a3a3a;
+$sc-thumb-color: #853bce;
 
 // Status
 $color-warning: #ffc107;

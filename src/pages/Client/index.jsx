@@ -31,7 +31,9 @@ const Client = () => {
                   <span>{t("welcome-txt-5")}</span>
                 </p>
                 <div className="d-flex gap-1">
-                  <Button value={"download cv"} />
+                  <div style={{ width: "200px" }}>
+                    <Button value={"download cv"} />
+                  </div>
                   <Button
                     value={<FaLinkedinIn />}
                     shape={"circle"}
@@ -55,19 +57,7 @@ const Client = () => {
             <h1 className="display-2 text-nowrap">{t("about-title")}</h1>
             <h2 className="h3">{t("about-subtitle")}</h2>
             <p>{t("about-paragraph")}</p>
-            <div className="d-flex gap-1 mb-5">
-              <Button value={"download cv"} />
-              <Button
-                value={<FaLinkedinIn />}
-                shape={"circle"}
-                classBtn="secondary"
-              />
-              <Button
-                value={<FaGithub />}
-                shape={"circle"}
-                classBtn="secondary"
-              />
-            </div>
+
             <div className="row g-5">
               <div className="col-md-6">
                 <h2 className="mb-4">{t("experiences-title")}</h2>
@@ -223,13 +213,10 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section
-          id="projetos"
-          className={styles["project-section"]}
-        >
+        <section id="projetos" className={styles["project-section"]}>
           <div className="container">
-            <h1 className="display-2 text-nowrap">{t("projects-title")}</h1>
-            <p>{t("projects-paragraph")}</p>
+            <h1 className="display-2 text-nowrap">{t("contact-title")}</h1>
+            <p>{t("contact-paragraph")}</p>
             <div className="row">
               <div className="col-md-6">
                 <ContactForm />

@@ -70,6 +70,7 @@ p {
   border-radius: 25px !important;
   text-transform: uppercase;
   height: 50px;
+  width: 100%;
 
   display: flex !important;
   justify-content: center;
@@ -161,4 +162,91 @@ p {
       border-radius: 16px;
     }
   }
+}
+
+//////////
+/// Forms
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  label {
+    margin-bottom: 6px;
+  }
+
+  input {
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    padding: 0 10px;
+    background-color: $form-color-bg;
+  }
+
+  textarea {
+    width: 100%;
+    border-radius: 8px;
+    padding: 14px 10px;
+    resize: vertical;
+    background-color: $form-color-bg;
+  }
+
+  p {
+    color: $color-danger;
+    font-size: 12px;
+    line-height: 12px;
+    padding-top: 4px;
+  }
+
+  input {
+    // Estilo do autofill para o Chrome, Safari, e Edge
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px $autofill-bg inset;
+      box-shadow: 0 0 0 1000px $autofill-bg inset;
+      -webkit-text-fill-color: $autofill-text-color;
+      border-radius: 8px !important;
+    }
+
+    // Estilo do autofill para o Firefox
+    &:-moz-autofill {
+      box-shadow: 0 0 0 1000px $autofill-bg inset;
+      -moz-text-fill-color: $autofill-text-color;
+      border-radius: 8px !important;
+    }
+
+    // Estilo do autofill para o Safari quando em foco
+    &:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px $autofill-bg inset;
+      box-shadow: 0 0 0 1000px $autofill-bg inset;
+      -webkit-text-fill-color: $autofill-text-color;
+      border-radius: 8px !important;
+    }
+
+    // Estilo do autofill para o Edge
+    &:-ms-autofill {
+      box-shadow: 0 0 0 1000px $autofill-bg inset;
+      -ms-text-fill-color: $autofill-text-color;
+      border-radius: 8px !important;
+    }
+  }
+}
+
+//////////////
+/// Scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $sc-thumb-color;
+  border-radius: 6px;
+}
+
+::-webkit-resizer {
+  border: none;
 }
