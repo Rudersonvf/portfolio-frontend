@@ -226,28 +226,80 @@ const Client = () => {
           <div className="container">
             <h1 className="display-2 text-nowrap">{t("contact-title")}</h1>
             <p>{t("contact-paragraph")}</p>
-            <div className="row">
+            <div className="row g-5">
               <div className="col-md-6">
                 <ContactForm />
               </div>
               <div className="col-md-6">
-                <div className="d-flex align-items-center gap-3 mb-4">
-                  <span className="h3 mb-0">{"(44) 99105-7251"}</span>
+                <div className="d-flex flex-column gap-4">
+                  <h3>Ruderson Vinicius Florentino</h3>
+                  <ContactCard
+                    type={"extLink"}
+                    logo={<FaLocationDot />}
+                    title="Endereço"
+                    content={
+                      <>
+                        R. Prof. Samuel Moura, 450 - Judith, <br /> Londrina -
+                        PR, 86061-060.
+                      </>
+                    }
+                    link="https://www.google.com/maps?q=-23.30782, -51.17947"
+                  />
+                  <ContactCard
+                    type={"tel"}
+                    logo={<FaPhone />}
+                    title="Tel"
+                    content={"(44) 99105-7251"}
+                    link={"5544991057251"}
+                  />
+                  <ContactCard
+                    type={"mail"}
+                    logo={<FaEnvelope />}
+                    title="Email"
+                    content={"contato@ruderson.com.br"}
+                    link={"contato@ruderson.com.br"}
+                  />
                 </div>
-                <div className="d-flex align-items-center gap-3 mb-4">
-                  <span className="h3 mb-0">{"contato@ruderson.com.br"}</span>
-                </div>
-                <div className="d-flex align-items-center gap-3 mb-4">
-                  <span className="h4 mb-0">
-                    R. Prof. Samuel Moura, 450 - Judith, <br />
-                    Londrina - PR, 86061-060
+                <div className="mt-3">
+                  <span className="follow">
+                    Baixe meu currículo e me siga nas redes socias!
                   </span>
+                  <div className="d-flex gap-4 mt-2">
+                    <div style={{ width: "200px" }}>
+                      <Button value={"download cv"} />
+                    </div>
+                    <Button
+                      value={<FaLinkedinIn />}
+                      shape={"circle"}
+                      classBtn="secondary"
+                      type="link"
+                      link={"https://www.linkedin.com/in/rudersonvf"}
+                    />
+                    <Button
+                      value={<FaGithub />}
+                      shape={"circle"}
+                      classBtn="secondary"
+                      type="link"
+                      link={"https://github.com/Rudersonvf"}
+                    />
+                    <Button
+                      value={<FaInstagram />}
+                      shape={"circle"}
+                      classBtn="secondary"
+                      type="link"
+                      link={"https://www.instagram.com/rudersonvf"}
+                    />
+                    <Button
+                      value={<FaWhatsapp />}
+                      shape={"circle"}
+                      classBtn="secondary"
+                      type="link"
+                      link={
+                        "https://api.whatsapp.com/send?phone=5544991057251&text=Ol%C3%A1%2C%20vamos%20marcar%20uma%20call%20%3F"
+                      }
+                    />
+                  </div>
                 </div>
-                <span className={styles["social-text"]}>
-                  Confira algumas das minhas redes sociais
-                </span>
-                <ContactCard
-                />
               </div>
             </div>
           </div>

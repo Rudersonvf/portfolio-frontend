@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 export const images = [
   "https://raw.githubusercontent.com/Rudersonvf/assets/main/port1.png",
   "https://raw.githubusercontent.com/Rudersonvf/assets/main/crud1.png",
@@ -34,3 +35,26 @@ export const project = {
     },
   ],
 };
+
+export const social = [
+  {
+    value: "linkedin",
+    link: "https://www.linkedin.com/in/rudersonvf",
+    icon: "<FaLinkedinIn />",
+  },
+  {
+    value: "github",
+    link: "https://github.com/Rudersonvf",
+    icon: "<FaGithub />",
+  },
+  {
+    value: "intagram",
+    link: "https://www.instagram.com/rudersonvf",
+    icon: "<FaInstagram />",
+  },
+  {
+    value: "whatsapp",
+    link: "https://api.whatsapp.com/send?phone=5544991057251&text=Ol%C3%A1%2C%20vamos%20marcar%20uma%20call%20%3F",
+    icon: "<FaWhatsapp />",
+  },
+];

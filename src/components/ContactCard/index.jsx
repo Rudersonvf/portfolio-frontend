@@ -1,47 +1,47 @@
-import PropTypes from 'prop-types'
-import styles from './styles.module.scss'
+import PropTypes from "prop-types";
+import styles from "./styles.module.scss";
 
-const ContactCard = ({ logo, title, type, content }) => {
-    function typeOfContent(type) {
-        let contentType = '';
+const ContactCard = ({ logo, title, type, content, link }) => {
+  function typeOfContent(type) {
+    let contentType = "";
 
-        switch (type) {
-            case "mail":
-                contentType = <a href={`mailto: ${content}`}>{content}</a>
-                break;
+    switch (type) {
+      case "mail":
+        contentType = <a href={`mailto:${link}`}>{content}</a>;
+        break;
 
-            case "tel":
-                contentType = <a href={`tel:+${content}`}>{content}</a>
-                break;
+      case "tel":
+        contentType = <a href={`tel:+${link}`}>{content}</a>;
+        break;
 
-            case "link":
-                contentType = <a href={content} target="_blank" rel="noopener noreferrer">{content}</a>
-
-            default:
-                break;
-        }
-
-        return contentType;
+      case "extLink":
+        contentType = (
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            {content}
+          </a>
+        );
     }
 
-    return (
-        <div className={styles['component-contact-card']}>
-            <div className={styles['logo-container']}>
-                {logo}
-            </div>
-            <div className={styles['content-container']}>
-                <span>{title}</span>
-                {typeOfContent(type)}
-            </div>
-        </div>
-    )
-}
+    return contentType;
+  }
+
+  return (
+    <div className={styles["component-contact-card"]}>
+      <div className={styles["logo-container"]}>{logo}</div>
+      <div className={styles["content-container"]}>
+        <span>{title}</span>
+        {typeOfContent(type)}
+      </div>
+    </div>
+  );
+};
 
 ContactCard.propTypes = {
-    logo: PropTypes.any,
-    title: PropTypes.string.isRequired,
-    type: PropTypes.oneOf["mail", 'tel', 'link'].isRequired,
-    content: PropTypes.string.isRequired,
-}
+  logo: PropTypes.any,
+  title: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(["mail", "tel", "extLink"]).isRequired,
+  content: PropTypes.string.isRequired,
+  link: PropTypes.string.isRequired,
+};
 
-export default ContactCard
+export default ContactCard;
