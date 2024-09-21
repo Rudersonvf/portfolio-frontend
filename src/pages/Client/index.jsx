@@ -20,6 +20,7 @@ import ContactForm from "../../components/ContactForm";
 import ContactCard from "../../components/ContactCard";
 import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
+import ClientFooter from "../../components/ClientFooter";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -315,7 +316,7 @@ const Client = () => {
           </div>
         </section>
       </main>
-      <div>Footer</div>
+      <ClientFooter />
     </>
   );
 };

@@ -44,7 +44,15 @@
   }
 }
 
-////////////////
+////////////
+/// Globals
+@mixin df-alc() {
+  display: flex;
+  align-items: center;
+  @content;
+}
+
+//////////
 /// Media
 
 @mixin mobile {

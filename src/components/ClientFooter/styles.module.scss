@@ -1,0 +1,43 @@
+@import "../../sass/vars.scss";
+@import "../../sass/mixins.scss";
+
+.component-client-footer {
+  height: 120px;
+  background-color: $rf-bg-2;
+  @include df-alc();
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid $font-paragraph-color;
+    padding: 16px 0 0 0;
+    @include df-alc();
+
+    p {
+      margin: 0;
+    }
+
+    .icon-container {
+      width: 40px;
+      height: 40px;
+
+      img {
+        aspect-ratio: 1;
+      }
+    }
+
+    ul {
+      display: flex;
+      gap: 15px;
+
+      li {
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $font-secondary-color;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
