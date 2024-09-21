@@ -17,7 +17,7 @@ const EducationCard = ({
 
   return (
     <div className={styles["component-education-card"]}>
-      <div className="d-flex justify-content-between align-items-center">
+      <div className={styles["course-container"]}>
         <span className={styles.course}>{courseName}</span>
         <span className={styles.date}>{`${startDate} - ${endDate}`}</span>
       </div>

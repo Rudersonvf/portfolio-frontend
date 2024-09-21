@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import ClientHeader from "../../components/ClientHeader";
-import styles from "./styles.module.scss";
 import Button from "../../components/Button";
 import {
   FaLinkedinIn,
@@ -19,6 +18,8 @@ import * as data from "../../utils/data";
 import ProjectCard from "../../components/ProjectCard";
 import ContactForm from "../../components/ContactForm";
 import ContactCard from "../../components/ContactCard";
+import rudeImg from "../../assets/ruderson.webp";
+import styles from "./styles.module.scss";
 
 const Client = () => {
   const { t } = useTranslation();
@@ -30,17 +31,19 @@ const Client = () => {
         <section id="#" className={styles["hero-section"]}>
           <div className="container">
             <div className="row gy-5">
-              <div className="col-md-6">
+              <div
+                className={`${styles["col-text"]} col-md-6 d-flex flex-column justify-content-center`}
+              >
                 <h1 className="display-2 text-nowrap">{t("welcome-title")}</h1>
                 <h1 className="display-2">{t("welcome-name")}</h1>
                 <h4 className="display-6">{t("welcome-position")}</h4>
-                <p>
+                <p className="mb-4">
                   {t("welcome-txt-1")} <span>{t("welcome-txt-2")}</span>,{" "}
                   <span>{t("welcome-txt-3")}</span> {t("welcome-txt-4")}{" "}
                   <span>{t("welcome-txt-5")}</span>
                 </p>
-                <div className="d-flex gap-1">
-                  <div style={{ width: "200px" }}>
+                <div className="d-flex gap-3">
+                  <div style={{ width: "180px" }}>
                     <Button value={"download cv"} />
                   </div>
                   <Button
@@ -55,23 +58,28 @@ const Client = () => {
                   />
                 </div>
               </div>
-              <div className="col-md-6">
-                <p>esq</p>
+              <div className="col-md-6 d-flex align-items-center justify-content-center">
+                <figure>
+                  <img
+                    src={rudeImg}
+                    alt="Ruderson Florentino"
+                    className="figure-img img-fluid rounded"
+                  />
+                </figure>
               </div>
             </div>
           </div>
         </section>
         <section id="sobre" className={`${styles["about-section"]} bg-alter`}>
           <div className="container">
-            <h1 className="display-2 text-nowrap">{t("about-title")}</h1>
-            <h2 className="h3">{t("about-subtitle")}</h2>
-            <p>{t("about-paragraph")}</p>
-
+            <h1 className="display-2 text-nowrap mb-1">{t("about-title")}</h1>
+            <h2 className="h3 mb-2">{t("about-subtitle")}</h2>
+            <p className="mb-5">{t("about-paragraph")}</p>
             <div className="row g-5">
               <div className="col-md-6">
                 <h2 className="mb-4">{t("experiences-title")}</h2>
                 <ExperienceCard
-                  position={"Full-stack"}
+                  position={"Analista de desenvolvimento JR"}
                   company={"Rolemar"}
                   startDate={"Jun 2022"}
                   endDate={"atual"}
@@ -102,8 +110,8 @@ const Client = () => {
         </section>
         <section id="habilidades" className={styles["skills-section"]}>
           <div className="container">
-            <h1 className="display-2 text-nowrap">{t("skill-title")}</h1>
-            <p>{t("skill-paragraph")}</p>
+            <h1 className="display-2 text-nowrap mb-1">{t("skill-title")}</h1>
+            <p className="mb-5">{t("skill-paragraph")}</p>
             <div className="row g-5">
               <div className="col-lg-2 col-md-4 col-sm-6 col-6">
                 <SkillCard
@@ -203,8 +211,10 @@ const Client = () => {
           className={`${styles["project-section"]} bg-alter`}
         >
           <div className="container">
-            <h1 className="display-2 text-nowrap">{t("projects-title")}</h1>
-            <p>{t("projects-paragraph")}</p>
+            <h1 className="display-2 text-nowrap mb-1">
+              {t("projects-title")}
+            </h1>
+            <p className="mb-5">{t("projects-paragraph")}</p>
             <div className="row gy-5">
               <div className="col-md-6">
                 <Carousel projectName={"projeto 01"} images={data.images} />
@@ -222,10 +232,10 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section id="projetos" className={styles["project-section"]}>
+        <section id="contato" className={styles["project-section"]}>
           <div className="container">
-            <h1 className="display-2 text-nowrap">{t("contact-title")}</h1>
-            <p>{t("contact-paragraph")}</p>
+            <h1 className="display-2 text-nowrap mb-1">{t("contact-title")}</h1>
+            <p className="mb-5">{t("contact-paragraph")}</p>
             <div className="row g-5">
               <div className="col-md-6">
                 <ContactForm />
@@ -264,7 +274,7 @@ const Client = () => {
                   <span className="follow">
                     Baixe meu currículo e me siga nas redes socias!
                   </span>
-                  <div className="d-flex gap-4 mt-2">
+                  <div className="d-flex gap-4 mt-2 flex-wrap">
                     <div style={{ width: "200px" }}>
                       <Button value={"download cv"} />
                     </div>

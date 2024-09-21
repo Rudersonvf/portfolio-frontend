@@ -9,19 +9,19 @@
   transition: all 0.2s ease !important;
   display: pointer;
 
-  a {
-    .text {
-      font-weight: 600;
-      text-transform: uppercase;
-      color: $font-secondary-color;
-      margin-right: 5px;
-      transition: all 0.2s ease !important;
-    }
+  .text {
+    font-weight: 600;
+    text-transform: uppercase;
+    color: $font-secondary-color;
+    margin-right: 5px;
+    transition: all 0.2s ease !important;
+    font-size: 18px !important;
   }
 
   svg {
     fill: $font-secondary-color;
     transition: all 0.2s ease !important;
+    font-size: 20px;
   }
 
   path {
@@ -32,14 +32,22 @@
   &:hover {
     color: $font-secondary-color-hover;
 
-    a {
-      .text {
-        color: $font-secondary-color-hover;
-      }
+    .text {
+      color: $font-secondary-color-hover;
     }
 
     svg {
       fill: $font-secondary-color-hover;
+    }
+  }
+
+  @include mobile {
+    .text {
+      font-size: 14px !important;
+    }
+
+    svg {
+      font-size: 16px;
     }
   }
 }

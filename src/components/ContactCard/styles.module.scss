@@ -42,4 +42,22 @@
       }
     }
   }
+
+  @include mobile {
+    .logo-container {
+      width: 64px;
+      min-height: 60px;
+      font-size: 32px;
+    }
+
+    .content-container {
+      span {
+        font-size: 12px;
+      }
+
+      a {
+        font-size: 16px;
+      }
+    }
+  }
 }

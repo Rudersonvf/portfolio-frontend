@@ -9,13 +9,18 @@
   flex-direction: column;
   background-color: $rf-bg-1;
 
-  .course {
-    font-size: 24px;
-    font-weight: 600;
-  }
+  .course-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .course {
+      font-size: 24px;
+      font-weight: 600;
+    }
 
-  .date {
-    text-transform: capitalize;
+    .date {
+      text-transform: capitalize;
+    }
   }
 
   .institution,
@@ -25,5 +30,26 @@
     font-size: 20px;
     color: $font-secondary-color;
     margin-bottom: 10px;
+  }
+
+  @include mobile {
+    .course-container {
+      display: block;
+
+      .course {
+        font-size: 20px;
+        display: block;
+      }
+
+      .date {
+        font-size: 16px;
+        text-align: end;
+      }
+    }
+
+    .institution,
+    .workload {
+      font-size: 18px;
+    }
   }
 }

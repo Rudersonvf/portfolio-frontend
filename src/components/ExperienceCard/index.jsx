@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 const ExperienceCard = ({ position, startDate, endDate, company, resume }) => {
   return (
     <div className={styles["component-experience-card"]}>
-      <div className="d-flex justify-content-between align-items-center">
+      <div className={styles["position-container"]}>
         <span className={styles.position}>{position}</span>
         <span className={styles.date}>{`${startDate} - ${endDate}`}</span>
       </div>

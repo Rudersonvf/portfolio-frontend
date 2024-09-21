@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 
-const ButtonLink = ({ text, link, icon, size = 14 }) => {
+const ButtonLink = ({ text, link, icon }) => {
   return (
     <div className={styles["component-button-link"]}>
       <a
@@ -9,7 +9,6 @@ const ButtonLink = ({ text, link, icon, size = 14 }) => {
         target="_blank"
         rel="noopener noreferrer"
         className={styles.link}
-        style={{ fontSize: size }}
       >
         <span className={styles.text}>{text}</span>
         {icon && <span className={styles.icon}>{icon}</span>}
@@ -22,7 +21,6 @@ ButtonLink.propTypes = {
   text: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
   icon: PropTypes.any,
-  size: PropTypes.number,
 };
 
 export default ButtonLink;

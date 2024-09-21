@@ -9,13 +9,19 @@
   flex-direction: column;
   background-color: $rf-bg-1;
 
-  .position {
-    font-size: 24px;
-    font-weight: 600;
-  }
+  .position-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
 
-  .date {
-    text-transform: capitalize;
+    .position {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .date {
+      text-transform: capitalize;
+    }
   }
 
   .company {
@@ -26,12 +32,17 @@
   }
 
   @include mobile {
-    .position {
-      font-size: 20px;
-    }
+    .position-container {
+      display: block;
 
-    .date {
-      font-size: 16px;
+      .position {
+        font-size: 20px;
+        display: block;
+      }
+
+      .date {
+        font-size: 16px;
+      }
     }
 
     .company {

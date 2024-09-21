@@ -1,15 +1,45 @@
 @import "../../sass/_vars";
+@import "../../sass/_mixins";
 
 main {
   .hero-section {
     width: 100%;
-    height: calc(100vh - 30px);
+    height: 100vh;
     display: flex;
     align-items: center;
 
     span {
       color: $font-secondary-color;
       font-weight: 600;
+    }
+
+    figure {
+      border-radius: 16px;
+      overflow: hidden;
+
+      img {
+        margin: 0;
+      }
+    }
+
+    @include tablet-and-mobile {
+      height: calc(100vh - 80px);
+
+      .col-text {
+        align-items: center;
+        text-align: center;
+      }
+
+      figure {
+        height: 400px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
     }
   }
 }

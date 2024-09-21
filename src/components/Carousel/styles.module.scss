@@ -8,4 +8,11 @@
   padding: 100px 48px;
   border-radius: 16px;
   background-color: $rf-bg-1;
+
+  @include mobile {
+    height: 400px;
+    padding: 32px 18px;
+    border-radius: 16px;
+    background-color: $rf-bg-1;
+  }
 }
