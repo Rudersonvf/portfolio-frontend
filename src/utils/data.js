@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-undef */
 export const images = [
   "https://raw.githubusercontent.com/Rudersonvf/assets/main/port1.png",
   "https://raw.githubusercontent.com/Rudersonvf/assets/main/crud1.png",
