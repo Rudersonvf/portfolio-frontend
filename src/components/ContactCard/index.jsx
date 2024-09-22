@@ -40,7 +40,7 @@ ContactCard.propTypes = {
   logo: PropTypes.any,
   title: PropTypes.string.isRequired,
   type: PropTypes.oneOf(["mail", "tel", "extLink"]).isRequired,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.any.isRequired,
   link: PropTypes.string.isRequired,
 };
 
