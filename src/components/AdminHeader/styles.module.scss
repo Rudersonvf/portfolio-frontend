@@ -1,0 +1,54 @@
+@import "../../sass/_mixins";
+@import "../../sass/_vars";
+
+.component-admin-header {
+  background-color: $rf-bg-2;
+  height: 100px;
+  display: flex;
+
+  .hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+
+    .bar {
+      height: 2px;
+      width: 100%;
+      background-color: $font-primary-color;
+      border-radius: 10px;
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 26px;
+
+    svg {
+      cursor: pointer;
+    }
+
+    .img-container {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid $btn-border-primary;
+      cursor: pointer;
+
+      img {
+        width: auto;
+        height: 200%;
+        object-fit: cover;
+        object-position: 1px 15px;
+      }
+    }
+  }
+}
