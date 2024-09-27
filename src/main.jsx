@@ -5,6 +5,14 @@ import "./utils/i18n.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
+if (import.meta.env.MODE === "development") {
+  import("./mocks/browser").then(({ worker }) => {
+    worker.start();
+  });
+}
+
+console.log("ENV MODE: ", import.meta.env.MODE);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
