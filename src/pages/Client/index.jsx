@@ -22,30 +22,28 @@ import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
 import ClientFooter from "../../components/ClientFooter";
 import { useState, useEffect } from "react";
+import * as authService from "../../services/auth-service";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
-    async function fetchExperience() {
+    async function fetchUser() {
       try {
-        const response = await fetch("/api/experiences");
-        const data = await response.json();
-        setExperiences(data);
-        console.log("response exp: ", data);
+        const result = await authService.loginRequest({
+          username: "testuser",
+          password: "password",
+        });
+        console.log("Login successful:", result.data);
+        authService.saveAccessToken(result.data.access_token);
       } catch (error) {
-        console.error("Erro ao carregar experiências:", error);
+        console.error("Login failed:", error.response?.data || error.message);
       }
     }
-    fetchExperience();
-  }, []);
 
-  useEffect(() => {
-    if (experiences) {
-      console.log("tem experiencias", experiences);
-    }
-  }, [experiences]);
+    fetchUser();
+  }, []);
 
   return (
     <>
