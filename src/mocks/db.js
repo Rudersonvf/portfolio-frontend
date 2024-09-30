@@ -8,12 +8,12 @@ export const generateFakerExperience = (overrides = {}) => ({
   id: faker.number.int(),
   position: faker.person.jobTitle(),
   company: faker.company.name(),
-  description: faker.person.jobDescriptor(),
+  description: faker.lorem.paragraph(3),
   startDate: faker.date.past(),
   endDate: faker.date.future(),
   ...overrides,
 });
 
 for (let i = 0; i < 2; i++) {
-  db.user.create(generateFakerExperience());
+  db.experience.create(generateFakerExperience());
 }

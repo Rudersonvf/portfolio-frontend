@@ -21,9 +21,31 @@ import ContactCard from "../../components/ContactCard";
 import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
 import ClientFooter from "../../components/ClientFooter";
+import { useState, useEffect } from "react";
 
 const Client = () => {
+  const [experiences, setExperiences] = useState([]);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    async function fetchExperience() {
+      try {
+        const response = await fetch("/api/experiences");
+        const data = await response.json();
+        setExperiences(data);
+        console.log("response exp: ", data);
+      } catch (error) {
+        console.error("Erro ao carregar experiências:", error);
+      }
+    }
+    fetchExperience();
+  }, []);
+
+  useEffect(() => {
+    if (experiences) {
+      console.log("tem experiencias", experiences);
+    }
+  }, [experiences]);
 
   return (
     <>

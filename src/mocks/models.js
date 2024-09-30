@@ -2,7 +2,7 @@ import { primaryKey } from "@mswjs/data";
 
 export const models = {
   experience: {
-    id: primaryKey(String),
+    id: primaryKey(Number),
     position: String,
     company: String,
     description: String,
@@ -10,7 +10,7 @@ export const models = {
     endDate: String,
   },
   education: {
-    id: primaryKey(String),
+    id: primaryKey(Number),
     courseName: String,
     institution: String,
     description: String,
