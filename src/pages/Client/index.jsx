@@ -25,12 +25,14 @@ import { useState, useEffect } from "react";
 import * as experienceService from "../../services/experience-service";
 import * as educationService from "../../services/educationService";
 import * as skillService from "../../services/skillService";
+import * as projectService from "../../services/projectService";
 import { formatDate } from "../../utils/dateFormat";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);
   const [educations, setEducations] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   const { t } = useTranslation();
 
@@ -46,12 +48,27 @@ const Client = () => {
         const skillData = await skillService.findAllRequest();
         setSkills(skillData.data);
       } catch (error) {
-        console.error("Erro ao buscar experiencias ", error);
+        console.error("Erro ao buscar dados ", error);
       }
     }
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function fetchProjects() {
+      if (skills.length > 1) {
+        try {
+          const projectData = await projectService.findAllRequest();
+          setProjects(projectData.data);
+        } catch (error) {
+          console.error("Erro ao buscar projetos ", error);
+        }
+      }
+    }
+
+    fetchProjects();
+  }, [skills]);
 
   return (
     <>
@@ -167,19 +184,28 @@ const Client = () => {
             </h1>
             <p className="mb-5">{t("projects-paragraph")}</p>
             <div className="row gy-5">
-              <div className="col-md-6">
-                <Carousel projectName={"projeto 01"} images={data.images} />
-              </div>
-              <div className="col-md-6 d-flex align-items-center">
-                <ProjectCard
-                  projectName={data.project.name}
-                  description={data.project.description}
-                  gitUrl={data.project.gitUrl}
-                  liveUrl={data.project.liveUrl}
-                  categories={data.project.categories}
-                  technologies={data.project.technologies}
-                />
-              </div>
+              {projects.map((project) => (
+                <>
+                  <div key={project.id} className="col-md-6">
+                    <Carousel
+                      projectName={project.projectName}
+                      images={project.images}
+                      id={project.id}
+                    />
+                  </div>
+                  <div className="col-md-6 d-flex align-items-center">
+                    <ProjectCard
+                      projectName={project.projectName}
+                      description={project.description}
+                      gitUrl={project.gitUrl}
+                      liveUrl={project.liveUrl}
+                      categories={project.categories}
+                      technologyIds={project.technologies}
+                      technologyData={skills}
+                    />
+                  </div>
+                </>
+              ))}
             </div>
           </div>
         </section>

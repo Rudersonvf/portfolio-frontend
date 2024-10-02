@@ -163,15 +163,18 @@ p {
   height: 100%;
 }
 
-.carousel-inner {
-  height: 100%;
-  .carousel-item {
+.carousel {
+  width: 100%;
+  .carousel-inner {
     height: 100%;
-    img {
+    .carousel-item {
       height: 100%;
-      width: 100%;
-      object-fit: cover;
-      border-radius: 16px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: fill;
+        border-radius: 16px;
+      }
     }
   }
 }

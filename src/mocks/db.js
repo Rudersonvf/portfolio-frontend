@@ -47,12 +47,10 @@ export const generatedFakerProjects = (overrides = {}) => {
     description: faker.lorem.paragraph(3),
     gitUrl: faker.internet.url(),
     liveUrl: faker.internet.url(),
-    categories: faker.helpers.arrayElements([
-      "Frontend",
-      "Backend",
-      "Full Stack",
-      "DevOps",
-    ]),
+    categories: faker.helpers.arrayElements(
+      ["Frontend", "Backend", "Full Stack", "DevOps"],
+      { min: 1, max: 3 }
+    ),
     technologies: randomSkills,
     images: Array.from({ length: 3 }, () => faker.image.url()),
     ...overrides,
@@ -71,5 +69,6 @@ for (let i = 0; i < 6; i++) {
 }
 
 for (let i = 0; i < 2; i++) {
-  db.project.create(generatedFakerProjects());
+  const proj = db.project.create(generatedFakerProjects());
+  console.log("asughduyasghduahda", proj);
 }

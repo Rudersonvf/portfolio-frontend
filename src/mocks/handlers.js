@@ -44,8 +44,8 @@ export const handlers = [
   }),
 
   //Projects
-  rest.get(`${MOCK_URL}/api/skills`, (req, res, ctx) => {
-    const projects = db.projects.getAll();
+  rest.get(`${MOCK_URL}/api/projects`, (req, res, ctx) => {
+    const projects = db.project.getAll();
     return res(ctx.status(200), ctx.json(projects));
   }),
 ];

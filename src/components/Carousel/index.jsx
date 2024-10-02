@@ -1,14 +1,12 @@
 import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 
-const Carousel = ({ images, projectName }) => {
+const Carousel = ({ images, projectName, id }) => {
+  console.log("carousel comp: ", id);
+
   return (
     <div className={styles["component-carousel"]}>
-      <div
-        id="carouselControls"
-        className="carousel slide"
-        data-bs-ride="carousel"
-      >
+      <div id={id} className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           {images.map((image, index) => (
             <div
@@ -24,7 +22,7 @@ const Carousel = ({ images, projectName }) => {
             <button
               className="carousel-control-prev"
               type="button"
-              data-bs-target="#carouselControls"
+              data-bs-target={`#${id}`}
               data-bs-slide="prev"
             >
               <span
@@ -36,7 +34,7 @@ const Carousel = ({ images, projectName }) => {
             <button
               className="carousel-control-next"
               type="button"
-              data-bs-target="#carouselControls"
+              data-bs-target={`#${id}`}
               data-bs-slide="next"
             >
               <span
@@ -55,6 +53,7 @@ const Carousel = ({ images, projectName }) => {
 Carousel.propTypes = {
   images: PropTypes.array.isRequired,
   projectName: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default Carousel;
