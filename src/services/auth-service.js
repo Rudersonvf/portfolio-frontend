@@ -17,7 +17,7 @@ export function loginRequest(loginData) {
 
   const config = {
     method: "POST",
-    url: "/oauth/token",
+    url: "/oauth2/token",
     data: requestBody,
     headers,
   };

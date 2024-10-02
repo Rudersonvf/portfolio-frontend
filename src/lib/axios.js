@@ -1,9 +1,15 @@
 import axios from "axios";
-import { BASE_URL } from "../config/index";
+import { BASE_URL, USE_MOCK, MOCK_URL } from "../config/index";
 import { history } from "./history";
 import * as authService from "../services/auth-service.js";
 
-export function requestBackend(config) {
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export async function requestBackend(config) {
+  if (USE_MOCK) {
+    await delay(500);
+  }
+
   const headers = config.withCredentials
     ? {
         ...config.headers,
@@ -11,7 +17,7 @@ export function requestBackend(config) {
       }
     : config.headers;
 
-  return axios({ ...config, baseURL: BASE_URL, headers });
+  return axios({ ...config, baseURL: USE_MOCK ? MOCK_URL : BASE_URL, headers });
 }
 
 //REQUEST INTERCECPTOR

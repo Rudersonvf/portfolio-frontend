@@ -1,9 +1,9 @@
-import { axios } from "../lib/axios";
+import { requestBackend } from "../lib/axios";
 
 export function findAllRequest() {
   const config = {
     method: "GET",
-    url: "/experiences",
+    url: "/api/experiences",
   };
-  return axios(config);
+  return requestBackend(config);
 }

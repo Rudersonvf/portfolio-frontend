@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { USE_MOCK } from "./config/index.js";
 
-if (USE_MOCK === true) {
+if (USE_MOCK === "true") {
   import("./mocks/browser").then(({ worker }) => {
     worker.start();
   });

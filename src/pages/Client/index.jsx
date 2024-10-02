@@ -22,27 +22,24 @@ import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
 import ClientFooter from "../../components/ClientFooter";
 import { useState, useEffect } from "react";
-import * as authService from "../../services/auth-service";
+import * as experienceService from "../../services/experience-service";
+import { formatDate } from "../../utils/dateFormat";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);
   const { t } = useTranslation();
 
   useEffect(() => {
-    async function fetchUser() {
+    async function fetchExperience() {
       try {
-        const result = await authService.loginRequest({
-          username: "testuser",
-          password: "password",
-        });
-        console.log("Login successful:", result.data);
-        authService.saveAccessToken(result.data.access_token);
+        const result = await experienceService.findAllRequest();
+        setExperiences(result.data);
       } catch (error) {
-        console.error("Login failed:", error.response?.data || error.message);
+        console.error("Erro ao buscar experiencias ", error);
       }
     }
 
-    fetchUser();
+    fetchExperience();
   }, []);
 
   return (
@@ -99,15 +96,16 @@ const Client = () => {
             <div className="row g-5">
               <div className="col-md-6">
                 <h2 className="mb-4">{t("experiences-title")}</h2>
-                <ExperienceCard
-                  position={"Analista de desenvolvimento JR"}
-                  company={"Rolemar"}
-                  startDate={"Jun 2022"}
-                  endDate={"atual"}
-                  resume={
-                    "Manutencao e desenvolvimento de novas features na aplicação da empresa, um e-commerce de pecas automotivas com integracão ao erp da empresa. Aplicação web desenvolvida em php e react."
-                  }
-                />
+                {experiences.map((experience, index) => (
+                  <ExperienceCard
+                    key={index}
+                    company={experience.company}
+                    position={experience.position}
+                    resume={experience.description}
+                    startDate={formatDate(experience.startDate)}
+                    endDate={formatDate(experience.endDate)}
+                  />
+                ))}
               </div>
               <div className="col-md-6">
                 <h2 className="mb-4">{t("education-title")}</h2>
