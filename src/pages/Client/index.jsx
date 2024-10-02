@@ -23,23 +23,34 @@ import styles from "./styles.module.scss";
 import ClientFooter from "../../components/ClientFooter";
 import { useState, useEffect } from "react";
 import * as experienceService from "../../services/experience-service";
+import * as educationService from "../../services/educationService";
+import * as skillService from "../../services/skillService";
 import { formatDate } from "../../utils/dateFormat";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);
+  const [educations, setEducations] = useState([]);
+  const [skills, setSkills] = useState([]);
+
   const { t } = useTranslation();
 
   useEffect(() => {
-    async function fetchExperience() {
+    async function fetchData() {
       try {
-        const result = await experienceService.findAllRequest();
-        setExperiences(result.data);
+        const experienceData = await experienceService.findAllRequest();
+        setExperiences(experienceData.data);
+
+        const educationData = await educationService.findAllRequest();
+        setEducations(educationData.data);
+
+        const skillData = await skillService.findAllRequest();
+        setSkills(skillData.data);
       } catch (error) {
         console.error("Erro ao buscar experiencias ", error);
       }
     }
 
-    fetchExperience();
+    fetchData();
   }, []);
 
   return (
@@ -109,20 +120,18 @@ const Client = () => {
               </div>
               <div className="col-md-6">
                 <h2 className="mb-4">{t("education-title")}</h2>
-                <EducationCard
-                  courseName={"Desenvolvedor moderno"}
-                  startDate={"Set 2022"}
-                  endDate={"set 2023"}
-                  institution={"devsuperior"}
-                  resume={
-                    "Na jornada os seguintes cursos foram concluídos: 1. Lógica de programação; 2. Git e Github; 3. HTML e CSS; 4. Programação Moderna; 5. Banco de Dados; 6. Análise de Sistemas; 7. Ambiente de Desenvolvimento; 8. Back End; 9. JavaScript; 10. Front end."
-                  }
-                  workload={650}
-                  i18nIsDynamicList={true}
-                  certificateUrl={
-                    "https://learn.devsuperior.com/certificados/7774880"
-                  }
-                />
+                {educations.map((education) => (
+                  <EducationCard
+                    key={education.id}
+                    courseName={education.courseName}
+                    institution={education.institution}
+                    resume={education.description}
+                    workload={education.workload}
+                    certificateUrl={education.certificateUrl}
+                    startDate={formatDate(education.startDate)}
+                    endDate={formatDate(education.endDate)}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -132,96 +141,19 @@ const Client = () => {
             <h1 className="display-2 text-nowrap mb-1">{t("skill-title")}</h1>
             <p className="mb-5">{t("skill-paragraph")}</p>
             <div className="row g-5">
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java script"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"type script"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-plain.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"kubernetes"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"python"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
-              <div className="col-lg-2 col-md-4 col-sm-6 col-6">
-                <SkillCard
-                  name={"java"}
-                  icon={
-                    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
-                  }
-                  level={50}
-                  docUrl={"https://docs.oracle.com/en/java/"}
-                />
-              </div>
+              {skills.map((skill) => (
+                <div
+                  key={skill.id}
+                  className="col-lg-2 col-md-4 col-sm-6 col-6"
+                >
+                  <SkillCard
+                    icon={skill.icon}
+                    name={skill.name}
+                    level={skill.level}
+                    docUrl={skill.docUrl}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </section>

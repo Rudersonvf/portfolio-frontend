@@ -19,4 +19,11 @@ export const models = {
     startDate: String,
     endDate: String,
   },
+  skill: {
+    id: primaryKey(Number),
+    icon: String,
+    name: String,
+    level: Number,
+    docUrl: String,
+  },
 };

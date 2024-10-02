@@ -6,7 +6,7 @@ const ACCESS_TOKEN = "fake_access_token";
 
 export const handlers = [
   //Autorzations
-  rest.post(MOCK_URL + "/oauth2/token", (req, res, ctx) => {
+  rest.post(`${MOCK_URL}/oauth2/token`, (req, res, ctx) => {
     const params = new URLSearchParams(req.body);
     const username = params.get("username");
     const password = params.get("password");
@@ -26,9 +26,20 @@ export const handlers = [
   }),
 
   //Experiences
-  rest.get(MOCK_URL + "/api/experiences", (req, res, ctx) => {
+  rest.get(`${MOCK_URL}/api/experiences`, (req, res, ctx) => {
     const experiences = db.experience.getAll();
-    console.log("return: ", experiences);
     return res(ctx.status(200), ctx.json(experiences));
+  }),
+
+  //Educations
+  rest.get(`${MOCK_URL}/api/educations`, (req, res, ctx) => {
+    const educations = db.education.getAll();
+    return res(ctx.status(200), ctx.json(educations));
+  }),
+
+  //Skills
+  rest.get(`${MOCK_URL}/api/skills`, (req, res, ctx) => {
+    const skills = db.skill.getAll();
+    return res(ctx.status(200), ctx.json(skills));
   }),
 ];
