@@ -4,6 +4,8 @@ import { faker } from "@faker-js/faker";
 
 export const db = factory(models);
 
+const skillIds = [];
+
 // Create data
 export const generateFakerExperience = (overrides = {}) => ({
   id: faker.number.int(),
@@ -30,11 +32,32 @@ export const generatedFakerEducation = (overrides = {}) => ({
 export const generatedFakerSkill = (overrides = {}) => ({
   id: faker.number.int(),
   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-  name: "Java Script",
+  name: faker.hacker.noun(),
   docUrl: faker.internet.url(),
   level: faker.number.int({ min: 1, max: 100, multipleOf: 10 }),
   ...overrides,
 });
+
+export const generatedFakerProjects = (overrides = {}) => {
+  const randomSkills = faker.helpers.arrayElements(skillIds);
+
+  return {
+    id: faker.number.int(),
+    projectName: faker.commerce.productName(),
+    description: faker.lorem.paragraph(3),
+    gitUrl: faker.internet.url(),
+    liveUrl: faker.internet.url(),
+    categories: faker.helpers.arrayElements([
+      "Frontend",
+      "Backend",
+      "Full Stack",
+      "DevOps",
+    ]),
+    technologies: randomSkills,
+    images: Array.from({ length: 3 }, () => faker.image.url()),
+    ...overrides,
+  };
+};
 
 //Generated quantities
 for (let i = 0; i < 2; i++) {
@@ -43,5 +66,10 @@ for (let i = 0; i < 2; i++) {
 }
 
 for (let i = 0; i < 6; i++) {
-  db.skill.create(generatedFakerSkill());
+  const skill = db.skill.create(generatedFakerSkill());
+  skillIds.push(skill.id);
+}
+
+for (let i = 0; i < 2; i++) {
+  db.project.create(generatedFakerProjects());
 }

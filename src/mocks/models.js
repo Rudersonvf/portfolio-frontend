@@ -26,4 +26,14 @@ export const models = {
     level: Number,
     docUrl: String,
   },
+  project: {
+    id: primaryKey(Number),
+    projectName: String,
+    description: String,
+    gitUrl: String,
+    liveUrl: String,
+    categories: Array(String),
+    technologies: Array(Number),
+    images: Array(String),
+  },
 };

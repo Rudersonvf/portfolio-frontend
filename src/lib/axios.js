@@ -7,7 +7,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function requestBackend(config) {
   if (USE_MOCK) {
-    await delay(500);
+    await delay(1000);
   }
 
   const headers = config.withCredentials
