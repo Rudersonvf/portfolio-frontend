@@ -32,11 +32,11 @@ export const generatedFakerSkill = (overrides = {}) => ({
   icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
   name: "Java Script",
   docUrl: faker.internet.url(),
-  level: faker.number.int({ min: 1, max: 100 }),
+  level: faker.number.int({ min: 1, max: 100, multipleOf: 10 }),
   ...overrides,
 });
 
-//Generated quantity
+//Generated quantities
 for (let i = 0; i < 2; i++) {
   db.experience.create(generateFakerExperience());
   db.education.create(generatedFakerEducation());
