@@ -42,6 +42,12 @@ main {
   background-color: $rf-bg-2;
 }
 
+.mb-last {
+  &:not(:last-child) {
+    margin-bottom: 80px;
+  }
+}
+
 //////////
 /// Fonts
 h1,

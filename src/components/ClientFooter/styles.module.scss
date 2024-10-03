@@ -2,9 +2,13 @@
 @import "../../sass/_mixins.scss";
 
 .component-client-footer {
-  height: 120px;
+  min-height: 120px;
   background-color: $rf-bg-2;
   @include df-alc();
+
+  @include tablet-and-mobile() {
+    padding: 10px;
+  }
 
   p {
     margin: 0;

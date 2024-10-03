@@ -54,7 +54,7 @@ const ProjectCard = ({
           ))}
         </div>
       </div>
-      <div className="d-flex gap-4 mt-5">
+      <div className="d-flex gap-4 mt-lg-5 mt-3">
         {liveUrl && (
           <ButtonLink
             text={t("project-live-btn")}

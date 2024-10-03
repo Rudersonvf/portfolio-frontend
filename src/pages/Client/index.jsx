@@ -14,7 +14,6 @@ import ExperienceCard from "../../components/ExperienceCard";
 import EducationCard from "../../components/EducationCard";
 import SkillCard from "../../components/SkillCard";
 import Carousel from "../../components/Carousel";
-import * as data from "../../utils/data";
 import ProjectCard from "../../components/ProjectCard";
 import ContactForm from "../../components/ContactForm";
 import ContactCard from "../../components/ContactCard";
@@ -193,7 +192,7 @@ const Client = () => {
                       id={project.id}
                     />
                   </div>
-                  <div className="col-md-6 d-flex align-items-center">
+                  <div className="col-md-6 d-flex align-items-center mb-last">
                     <ProjectCard
                       projectName={project.projectName}
                       description={project.description}
