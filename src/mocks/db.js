@@ -69,6 +69,5 @@ for (let i = 0; i < 6; i++) {
 }
 
 for (let i = 0; i < 2; i++) {
-  const proj = db.project.create(generatedFakerProjects());
-  console.log("asughduyasghduahda", proj);
+  db.project.create(generatedFakerProjects());
 }

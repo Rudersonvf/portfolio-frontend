@@ -2,8 +2,6 @@ import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 
 const Carousel = ({ images, projectName, id }) => {
-  console.log("carousel comp: ", id);
-
   return (
     <div className={styles["component-carousel"]}>
       <div id={id} className="carousel slide" data-bs-ride="carousel">

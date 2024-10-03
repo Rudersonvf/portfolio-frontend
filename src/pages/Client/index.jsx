@@ -1,3 +1,4 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 import ClientHeader from "../../components/ClientHeader";
 import Button from "../../components/Button";
@@ -123,9 +124,9 @@ const Client = () => {
             <div className="row g-5">
               <div className="col-md-6">
                 <h2 className="mb-4">{t("experiences-title")}</h2>
-                {experiences.map((experience, index) => (
+                {experiences.map((experience) => (
                   <ExperienceCard
-                    key={index}
+                    key={experience.id}
                     company={experience.company}
                     position={experience.position}
                     resume={experience.description}
@@ -184,8 +185,8 @@ const Client = () => {
             <p className="mb-5">{t("projects-paragraph")}</p>
             <div className="row gy-5">
               {projects.map((project) => (
-                <>
-                  <div key={project.id} className="col-md-6">
+                <React.Fragment key={project.id}>
+                  <div className="col-md-6">
                     <Carousel
                       projectName={project.projectName}
                       images={project.images}
@@ -203,7 +204,7 @@ const Client = () => {
                       technologyData={skills}
                     />
                   </div>
-                </>
+                </React.Fragment>
               ))}
             </div>
           </div>
