@@ -90,7 +90,11 @@ const Client = () => {
                 </p>
                 <div className="d-flex gap-3">
                   <div style={{ width: "180px" }}>
-                    <Button value={"download cv"} />
+                    <Button
+                      value={"download cv"}
+                      type="link"
+                      link={"/rudersonCv.pdf"}
+                    />
                   </div>
                   <Button
                     value={<FaLinkedinIn />}
@@ -253,7 +257,11 @@ const Client = () => {
                   </span>
                   <div className="d-flex gap-4 mt-2 flex-wrap">
                     <div style={{ width: "200px" }}>
-                      <Button value={"download cv"} />
+                      <Button
+                        value={"download cv"}
+                        type="link"
+                        link={"/rudersonCv.pdf"}
+                      />
                     </div>
                     <Button
                       value={<FaLinkedinIn />}
