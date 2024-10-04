@@ -8,13 +8,19 @@ const Button = ({
   shape,
   onClick,
   disable,
+  style,
 }) => {
   const className = classBtn !== "primary" ? `btn-${classBtn}` : "btn-primary";
   const buttonClasses = `btn ${className} ${shape ? `btn-${shape}` : ""}`;
 
   if (type !== "link") {
     return (
-      <button onClick={onClick} className={buttonClasses} disabled={disable}>
+      <button
+        onClick={onClick}
+        className={buttonClasses}
+        disabled={disable}
+        style={style}
+      >
         {value}
       </button>
     );
@@ -41,6 +47,7 @@ Button.propTypes = {
   shape: PropTypes.oneOf(["circle", "normal"]),
   onClick: PropTypes.func,
   disable: PropTypes.bool,
+  style: PropTypes.any,
 };
 
 export default Button;

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import Button from "../../../components/Button";
 import { useState } from "react";
+import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -16,6 +17,14 @@ const Categories = () => {
   const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const onSubmit = (data) => console.log(data);
+
+  function handleEditClick() {
+    console.log("CLICOU PARA EDITAR");
+  }
+
+  function handleDeleteClick() {
+    console.log("CLICOU PARA APAGAR");
+  }
 
   return (
     <main>
@@ -63,6 +72,49 @@ const Categories = () => {
                 <Button value={"cadastrar"} type="submit" />
               </div>
             </form>
+          </div>
+          <div className="table-responsive">
+            <table className="table table-hover ">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">id</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>4322</td>
+                  <td>Frontend</td>
+                  <td className="d-flex gap-2">
+                    <Button
+                      value={<FaPen />}
+                      classBtn="warning"
+                      onClick={handleEditClick}
+                      shape={"circle"}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        padding: "8px",
+                      }}
+                    />
+                    <Button
+                      value={<FaRegTrashCan />}
+                      classBtn="danger"
+                      onClick={handleDeleteClick}
+                      shape={"circle"}
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        padding: "8px",
+                      }}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </section>

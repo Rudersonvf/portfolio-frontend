@@ -92,6 +92,7 @@ p {
 
   svg {
     background-color: unset;
+    font-size: 3.5em !important;
   }
 }
 
@@ -270,4 +271,29 @@ form {
 
 ::-webkit-resizer {
   border: none;
+}
+
+//////////
+/// Table
+table {
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid $rf-bg-alter !important;
+  thead {
+    tr {
+      th {
+        background-color: $rf-bg-alter !important;
+        color: $font-primary-color !important;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td,
+      th {
+        background-color: $rf-bg-2 !important;
+        color: $font-paragraph-color !important;
+      }
+    }
+  }
 }
