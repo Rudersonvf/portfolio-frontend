@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Client from "./pages/Client";
 import "./sass/app.scss";
+import "react-loading-skeleton/dist/skeleton.css";
 import Admin from "./pages/Admin";
 import Categories from "./pages/Admin/Categories";
 
