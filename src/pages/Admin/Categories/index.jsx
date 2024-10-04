@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as categoryService from "../../../services/categoryService";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import Button from "../../../components/Button";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 
@@ -8,6 +9,7 @@ const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [editingCategory, setEditingCategory] = useState(null);
   const [collapse, setCollapse] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -19,9 +21,11 @@ const Categories = () => {
 
   useEffect(() => {
     async function fetchCategories() {
+      setIsLoading(true);
       try {
         const categoryData = await categoryService.findAllRequest();
         setCategories(categoryData.data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados ", error);
       }
@@ -124,47 +128,75 @@ const Categories = () => {
                 </tr>
               </thead>
               <tbody>
-                {categories.map((category, index) => (
-                  <tr key={category.id}>
-                    <th scope="row">{index}</th>
-                    <td>{category.id}</td>
-                    <td>{category.name}</td>
-                    <td className="d-flex gap-3">
-                      <div
-                        style={{ width: "30px", height: "30px" }}
-                        className="btn btn-success"
-                        data-bs-toggle="collapse"
-                        data-bs-target={collapse ? "" : "#collapseCat"}
-                        aria-expanded="false"
-                        aria-controls="collapseCat"
-                        onClick={handleCollapseClick}
-                      >
-                        <Button
-                          value={<FaPen size={14} />}
-                          classBtn="warning"
-                          onClick={() => handleEditClick(category)}
-                          shape={"circle"}
-                          style={{
-                            width: "30px",
-                            height: "30px",
-                            padding: "8px",
-                          }}
-                        />
-                      </div>
-                      <Button
-                        value={<FaRegTrashCan size={14} />}
-                        classBtn="danger"
-                        onClick={handleDeleteClick}
-                        shape={"circle"}
-                        style={{
-                          width: "30px",
-                          height: "30px",
-                          padding: "8px",
-                        }}
-                      />
-                    </td>
-                  </tr>
-                ))}
+                {isLoading
+                  ? Array.from({ length: 3 }).map((_, index) => (
+                      <tr key={index}>
+                        <SkeletonTheme highlightColor="#c1c1c1">
+                          <th scope="row">
+                            <Skeleton width={20} height={26} />
+                          </th>
+                          <td>
+                            <Skeleton width={50} height={26} />
+                          </td>
+                          <td>
+                            <Skeleton width={150} height={26} />
+                          </td>
+                          <td className="d-flex gap-3">
+                            <Skeleton
+                              width={30}
+                              height={30}
+                              borderRadius={50}
+                            />
+                            <Skeleton
+                              width={30}
+                              height={30}
+                              borderRadius={50}
+                            />
+                          </td>
+                        </SkeletonTheme>
+                      </tr>
+                    ))
+                  : categories.map((category, index) => (
+                      <tr key={category.id}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{category.id}</td>
+                        <td>{category.name}</td>
+                        <td className="d-flex gap-3">
+                          <div
+                            style={{ width: "30px", height: "30px" }}
+                            className="btn btn-success"
+                            data-bs-toggle="collapse"
+                            data-bs-target={collapse ? "" : "#collapseCat"}
+                            aria-expanded="false"
+                            aria-controls="collapseCat"
+                            onClick={handleCollapseClick}
+                          >
+                            <Button
+                              value={<FaPen size={14} />}
+                              classBtn="warning"
+                              onClick={() => handleEditClick(category)}
+                              shape={"circle"}
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                padding: "8px",
+                              }}
+                            />
+                          </div>
+                          <Button
+                            value={<FaRegTrashCan size={14} />}
+                            classBtn="danger"
+                            onClick={handleDeleteClick}
+                            shape={"circle"}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              padding: "8px",
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
