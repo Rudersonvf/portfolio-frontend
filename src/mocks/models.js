@@ -36,4 +36,8 @@ export const models = {
     technologies: Array(Number),
     images: Array(String),
   },
+  category: {
+    id: primaryKey(Number),
+    name: String,
+  },
 };

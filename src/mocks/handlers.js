@@ -48,4 +48,10 @@ export const handlers = [
     const projects = db.project.getAll();
     return res(ctx.status(200), ctx.json(projects));
   }),
+
+  //Categories
+  rest.get(`${MOCK_URL}/api/categories`, (req, res, ctx) => {
+    const categories = db.category.getAll();
+    return res(ctx.status(200), ctx.json(categories));
+  }),
 ];

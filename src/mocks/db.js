@@ -5,6 +5,7 @@ import { faker } from "@faker-js/faker";
 export const db = factory(models);
 
 const skillIds = [];
+const categoryIds = [];
 
 // Create data
 export const generateFakerExperience = (overrides = {}) => ({
@@ -40,6 +41,10 @@ export const generatedFakerSkill = (overrides = {}) => ({
 
 export const generatedFakerProjects = (overrides = {}) => {
   const randomSkills = faker.helpers.arrayElements(skillIds);
+  const randomCategories = faker.helpers.arrayElements(categoryIds, {
+    min: 1,
+    max: 3,
+  });
 
   return {
     id: faker.number.int(),
@@ -47,27 +52,38 @@ export const generatedFakerProjects = (overrides = {}) => {
     description: faker.lorem.paragraph(3),
     gitUrl: faker.internet.url(),
     liveUrl: faker.internet.url(),
-    categories: faker.helpers.arrayElements(
-      ["Frontend", "Backend", "Full Stack", "DevOps"],
-      { min: 1, max: 3 }
-    ),
+    categories: randomCategories,
     technologies: randomSkills,
     images: Array.from({ length: 3 }, () => faker.image.url()),
     ...overrides,
   };
 };
 
-//Generated quantities
+// Create fixed categories: Frontend, Backend, Full Stack, DevOps
+export const generateFakerCategories = (overrides = {}) => {
+  const categories = ["Frontend", "Backend", "Full Stack", "DevOps"];
+  return categories.map((category) => ({
+    id: faker.number.int(),
+    name: category,
+    ...overrides,
+  }));
+};
+
+// Generate fixed categories and store their IDs
+generateFakerCategories().forEach((category) => {
+  const createdCategory = db.category.create(category);
+  categoryIds.push(createdCategory.id);
+});
+
+// Generate experience, projects and education data
 for (let i = 0; i < 2; i++) {
   db.experience.create(generateFakerExperience());
   db.education.create(generatedFakerEducation());
+  db.project.create(generatedFakerProjects());
 }
 
+// Generate skill data
 for (let i = 0; i < 6; i++) {
   const skill = db.skill.create(generatedFakerSkill());
   skillIds.push(skill.id);
-}
-
-for (let i = 0; i < 2; i++) {
-  db.project.create(generatedFakerProjects());
 }

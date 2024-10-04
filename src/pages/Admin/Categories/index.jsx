@@ -1,29 +1,68 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import * as categoryService from "../../../services/categoryService";
 import Button from "../../../components/Button";
-import { useState } from "react";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
+  const [editingCategory, setEditingCategory] = useState(null);
+  const [collapse, setCollapse] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    reset,
   } = useForm();
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const categoryData = await categoryService.findAllRequest();
+        setCategories(categoryData.data);
+      } catch (error) {
+        console.error("Erro ao buscar dados ", error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
 
   const FIELD_ERROR = "Campo requirido";
   const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
   const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    if (editingCategory) {
+      console.log("Editando categoria: ", data);
+      // Lógica para editar a categoria
+    } else {
+      console.log("Criando nova categoria: ", data);
+      // Lógica para criar nova categoria
+    }
+    reset();
+    setEditingCategory(null);
+  };
 
-  function handleEditClick() {
-    console.log("CLICOU PARA EDITAR");
+  function handleEditClick(category) {
+    setEditingCategory(category);
+    setValue("name", category.name);
   }
 
   function handleDeleteClick() {
     console.log("CLICOU PARA APAGAR");
+  }
+
+  function handleCollapseClick() {
+    console.log("entrou na func", collapse);
+    setCollapse(true);
+  }
+
+  function handleCollapseResetClick() {
+    setCollapse(!collapse);
+    reset();
   }
 
   return (
@@ -44,6 +83,7 @@ const Categories = () => {
               data-bs-target="#collapseCat"
               aria-expanded="false"
               aria-controls="collapseCat"
+              onClick={handleCollapseResetClick}
             >
               +
             </button>
@@ -84,35 +124,47 @@ const Categories = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>4322</td>
-                  <td>Frontend</td>
-                  <td className="d-flex gap-2">
-                    <Button
-                      value={<FaPen />}
-                      classBtn="warning"
-                      onClick={handleEditClick}
-                      shape={"circle"}
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        padding: "8px",
-                      }}
-                    />
-                    <Button
-                      value={<FaRegTrashCan />}
-                      classBtn="danger"
-                      onClick={handleDeleteClick}
-                      shape={"circle"}
-                      style={{
-                        width: "30px",
-                        height: "30px",
-                        padding: "8px",
-                      }}
-                    />
-                  </td>
-                </tr>
+                {categories.map((category, index) => (
+                  <tr key={category.id}>
+                    <th scope="row">{index}</th>
+                    <td>{category.id}</td>
+                    <td>{category.name}</td>
+                    <td className="d-flex gap-3">
+                      <div
+                        style={{ width: "30px", height: "30px" }}
+                        className="btn btn-success"
+                        data-bs-toggle="collapse"
+                        data-bs-target={collapse ? "" : "#collapseCat"}
+                        aria-expanded="false"
+                        aria-controls="collapseCat"
+                        onClick={handleCollapseClick}
+                      >
+                        <Button
+                          value={<FaPen size={14} />}
+                          classBtn="warning"
+                          onClick={() => handleEditClick(category)}
+                          shape={"circle"}
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            padding: "8px",
+                          }}
+                        />
+                      </div>
+                      <Button
+                        value={<FaRegTrashCan size={14} />}
+                        classBtn="danger"
+                        onClick={handleDeleteClick}
+                        shape={"circle"}
+                        style={{
+                          width: "30px",
+                          height: "30px",
+                          padding: "8px",
+                        }}
+                      />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
