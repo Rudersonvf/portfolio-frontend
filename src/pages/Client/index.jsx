@@ -22,7 +22,7 @@ import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
 import ClientFooter from "../../components/ClientFooter";
 import { useState, useEffect } from "react";
-import * as experienceService from "../../services/experience-service";
+import * as experienceService from "../../services/experienceService";
 import * as educationService from "../../services/educationService";
 import * as skillService from "../../services/skillService";
 import * as projectService from "../../services/projectService";

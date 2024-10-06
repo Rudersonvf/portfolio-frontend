@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import * as educationService from "../../../services/educationService";
+import * as experienceService from "../../../services/experienceService";
 import Button from "../../../components/Button";
-import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
+import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 
-const Educations = () => {
-  const [education, setEducation] = useState([]);
-  const [editingCategory, setEditingCategory] = useState(null);
+const Experiences = () => {
+  const [experiences, setExperiences] = useState([]);
+  const [editingExperiences, setEditingExperiences] = useState(null);
   const [collapse, setCollapse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,8 +23,8 @@ const Educations = () => {
     async function fetchCategories() {
       setIsLoading(true);
       try {
-        const categoryData = await educationService.findAllRequest();
-        setEducation(categoryData.data);
+        const experienceData = await experienceService.findAllRequest();
+        setExperiences(experienceData.data);
         setIsLoading(false);
       } catch (error) {
         console.error("Erro ao buscar dados ", error);
@@ -39,7 +39,7 @@ const Educations = () => {
   const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const onSubmit = (data) => {
-    if (editingCategory) {
+    if (editingExperiences) {
       console.log("Editando categoria: ", data);
       // Lógica para editar a categoria
     } else {
@@ -47,18 +47,16 @@ const Educations = () => {
       // Lógica para criar nova categoria
     }
     reset();
-    setEditingCategory(null);
+    setEditingExperiences(null);
   };
 
-  function handleEditClick(education) {
-    setEditingCategory(education);
-    setValue("courseName", education.courseName);
-    setValue("institution", education.institution);
-    setValue("startDate", education.startDate);
-    setValue("endDate", education.endDate);
-    setValue("workload", education.workload);
-    setValue("certificateUrl", education.certificateUrl);
-    setValue("description", education.description);
+  function handleEditClick(experience) {
+    setEditingExperiences(experience);
+    setValue("position", experience.position);
+    setValue("company", experience.company);
+    setValue("startDate", experience.startDate);
+    setValue("endDate", experience.endDate);
+    setValue("description", experience.description);
   }
 
   function handleDeleteClick() {
@@ -86,7 +84,7 @@ const Educations = () => {
       <section>
         <div className="container">
           <div className="pt-4 mb-5 d-flex justify-content-between">
-            <span className="h2">Educação</span>
+            <span className="h2">Experiências</span>
             <button
               style={{
                 borderRadius: "50%",
@@ -108,10 +106,10 @@ const Educations = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">
-                  <label htmlFor="corseName">Nome do curso</label>
+                  <label htmlFor="position">Cargo</label>
                   <input
-                    id="courseName"
-                    {...register("courseName", {
+                    id="company"
+                    {...register("position", {
                       required: FIELD_ERROR,
                       minLength: {
                         value: 3,
@@ -123,27 +121,27 @@ const Educations = () => {
                       },
                     })}
                   />
-                  {errors.courseName && <p>{errors.courseName.message}</p>}
+                  {errors.position && <p>{errors.position.message}</p>}
                 </div>
                 <div className="col-md-6">
-                  <label htmlFor="institution">Instituição</label>
+                  <label htmlFor="company">Empresa</label>
                   <input
-                    id="institution"
-                    {...register("institution", {
+                    id="company"
+                    {...register("company", {
                       required: FIELD_ERROR,
                       minLength: {
-                        value: 3,
+                        value: 1,
                         message: FIELD_ERROR_MIN_LENGTH,
                       },
                       maxLength: {
-                        value: 80,
+                        value: 3,
                         message: FIELD_ERROR_MAX_LENGTH,
                       },
                     })}
                   />
-                  {errors.institution && <p>{errors.institution.message}</p>}
+                  {errors.company && <p>{errors.company.message}</p>}
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-6">
                   <label htmlFor="startDate">Data inicio</label>
                   <input
                     id="startDate"
@@ -161,7 +159,7 @@ const Educations = () => {
                   />
                   {errors.startDate && <p>{errors.startDate.message}</p>}
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-6">
                   <label htmlFor="endDate">Data final</label>
                   <input
                     id="endDate"
@@ -178,44 +176,6 @@ const Educations = () => {
                     })}
                   />
                   {errors.endDate && <p>{errors.endDate.message}</p>}
-                </div>
-                <div className="col-md-4">
-                  <label htmlFor="workload">Carga horária</label>
-                  <input
-                    id="workload"
-                    {...register("workload", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 3,
-                        message: FIELD_ERROR_MIN_LENGTH,
-                      },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
-                    })}
-                  />
-                  {errors.workload && <p>{errors.workload.message}</p>}
-                </div>
-                <div className="col-md-12">
-                  <label htmlFor="certificateUrl">Url do certificado</label>
-                  <input
-                    id="certificateUrl"
-                    {...register("certificateUrl", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 3,
-                        message: FIELD_ERROR_MIN_LENGTH,
-                      },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
-                    })}
-                  />
-                  {errors.certificateUrl && (
-                    <p>{errors.certificateUrl.message}</p>
-                  )}
                 </div>
                 <div>
                   <label htmlFor="description">Descrição</label>
@@ -250,7 +210,6 @@ const Educations = () => {
                   <th scope="col">#</th>
                   <th scope="col">id</th>
                   <th scope="col">Nome</th>
-                  <th scope="col">Instituição</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
@@ -267,21 +226,17 @@ const Educations = () => {
                         <td>
                           <Skeleton width={150} height={26} />
                         </td>
-                        <td>
-                          <Skeleton width={150} height={26} />
-                        </td>
                         <td className="d-flex gap-3">
                           <Skeleton width={30} height={30} borderRadius={50} />
                           <Skeleton width={30} height={30} borderRadius={50} />
                         </td>
                       </tr>
                     ))
-                  : education.map((education, index) => (
-                      <tr key={education.id}>
+                  : experiences.map((experience, index) => (
+                      <tr key={experience.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{education.id}</td>
-                        <td>{education.courseName}</td>
-                        <td>{education.institution}</td>
+                        <td>{experience.id}</td>
+                        <td>{experience.name}</td>
                         <td className="d-flex gap-3">
                           <div
                             style={{ width: "30px", height: "30px" }}
@@ -295,7 +250,7 @@ const Educations = () => {
                             <Button
                               value={<FaPen size={14} />}
                               classBtn="warning"
-                              onClick={() => handleEditClick(education)}
+                              onClick={() => handleEditClick(experience)}
                               shape={"circle"}
                               style={{
                                 width: "30px",
@@ -327,4 +282,4 @@ const Educations = () => {
   );
 };
 
-export default Educations;
+export default Experiences;
