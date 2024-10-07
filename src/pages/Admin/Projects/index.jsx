@@ -7,6 +7,8 @@ import Button from "../../../components/Button";
 import Skeleton from "react-loading-skeleton";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import styles from "./styles.module.scss";
+import ImageField from "../../../components/ImageField";
+import ImageCard from "../../../components/ImageCard";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -14,7 +16,8 @@ const Projects = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [allTechnologies, setAllTechnologies] = useState([]);
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
-  const [editingProjects, setEditingProjects] = useState(null);
+  const [allImages, setAllImages] = useState([]);
+  const [editingProject, setEditingProject] = useState(null);
   const [collapse, setCollapse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -50,7 +53,7 @@ const Projects = () => {
   const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const onSubmit = (data) => {
-    if (editingProjects) {
+    if (editingProject) {
       console.log("Editando categoria: ", data);
       // Lógica para editar a categoria
     } else {
@@ -58,17 +61,18 @@ const Projects = () => {
       // Lógica para criar nova categoria
     }
     reset();
-    setEditingProjects(null);
+    setEditingProject(null);
   };
 
   function handleEditClick(project) {
-    setEditingProjects(project);
+    setEditingProject(project);
     setValue("projectName", project.projectName);
     setValue("description", project.description);
     setValue("gitUrl", project.gitUrl);
     setValue("liveUrl", project.liveUrl);
     setSelectedCategories(project.categories);
     setSelectedTechnologies(project.technologies);
+    setAllImages(project.images);
   }
 
   function handleDeleteClick() {
@@ -84,6 +88,7 @@ const Projects = () => {
     reset();
     setSelectedCategories([]);
     setSelectedTechnologies([]);
+    setAllImages([]);
   }
 
   function handleInput(event) {
@@ -134,6 +139,10 @@ const Projects = () => {
     setSelectedTechnologies(
       selectedTechnologies.filter((tec) => tec.id !== id)
     );
+  }
+
+  function handleImageUpload(image) {
+    setAllImages((prevImages) => [...prevImages, image]);
   }
 
   return (
@@ -235,6 +244,14 @@ const Projects = () => {
                     })}
                   />
                   {errors.liveUrl && <p>{errors.liveUrl.message}</p>}
+                </div>
+                <div className="col-md-12">
+                  <ImageField onUploadImage={handleImageUpload} />
+                  <div className="d-flex gap-4 mt-3 mb-3">
+                    {allImages.map((image, index) => (
+                      <ImageCard key={index} imageLink={image} />
+                    ))}
+                  </div>
                 </div>
 
                 {/* Category select */}

@@ -9,3 +9,7 @@ export const USE_MOCK = import.meta.env.VITE_USE_MSW;
 export const CLIENT_SECRET = import.meta.env.VITE_CLIENT_SECRET;
 
 export const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+
+export const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
+
+export const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
