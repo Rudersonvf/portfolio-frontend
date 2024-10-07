@@ -164,6 +164,19 @@ p {
   @include shared-styles();
 }
 
+.btn-card {
+  height: 25px !important;
+  width: 25px !important;
+  font-size: 12px !important;
+  border-radius: 50% !important;
+
+  span {
+    line-height: 0;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+}
+
 /////////////
 /// Carousel
 .carousel {
@@ -251,6 +264,15 @@ form {
       -ms-text-fill-color: $autofill-text-color;
       border-radius: 8px !important;
     }
+  }
+
+  select {
+    display: flex;
+    background-color: $form-color-bg;
+    border-radius: 8px;
+    padding: 10px;
+    height: 50px;
+    width: 100%;
   }
 }
 

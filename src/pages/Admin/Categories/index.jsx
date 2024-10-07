@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as categoryService from "../../../services/categoryService";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import Button from "../../../components/Button";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 
@@ -131,29 +131,19 @@ const Categories = () => {
                 {isLoading
                   ? Array.from({ length: 3 }).map((_, index) => (
                       <tr key={index}>
-                        <SkeletonTheme highlightColor="#c1c1c1">
-                          <th scope="row">
-                            <Skeleton width={20} height={26} />
-                          </th>
-                          <td>
-                            <Skeleton width={50} height={26} />
-                          </td>
-                          <td>
-                            <Skeleton width={150} height={26} />
-                          </td>
-                          <td className="d-flex gap-3">
-                            <Skeleton
-                              width={30}
-                              height={30}
-                              borderRadius={50}
-                            />
-                            <Skeleton
-                              width={30}
-                              height={30}
-                              borderRadius={50}
-                            />
-                          </td>
-                        </SkeletonTheme>
+                        <th scope="row">
+                          <Skeleton width={20} height={26} />
+                        </th>
+                        <td>
+                          <Skeleton width={50} height={26} />
+                        </td>
+                        <td>
+                          <Skeleton width={150} height={26} />
+                        </td>
+                        <td className="d-flex gap-3">
+                          <Skeleton width={30} height={30} borderRadius={50} />
+                          <Skeleton width={30} height={30} borderRadius={50} />
+                        </td>
                       </tr>
                     ))
                   : categories.map((category, index) => (

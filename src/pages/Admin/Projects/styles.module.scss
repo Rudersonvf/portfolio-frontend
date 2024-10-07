@@ -1,0 +1,12 @@
+@import "../../../sass/_vars";
+@import "../../../sass/_mixins";
+
+.category-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: $form-color-bg;
+  border-radius: 8px;
+  padding: 8px;
+  height: 50px;
+}

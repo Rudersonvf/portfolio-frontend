@@ -6,9 +6,10 @@ export const db = factory(models);
 
 const skillIds = [];
 const categoryIds = [];
+const categories = [];
 
 // Create data
-export const generateFakerExperience = (overrides = {}) => ({
+export const generatedFakerExperience = (overrides = {}) => ({
   id: faker.number.int(),
   position: faker.person.jobTitle(),
   company: faker.company.name(),
@@ -60,30 +61,72 @@ export const generatedFakerProjects = (overrides = {}) => {
 };
 
 // Create fixed categories: Frontend, Backend, Full Stack, DevOps
-export const generateFakerCategories = (overrides = {}) => {
-  const categories = ["Frontend", "Backend", "Full Stack", "DevOps"];
+export const generatedFakerCategories = (overrides = {}) => {
+  const categories = [
+    {
+      id: 1,
+      catName: "Frontend",
+    },
+    {
+      id: 2,
+      catName: "Backend",
+    },
+    {
+      id: 3,
+      catName: "Full Stack",
+    },
+    {
+      id: 4,
+      catName: "DevOps",
+    },
+  ];
+
   return categories.map((category) => ({
-    id: faker.number.int(),
-    name: category,
+    id: category.id,
+    name: category.catName,
     ...overrides,
   }));
 };
 
 // Generate fixed categories and store their IDs
-generateFakerCategories().forEach((category) => {
+generatedFakerCategories().forEach((category) => {
   const createdCategory = db.category.create(category);
   categoryIds.push(createdCategory.id);
 });
 
+export const generatedFakerProjectDto = (overrides = {}) => {
+  const randomCategories = faker.helpers.arrayElements(
+    generatedFakerCategories(),
+    {
+      min: 1,
+      max: 3,
+    }
+  );
+
+  return {
+    id: faker.number.int(),
+    projectName: faker.commerce.productName(),
+    description: faker.lorem.paragraph(3),
+    gitUrl: faker.internet.url(),
+    liveUrl: faker.internet.url(),
+    categories: randomCategories,
+    technologies: Array.from({ length: 4 }, () => generatedFakerSkill()),
+    images: Array.from({ length: 3 }, () => faker.image.url()),
+    ...overrides,
+  };
+};
+
 // Generate experience, projects and education data
 for (let i = 0; i < 2; i++) {
-  db.experience.create(generateFakerExperience());
+  db.experience.create(generatedFakerExperience());
   db.education.create(generatedFakerEducation());
   db.project.create(generatedFakerProjects());
+  db.projectDto.create(generatedFakerProjectDto());
 }
 
 // Generate skill data
 for (let i = 0; i < 6; i++) {
   const skill = db.skill.create(generatedFakerSkill());
   skillIds.push(skill.id);
+  categories.push(skill);
 }

@@ -7,3 +7,11 @@ export function findAllRequest() {
   };
   return requestBackend(config);
 }
+
+export function findAllSummaryRequest() {
+  const config = {
+    method: "GET",
+    url: "/api/projects/summary",
+  };
+  return requestBackend(config);
+}

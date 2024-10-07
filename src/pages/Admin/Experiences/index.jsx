@@ -209,7 +209,7 @@ const Experiences = () => {
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">id</th>
-                  <th scope="col">Nome</th>
+                  <th scope="col">Empresa</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
@@ -236,7 +236,7 @@ const Experiences = () => {
                       <tr key={experience.id}>
                         <th scope="row">{index + 1}</th>
                         <td>{experience.id}</td>
-                        <td>{experience.name}</td>
+                        <td>{experience.company}</td>
                         <td className="d-flex gap-3">
                           <div
                             style={{ width: "30px", height: "30px" }}

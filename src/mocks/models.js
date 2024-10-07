@@ -36,6 +36,16 @@ export const models = {
     technologies: Array(Number),
     images: Array(String),
   },
+  projectDto: {
+    id: primaryKey(Number),
+    projectName: String,
+    description: String,
+    gitUrl: String,
+    liveUrl: String,
+    categories: Array(),
+    technologies: Array(),
+    images: Array(),
+  },
   category: {
     id: primaryKey(Number),
     name: String,
