@@ -35,12 +35,13 @@ const ImageCard = ({ imageLink, onImageDelete }) => {
     <div className={styles["component-image-card"]}>
       {isLoading && <Spinner />}
       <img src={imageLink} alt="image" />
-      <div
+      <button
+        type="button"
         onClick={() => handleImageDelete(imageLink)}
-        className={styles.delete}
+        className={`btn btn-danger ${styles.delete}`}
       >
         delete
-      </div>
+      </button>
     </div>
   );
 };

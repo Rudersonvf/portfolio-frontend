@@ -17,16 +17,13 @@
   .delete {
     height: 20px;
     width: 100%;
-    background-color: $color-danger;
     position: absolute;
     bottom: 0;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
+    border-radius: 0 !important;
     font-size: 12px;
-    text-transform: uppercase;
-    font-weight: 600;
   }
 }
