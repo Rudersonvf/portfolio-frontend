@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL, USE_MOCK, MOCK_URL } from "../config/index";
+import { BASE_URL, USE_MOCK, MOCK_URL, CLOUDINARY_NAME } from "../config/index";
 import { history } from "./history";
 import * as authService from "../services/auth-service.js";
 
@@ -18,6 +18,12 @@ export async function requestBackend(config) {
     : config.headers;
 
   return axios({ ...config, baseURL: USE_MOCK ? MOCK_URL : BASE_URL, headers });
+}
+
+export function requestCloudinary(config) {
+  const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}`;
+
+  return axios({ ...config, baseURL: cloudinaryUrl });
 }
 
 //REQUEST INTERCECPTOR

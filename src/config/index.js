@@ -13,3 +13,7 @@ export const CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
 export const CLOUDINARY_NAME = import.meta.env.VITE_CLOUDINARY_NAME;
 
 export const CLOUDINARY_PRESET = import.meta.env.VITE_CLOUDINARY_PRESET;
+
+export const CLOUDINARY_API_KEY = import.meta.env.VITE_CLOUDINARY_API_KEY;
+
+export const CLOUDINARY_API_SECRET = import.meta.env.VITE_CLOUDINARY_API_SECRET;

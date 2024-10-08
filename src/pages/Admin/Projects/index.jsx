@@ -145,6 +145,12 @@ const Projects = () => {
     setAllImages((prevImages) => [...prevImages, image]);
   }
 
+  function handleImageDelete(imageLink) {
+    setAllImages((prevImages) =>
+      prevImages.filter((image) => image !== imageLink)
+    );
+  }
+
   return (
     <main>
       <section>
@@ -249,7 +255,11 @@ const Projects = () => {
                   <ImageField onUploadImage={handleImageUpload} />
                   <div className="d-flex gap-4 mt-3 mb-3">
                     {allImages.map((image, index) => (
-                      <ImageCard key={index} imageLink={image} />
+                      <ImageCard
+                        key={index}
+                        imageLink={image}
+                        onImageDelete={handleImageDelete}
+                      />
                     ))}
                   </div>
                 </div>
