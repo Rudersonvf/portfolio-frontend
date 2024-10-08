@@ -27,9 +27,12 @@
     align-items: center;
     gap: 20px;
     font-size: 26px;
+    position: relative;
 
     svg {
       cursor: pointer;
+      fill: $font-primary-color;
+      font-size: 28px;
     }
 
     .img-container {
@@ -48,6 +51,37 @@
         height: 200%;
         object-fit: cover;
         object-position: 1px 15px;
+      }
+    }
+
+    .dropdown-container {
+      position: absolute;
+      bottom: -90px;
+      right: 0;
+      min-width: 200px;
+      background-color: $rf-bg-2;
+      padding: 0 10px 10px 10px;
+
+      ul {
+        li {
+          font-size: 16px;
+          margin-bottom: 20px;
+          height: 30px;
+          text-align: end;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          svg {
+            fill: $font-primary-color;
+            margin-right: 6px;
+            font-size: 16px;
+          }
+
+          &:hover {
+            background-color: $rf-bg-1;
+            padding-right: 6px !important;
+          }
+        }
       }
     }
   }
