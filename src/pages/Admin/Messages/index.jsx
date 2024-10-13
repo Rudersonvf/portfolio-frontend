@@ -1,11 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import * as messageService from "../../../services/messageService";
 import Skeleton from "react-loading-skeleton";
 import Button from "../../../components/Button";
+import { formatDmy } from "../../../utils/dateFormat";
+import { FaRegTrashCan, FaEnvelope } from "react-icons/fa6";
+import styles from "./styles.module.scss";
 
 const Messages = () => {
   const [messages, setMessages] = useState([]);
+  const [openMessage, setOpenMessage] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [collapse, setCollapse] = useState(false);
+
+  useEffect(() => {
+    async function fetchMessages() {
+      setIsLoading(true);
+      try {
+        const messageData = await messageService.findAllRequest();
+        setMessages(messageData.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Erro ao buscar dados ", error);
+      }
+    }
+
+    fetchMessages();
+  }, []);
+
+  function handleOpenClick(message) {
+    setCollapse(!collapse);
+    setOpenMessage(message);
+  }
+
+  function handleCollapseClick() {
+    setCollapse(true);
+  }
+
+  function handleMessageStatusChange(id, isChecked) {
+    console.log("entrou na func handleReadChange", id, " / ", isChecked);
+    //calls the service to update the status of the message on api
+  }
 
   return (
     <main>
@@ -14,17 +48,30 @@ const Messages = () => {
           <div className="pt-4 mb-5 d-flex justify-content-between">
             <span className="h2">Mensagens</span>
           </div>
-          <div className="collapse mb-5" id="collapseCat"></div>
+          <div className="collapse mb-5" id="collapseCat">
+            <div className={styles["message-container"]}>
+              <div className="row g-3">
+                <div className="col-12">{formatDmy(openMessage.sendAt)}</div>
+                <div className="col-md-6">{openMessage.name}</div>
+                <div className="col-md-6">{openMessage.email}</div>
+                <div className={styles["message-body"]}>
+                  <span>{openMessage.subject}</span>
+                  <hr />
+                  <p>{openMessage.message}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="table-responsive">
             <table className="table table-hover ">
               <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Nome</th>
-                  <th scope="col">Subject</th>
+                  <th scope="col">Assunto</th>
                   <th scope="col">Data</th>
                   <th scope="col">Lido</th>
-                  <th scope="col">Deletar</th>
+                  <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,10 +82,16 @@ const Messages = () => {
                           <Skeleton width={20} height={26} />
                         </th>
                         <td>
-                          <Skeleton width={50} height={26} />
+                          <Skeleton width={150} height={26} />
                         </td>
                         <td>
-                          <Skeleton width={150} height={26} />
+                          <Skeleton width={350} height={26} />
+                        </td>
+                        <td>
+                          <Skeleton width={100} height={26} />
+                        </td>
+                        <td>
+                          <Skeleton width={15} height={15} />
                         </td>
                         <td className="d-flex gap-3">
                           <Skeleton width={30} height={30} borderRadius={50} />
@@ -46,11 +99,24 @@ const Messages = () => {
                         </td>
                       </tr>
                     ))
-                  : messages.map((experience, index) => (
-                      <tr key={experience.id}>
+                  : messages.map((message, index) => (
+                      <tr key={message.id}>
                         <th scope="row">{index + 1}</th>
-                        <td>{experience.id}</td>
-                        <td>{experience.company}</td>
+                        <td>{message.name}</td>
+                        <td>{message.subject}</td>
+                        <td>{formatDmy(message.sendAt)}</td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={message.isRead}
+                            onChange={(event) =>
+                              handleMessageStatusChange(
+                                message.id,
+                                event.target.checked
+                              )
+                            }
+                          />
+                        </td>
                         <td className="d-flex gap-3">
                           <div
                             style={{ width: "30px", height: "30px" }}
@@ -59,10 +125,22 @@ const Messages = () => {
                             data-bs-target={collapse ? "" : "#collapseCat"}
                             aria-expanded="false"
                             aria-controls="collapseCat"
-                            //onClick={handleCollapseClick}
-                          ></div>
+                            onClick={handleCollapseClick}
+                          >
+                            <Button
+                              value={<FaEnvelope size={14} />}
+                              classBtn="success"
+                              onClick={() => handleOpenClick(message)}
+                              shape={"circle"}
+                              style={{
+                                width: "30px",
+                                height: "30px",
+                                padding: "8px",
+                              }}
+                            />
+                          </div>
                           <Button
-                            //value={<FaRegTrashCan size={14} />}
+                            value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
                             //onClick={handleDeleteClick}
                             shape={"circle"}

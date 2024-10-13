@@ -59,4 +59,10 @@ export const handlers = [
     const categories = db.category.getAll();
     return res(ctx.status(200), ctx.json(categories));
   }),
+
+  //Messages
+  rest.get(`${MOCK_URL}/api/messages`, (req, res, ctx) => {
+    const messages = db.message.getAll();
+    return res(ctx.status(200), ctx.json(messages));
+  }),
 ];

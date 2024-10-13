@@ -1,0 +1,29 @@
+@import "../../../sass/_vars";
+@import "../../../sass/_mixins";
+
+.message-container {
+  background-color: $rf-bg-2;
+  border-radius: 8px;
+  min-height: 100px;
+  padding: 24px 124px;
+
+  .message-body {
+    border-radius: 8px;
+    padding: 48px 84px;
+    background-color: $rf-bg-1;
+
+    span {
+      font-size: 22px;
+      text-align: center;
+      display: block;
+    }
+  }
+
+  @include tablet-and-mobile {
+    padding: 24px;
+
+    .message-body {
+      padding: 24px;
+    }
+  }
+}

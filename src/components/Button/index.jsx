@@ -43,6 +43,7 @@ Button.propTypes = {
     "danger",
     "warning",
     "info",
+    "success",
   ]),
   shape: PropTypes.oneOf(["circle", "normal"]),
   onClick: PropTypes.func,

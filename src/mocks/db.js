@@ -60,6 +60,17 @@ export const generatedFakerProjects = (overrides = {}) => {
   };
 };
 
+export const generatedFakerMessages = (overrides = {}) => ({
+  id: faker.number.int(),
+  name: faker.person.fullName(),
+  email: faker.internet.email(),
+  subject: faker.lorem.sentence(),
+  message: faker.lorem.paragraph(3),
+  sendAt: faker.date.past(),
+  isRead: faker.datatype.boolean(),
+  ...overrides,
+});
+
 // Create fixed categories: Frontend, Backend, Full Stack, DevOps
 export const generatedFakerCategories = (overrides = {}) => {
   const categories = [
@@ -124,9 +135,10 @@ for (let i = 0; i < 2; i++) {
   db.projectDto.create(generatedFakerProjectDto());
 }
 
-// Generate skill data
+// Generate skill data and messages
 for (let i = 0; i < 6; i++) {
   const skill = db.skill.create(generatedFakerSkill());
   skillIds.push(skill.id);
   categories.push(skill);
+  db.message.create(generatedFakerMessages());
 }

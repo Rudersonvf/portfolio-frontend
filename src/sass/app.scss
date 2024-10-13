@@ -319,3 +319,15 @@ table {
     }
   }
 }
+
+////////////
+/// Message
+.message-field {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid $font-paragraph-color;
+  background-color: $form-color-bg;
+}

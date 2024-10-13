@@ -50,4 +50,13 @@ export const models = {
     id: primaryKey(Number),
     name: String,
   },
+  message: {
+    id: primaryKey(Number),
+    name: String,
+    email: String,
+    subject: String,
+    message: String,
+    sendAt: String,
+    isRead: Boolean,
+  },
 };
