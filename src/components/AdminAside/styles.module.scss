@@ -38,6 +38,21 @@
     gap: 8px;
     padding: 8px 0 8px 12px !important;
     background-color: $rf-bg-1;
+
+    li {
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: $rf-bg-2;
+      }
+      a {
+        transition: all 0.2s ease;
+
+        &:hover {
+          padding-left: 6px;
+        }
+      }
+    }
   }
 
   .collapse-btn {

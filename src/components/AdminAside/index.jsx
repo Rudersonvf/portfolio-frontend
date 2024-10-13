@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { FaAngleDown } from "react-icons/fa6";
 import logoIcon from "../../assets/icon.svg";
@@ -12,18 +12,22 @@ const AdminAside = () => {
     { path: "/admin/categories", name: "Categorias" },
   ];
 
+  const location = useLocation();
+
+  const isCrudActive = navLinks.some((link) =>
+    location.pathname.includes(link.path)
+  );
+
   return (
     <aside className={styles["admin-aside"]}>
       <div className={styles["icon-container"]}>
         <img src={logoIcon} alt="RF Logo" />
       </div>
       <nav>
-        <ul>
+        <ul className={styles["nav-list"]}>
           <li>
             <NavLink
-              className={({ isActive }) =>
-                isActive ? styles["link-active"] : styles["link"]
-              }
+              className={isCrudActive ? styles["link-active"] : styles["link"]}
               data-bs-toggle="collapse"
               data-bs-target="#crud"
               aria-expanded="true"
@@ -41,23 +45,24 @@ const AdminAside = () => {
                     isActive ? styles["link-active"] : styles["link"]
                   }
                   to={item.path}
+                  end
                 >
                   {item.name}
                 </NavLink>
               </li>
             ))}
           </ul>
-          <li>
+          <li className="mt-2">
             <NavLink
               className={({ isActive }) =>
                 isActive ? styles["link-active"] : styles["link"]
               }
               to={"/admin/messages"}
+              end
             >
-              Menssagens
+              Mensagens
             </NavLink>
           </li>
-          {/* another nav links */}
         </ul>
       </nav>
     </aside>
