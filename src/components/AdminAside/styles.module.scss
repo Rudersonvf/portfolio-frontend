@@ -23,12 +23,30 @@
   }
 
   .link-active {
-    color: $font-secondary-color;
+    color: $font-secondary-color !important;
     font-weight: 600;
     transition: color 0.3s ease, font-weight 0.3s ease;
   }
 
   .link- {
     font-weight: 400;
+  }
+
+  .collapse-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0 8px 12px !important;
+    background-color: $rf-bg-1;
+  }
+
+  .collapse-btn {
+    cursor: pointer;
+  }
+  svg {
+    fill: $font-paragraph-color;
+    font-size: 1.3rem;
+    margin-left: 5px;
+    padding-bottom: 2px;
   }
 }
