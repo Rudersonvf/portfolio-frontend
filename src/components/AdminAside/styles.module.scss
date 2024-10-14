@@ -35,16 +35,21 @@
   .collapse-container {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     padding: 8px 0 8px 12px !important;
     background-color: $rf-bg-1;
 
     li {
       transition: all 0.2s ease;
+      padding: 5px 0 !important;
 
       &:hover {
         background-color: $rf-bg-2;
+
+        a {
+          padding-left: 6px;
+        }
       }
+
       a {
         transition: all 0.2s ease;
 
