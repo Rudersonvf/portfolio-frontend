@@ -29,10 +29,28 @@
     font-size: 26px;
     position: relative;
 
-    svg {
-      cursor: pointer;
-      fill: $font-primary-color;
-      font-size: 28px;
+    .count-container {
+      span {
+        position: absolute;
+        top: 18px;
+        left: -2px;
+        background-color: $color-danger;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        font-size: 12px;
+        font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      svg {
+        cursor: pointer;
+        fill: $font-primary-color;
+        font-size: 28px;
+      }
     }
 
     .img-container {

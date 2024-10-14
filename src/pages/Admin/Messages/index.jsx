@@ -1,31 +1,15 @@
-import { useEffect, useState } from "react";
-import * as messageService from "../../../services/messageService";
+import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Button from "../../../components/Button";
 import { formatDmy } from "../../../utils/dateFormat";
 import { FaRegTrashCan, FaEnvelope } from "react-icons/fa6";
 import styles from "./styles.module.scss";
+import { useOutletContext } from "react-router-dom";
 
 const Messages = () => {
-  const [messages, setMessages] = useState([]);
+  const { messages, setUnreadCount } = useOutletContext();
   const [openMessage, setOpenMessage] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [collapse, setCollapse] = useState(false);
-
-  useEffect(() => {
-    async function fetchMessages() {
-      setIsLoading(true);
-      try {
-        const messageData = await messageService.findAllRequest();
-        setMessages(messageData.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados ", error);
-      }
-    }
-
-    fetchMessages();
-  }, []);
 
   function handleOpenClick(message) {
     setCollapse(!collapse);
@@ -38,7 +22,17 @@ const Messages = () => {
 
   function handleMessageStatusChange(id, isChecked) {
     console.log("entrou na func handleReadChange", id, " / ", isChecked);
-    //calls the service to update the status of the message on api
+    // Aqui chama o serviço para atualizar o status de leitura na API
+    const updatedMessages = messages.map((msg) => {
+      if (msg.id === id) {
+        return { ...msg, isRead: isChecked };
+      }
+      return msg;
+    });
+    const unreadMessages = updatedMessages.filter(
+      (message) => !message.isRead
+    ).length;
+    setUnreadCount(unreadMessages);
   }
 
   return (
@@ -75,7 +69,7 @@ const Messages = () => {
                 </tr>
               </thead>
               <tbody>
-                {isLoading
+                {!messages
                   ? Array.from({ length: 3 }).map((_, index) => (
                       <tr key={index}>
                         <th scope="row">

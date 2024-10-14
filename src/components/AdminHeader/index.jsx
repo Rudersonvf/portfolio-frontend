@@ -1,16 +1,21 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaBell, FaNewspaper, FaPowerOff } from "react-icons/fa6";
 import imgOwner from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
 
-const AdminHeader = ({ onToggleAside }) => {
+const AdminHeader = ({ onToggleAside, unreadCount }) => {
   const [isActive, setIsActive] = useState(false);
+  const navigate = useNavigate();
 
-  const handleDropdownClick = () => {
+  function handleDropdownClick() {
     setIsActive(!isActive);
-  };
+  }
+
+  function handleBellClick() {
+    navigate("/admin/messages");
+  }
 
   return (
     <header className={styles["component-admin-header"]}>
@@ -21,7 +26,10 @@ const AdminHeader = ({ onToggleAside }) => {
           <span className={styles["bar"]}></span>
         </div>
         <nav>
-          <FaBell />
+          <div className={styles["count-container"]} onClick={handleBellClick}>
+            {unreadCount > 1 && <span>{unreadCount}</span>}
+            <FaBell />
+          </div>
           <div
             className={styles["img-container"]}
             onClick={handleDropdownClick}
@@ -52,6 +60,7 @@ const AdminHeader = ({ onToggleAside }) => {
 
 AdminHeader.propTypes = {
   onToggleAside: PropTypes.func,
+  unreadCount: PropTypes.number,
 };
 
 export default AdminHeader;
