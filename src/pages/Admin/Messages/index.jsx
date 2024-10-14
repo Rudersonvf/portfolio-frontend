@@ -2,7 +2,7 @@ import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import Button from "../../../components/Button";
 import { formatDmy } from "../../../utils/dateFormat";
-import { FaRegTrashCan, FaEnvelope } from "react-icons/fa6";
+import { FaRegTrashCan, FaEnvelope, FaEnvelopeOpen } from "react-icons/fa6";
 import styles from "./styles.module.scss";
 import { useOutletContext } from "react-router-dom";
 
@@ -18,21 +18,6 @@ const Messages = () => {
 
   function handleCollapseClick() {
     setCollapse(true);
-  }
-
-  function handleMessageStatusChange(id, isChecked) {
-    console.log("entrou na func handleReadChange", id, " / ", isChecked);
-    // Aqui chama o serviço para atualizar o status de leitura na API
-    const updatedMessages = messages.map((msg) => {
-      if (msg.id === id) {
-        return { ...msg, isRead: isChecked };
-      }
-      return msg;
-    });
-    const unreadMessages = updatedMessages.filter(
-      (message) => !message.isRead
-    ).length;
-    setUnreadCount(unreadMessages);
   }
 
   return (
@@ -64,7 +49,6 @@ const Messages = () => {
                   <th scope="col">Nome</th>
                   <th scope="col">Assunto</th>
                   <th scope="col">Data</th>
-                  <th scope="col">Lido</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
@@ -99,18 +83,6 @@ const Messages = () => {
                         <td>{message.name}</td>
                         <td>{message.subject}</td>
                         <td>{formatDmy(message.sendAt)}</td>
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={message.isRead}
-                            onChange={(event) =>
-                              handleMessageStatusChange(
-                                message.id,
-                                event.target.checked
-                              )
-                            }
-                          />
-                        </td>
                         <td className="d-flex gap-3">
                           <div
                             style={{ width: "30px", height: "30px" }}
@@ -122,8 +94,14 @@ const Messages = () => {
                             onClick={handleCollapseClick}
                           >
                             <Button
-                              value={<FaEnvelope size={14} />}
-                              classBtn="success"
+                              value={
+                                message.isRead ? (
+                                  <FaEnvelopeOpen size={14} />
+                                ) : (
+                                  <FaEnvelope size={14} />
+                                )
+                              }
+                              classBtn={message.isRead ? "success" : "warning"}
                               onClick={() => handleOpenClick(message)}
                               shape={"circle"}
                               style={{
