@@ -9,6 +9,7 @@ import Skills from "./pages/Admin/Skills";
 import Experiences from "./pages/Admin/Experiences";
 import Projects from "./pages/Admin/Projects";
 import Messages from "./pages/Admin/Messages";
+import NotFound from "./pages/Error/NotFound";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route path="categories" element={<Categories />} />
           <Route path="messages" element={<Messages />} />
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
