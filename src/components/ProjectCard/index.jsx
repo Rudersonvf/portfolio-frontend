@@ -5,26 +5,16 @@ import { HiMiniArrowUpRight } from "react-icons/hi2";
 import { FaGithub } from "react-icons/fa6";
 import styles from "./styles.module.scss";
 import TechnologyIcon from "../TechnologyIcon";
-import { useState, useEffect } from "react";
 
 const ProjectCard = ({
   projectName,
   description,
   categories,
-  technologyIds,
-  technologyData,
+  technologies,
   gitUrl,
   liveUrl,
 }) => {
-  const [technologies, setTechnologies] = useState([]);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const selectedTechnologies = technologyData.filter((tec) =>
-      technologyIds.includes(tec.id)
-    );
-    setTechnologies(selectedTechnologies);
-  }, [technologyIds, technologyData]);
 
   return (
     <div className={styles["component-project-card"]}>
@@ -37,7 +27,7 @@ const ProjectCard = ({
         <span>{t("project-cat")}</span>
         <div className={styles.wrapper}>
           {categories.map((cat, index) => (
-            <span key={index}>{cat}</span>
+            <span key={index}>{cat.name}</span>
           ))}
         </div>
       </div>
@@ -47,7 +37,7 @@ const ProjectCard = ({
           {technologies.map((tec, index) => (
             <TechnologyIcon
               key={index}
-              svgUrl={tec.icon}
+              svgUrl={tec.iconUrl}
               technologyName={tec.name}
               size={35}
             />
@@ -82,8 +72,7 @@ ProjectCard.propTypes = {
   gitUrl: PropTypes.string.isRequired,
   liveUrl: PropTypes.string.isRequired,
   categories: PropTypes.array.isRequired,
-  technologyIds: PropTypes.array.isRequired,
-  technologyData: PropTypes.array.isRequired,
+  technologies: PropTypes.array.isRequired,
 };
 
 export default ProjectCard;

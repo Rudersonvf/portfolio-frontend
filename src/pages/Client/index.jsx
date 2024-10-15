@@ -162,19 +162,22 @@ const Client = () => {
             <h1 className="display-2 text-nowrap mb-1">{t("skill-title")}</h1>
             <p className="mb-5">{t("skill-paragraph")}</p>
             <div className="row g-5">
-              {skills.map((skill) => (
-                <div
-                  key={skill.id}
-                  className="col-lg-2 col-md-4 col-sm-6 col-6"
-                >
-                  <SkillCard
-                    icon={skill.icon}
-                    name={skill.name}
-                    level={skill.level}
-                    docUrl={skill.docUrl}
-                  />
-                </div>
-              ))}
+              {skills.map(
+                (skill) =>
+                  skill.showAsAbility === true && (
+                    <div
+                      key={skill.id}
+                      className="col-lg-2 col-md-4 col-sm-6 col-6"
+                    >
+                      <SkillCard
+                        icon={skill.iconUrl}
+                        name={skill.name}
+                        level={skill.level}
+                        docUrl={skill.docUrl}
+                      />
+                    </div>
+                  )
+              )}
             </div>
           </div>
         </section>
@@ -192,20 +195,19 @@ const Client = () => {
                 <React.Fragment key={project.id}>
                   <div className="col-md-6">
                     <Carousel
-                      projectName={project.projectName}
+                      projectName={project.title}
                       images={project.images}
                       id={project.id}
                     />
                   </div>
                   <div className="col-md-6 d-flex align-items-center mb-last">
                     <ProjectCard
-                      projectName={project.projectName}
+                      projectName={project.title}
                       description={project.description}
-                      gitUrl={project.gitUrl}
+                      gitUrl={project.repositoryUrl}
                       liveUrl={project.liveUrl}
                       categories={project.categories}
-                      technologyIds={project.technologies}
-                      technologyData={skills}
+                      technologies={project.skills}
                     />
                   </div>
                 </React.Fragment>

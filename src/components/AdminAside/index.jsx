@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { FaAngleDown } from "react-icons/fa6";
 import logoIcon from "../../assets/icon.svg";
@@ -13,14 +13,19 @@ const AdminAside = () => {
   ];
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isCrudActive = navLinks.some((link) =>
     location.pathname.includes(link.path)
   );
 
+  function handleLogoCLick() {
+    navigate("/");
+  }
+
   return (
     <aside className={styles["admin-aside"]}>
-      <div className={styles["icon-container"]}>
+      <div className={styles["icon-container"]} onClick={handleLogoCLick}>
         <img src={logoIcon} alt="RF Logo" />
       </div>
       <nav>

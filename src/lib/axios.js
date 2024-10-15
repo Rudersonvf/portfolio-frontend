@@ -6,7 +6,7 @@ import * as authService from "../services/auth-service.js";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function requestBackend(config) {
-  if (USE_MOCK) {
+  if (USE_MOCK === true) {
     await delay(1000);
   }
 
@@ -17,7 +17,11 @@ export async function requestBackend(config) {
       }
     : config.headers;
 
-  return axios({ ...config, baseURL: USE_MOCK ? MOCK_URL : BASE_URL, headers });
+  return axios({
+    ...config,
+    baseURL: USE_MOCK === true ? MOCK_URL : BASE_URL,
+    headers,
+  });
 }
 
 export function requestCloudinary(config) {
