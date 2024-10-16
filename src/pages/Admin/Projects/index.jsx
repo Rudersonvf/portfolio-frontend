@@ -1,4 +1,4 @@
-import * as categoryService from "../../../services/categoryService";
+import * as categoryService from "../../../services/category-service";
 import * as projectService from "../../../services/projectService";
 import * as skillService from "../../../services/skillService";
 
