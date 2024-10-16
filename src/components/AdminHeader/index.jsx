@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { FaBell, FaNewspaper, FaPowerOff } from "react-icons/fa6";
 import imgOwner from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
+import * as accessTokenManager from "../../utils/access-token-manager";
 
 const AdminHeader = ({ onToggleAside, unreadCount }) => {
   const [isActive, setIsActive] = useState(false);
@@ -15,6 +16,11 @@ const AdminHeader = ({ onToggleAside, unreadCount }) => {
 
   function handleBellClick() {
     navigate("/admin/messages");
+  }
+
+  function handleLogoutClick() {
+    accessTokenManager.remove();
+    navigate("/");
   }
 
   return (
@@ -45,7 +51,7 @@ const AdminHeader = ({ onToggleAside, unreadCount }) => {
                     To site
                   </NavLink>
                 </li>
-                <li>
+                <li onClick={handleLogoutClick}>
                   <FaPowerOff />
                   Logout
                 </li>

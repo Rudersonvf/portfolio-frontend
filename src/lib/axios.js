@@ -13,7 +13,7 @@ export async function requestBackend(config) {
   const headers = config.withCredentials
     ? {
         ...config.headers,
-        //Authorization: "Bearer " + authService.getAccessToken(),
+        Authorization: "Bearer " + authService.getAccessToken(),
       }
     : config.headers;
 
