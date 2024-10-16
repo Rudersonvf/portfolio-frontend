@@ -12,6 +12,7 @@ export function findAllSummaryRequest() {
   const config = {
     method: "GET",
     url: "/api/projects/summary",
+    withCredentials: true,
   };
   return requestBackend(config);
 }

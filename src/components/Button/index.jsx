@@ -7,7 +7,7 @@ const Button = ({
   classBtn = "primary",
   shape,
   onClick,
-  disable,
+  disabled,
   style,
 }) => {
   const className = classBtn !== "primary" ? `btn-${classBtn}` : "btn-primary";
@@ -18,10 +18,10 @@ const Button = ({
       <button
         onClick={onClick}
         className={buttonClasses}
-        disabled={disable}
+        disabled={disabled}
         style={style}
       >
-        {value}
+        {disabled ? <div className="spinner-border" role="status" /> : value}
       </button>
     );
   } else {
@@ -47,7 +47,7 @@ Button.propTypes = {
   ]),
   shape: PropTypes.oneOf(["circle", "normal"]),
   onClick: PropTypes.func,
-  disable: PropTypes.bool,
+  disabled: PropTypes.bool,
   style: PropTypes.any,
 };
 

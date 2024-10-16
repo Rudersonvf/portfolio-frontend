@@ -52,6 +52,13 @@
   @content;
 }
 
+@mixin all-center() {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @content;
+}
+
 //////////
 /// Media
 

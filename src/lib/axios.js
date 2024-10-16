@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL, USE_MOCK, MOCK_URL, CLOUDINARY_NAME } from "../config/index";
-import { history } from "./history";
 import * as authService from "../services/auth-service.js";
+import { history } from "./history.js";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -13,7 +13,7 @@ export async function requestBackend(config) {
   const headers = config.withCredentials
     ? {
         ...config.headers,
-        Authorization: "Bearer " + authService.getAccessToken(),
+        //Authorization: "Bearer " + authService.getAccessToken(),
       }
     : config.headers;
 
@@ -51,10 +51,12 @@ axios.interceptors.response.use(
   function (error) {
     // DO SOMETHING WITH REQUEST ERROR
     if (error.response.status === 401) {
-      history.push("/login");
+      console.log("entrou no 401");
+      history.push("/forbidden");
     }
     if (error.response.status === 403) {
-      history.push("/catalog");
+      console.log("entrou no 403");
+      history.push("/forbidden");
     }
 
     return Promise.reject(error);

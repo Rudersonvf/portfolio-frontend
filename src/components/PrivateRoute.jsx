@@ -1,14 +1,17 @@
 import PropTypes from "prop-types";
 import { Navigate } from "react-router-dom";
-import { hasAnyRoles, isAuthenticated } from "../services/auth-service";
+import * as authService from "../services/auth-service";
 
-const PrivateRoute = ({ children, roles = [] }) => {
-  if (!isAuthenticated()) {
+const PrivateRoute = ({ children, roles }) => {
+  const isAuthenticated = authService.isAuthenticated();
+  const hasRoles = roles ? authService.hasAnyRoles(roles) : true;
+
+  if (!isAuthenticated) {
     return <Navigate to="/login" />;
   }
 
-  if (roles.length > 0 && !hasAnyRoles(roles)) {
-    return <Navigate to="/forbidden" />;
+  if (roles && !hasRoles) {
+    return <Navigate to="/unauthorized" />;
   }
 
   return children;

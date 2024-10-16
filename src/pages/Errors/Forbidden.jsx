@@ -1,9 +1,11 @@
-import { Navigate } from "react-router-dom";
 import { BiSolidLock } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import "../../sass/pages/error-pages.scss";
 
 const Forbidden = () => {
+  const navigate = useNavigate();
+
   return (
     <main>
       <section className="page-error">
@@ -21,7 +23,7 @@ const Forbidden = () => {
           <Button
             classBtn="primary"
             value="Login"
-            onClick={() => Navigate("/login")}
+            onClick={() => navigate("/login")}
             style={{ width: "180px" }}
           />
         </div>

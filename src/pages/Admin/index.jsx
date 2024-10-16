@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
+import * as authService from "../../services/auth-service";
 import * as messageService from "../../services/messageService";
 import AdminHeader from "../../components/AdminHeader";
 import AdminAside from "../../components/AdminAside";
@@ -13,11 +14,11 @@ const Admin = () => {
     async function fetchUnreadMessages() {
       try {
         const messageData = await messageService.findAllRequest();
-        setMessages(messageData.data); // Armazena as mensagens
+        setMessages(messageData.data);
         const unreadMessages = messageData.data.filter(
           (message) => !message.isRead
         ).length;
-        setUnreadCount(unreadMessages); // Atualiza a contagem de não lidas
+        setUnreadCount(unreadMessages);
       } catch (error) {
         console.error("Erro ao buscar dados de mensagens: ", error);
       }
@@ -25,6 +26,12 @@ const Admin = () => {
 
     fetchUnreadMessages();
   }, []);
+
+  const isAuthenticated = authService.isAuthenticated();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
 
   function handleToggleAside() {
     setIsVisble(!isVisible);

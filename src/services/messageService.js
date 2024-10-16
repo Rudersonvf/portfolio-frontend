@@ -4,6 +4,7 @@ export function findAllRequest() {
   const config = {
     method: "GET",
     url: "/api/messages",
+    withCredentials: true,
   };
   return requestBackend(config);
 }
