@@ -1,0 +1,39 @@
+@import "../_vars";
+@import "../_animations";
+
+.page-error {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+
+  .error-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    svg {
+      font-size: 160px;
+      fill: $font-secondary-color !important;
+
+      path {
+        fill: $font-secondary-color;
+      }
+    }
+
+    span {
+      font-size: 162px;
+      line-height: 86px;
+      color: $font-secondary-color;
+      font-weight: 600;
+    }
+  }
+
+  .error-oops {
+    font-size: 20px;
+  }
+}

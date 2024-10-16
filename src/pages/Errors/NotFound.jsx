@@ -1,24 +1,30 @@
 import { FaReact } from "react-icons/fa6";
-import "../../sass/pages/notfound-page.scss";
 import Button from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import "../../sass/pages/error-pages.scss";
 
 const NotFound = () => {
+  const navigate = useNavigate();
+
   return (
     <main>
-      <section className="page-notfound">
+      <section className="page-error">
         <div className="container">
-          <div className="notfound-wrapper">
+          <div className="error-wrapper">
             <span>4</span>
             <FaReact className="animateSpinGlow" />
             <span>4</span>
           </div>
         </div>
-        <span className="notfound-oops">
+        <p className="error-oops">
           Oops! A página que você está procurando não foi encontrada.
-        </span>
-        <div style={{ maxWidth: "200px" }}>
-          <Button classBtn="primary" value="Voltar ao início" />
-        </div>
+        </p>
+        <Button
+          classBtn="primary"
+          value="Voltar ao início"
+          onClick={() => navigate("/")}
+          style={{ maxWidth: "200px" }}
+        />
       </section>
     </main>
   );

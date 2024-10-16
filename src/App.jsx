@@ -9,7 +9,8 @@ import Skills from "./pages/Admin/Skills";
 import Experiences from "./pages/Admin/Experiences";
 import Projects from "./pages/Admin/Projects";
 import Messages from "./pages/Admin/Messages";
-import NotFound from "./pages/Error/NotFound";
+import NotFound from "./pages/Errors/NotFound";
+import Forbidden from "./pages/Errors/Forbidden";
 
 function App() {
   return (
@@ -26,9 +27,9 @@ function App() {
         </Route>
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/forbidden" element={<Forbidden />} />
       </Routes>
     </BrowserRouter>
   );
 }
-//teste
 export default App;

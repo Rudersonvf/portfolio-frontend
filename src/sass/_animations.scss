@@ -55,26 +55,42 @@
 @keyframes subtleSpinGlow {
   0% {
     transform: rotate(0deg);
-    filter: drop-shadow(0 0 10px $font-secondary-color-hover);
+    filter: drop-shadow(0 0 5px $font-secondary-color-hover);
   }
   25% {
     transform: rotate(90deg);
-    filter: drop-shadow(0 0 50px $font-secondary-color);
+    filter: drop-shadow(0 0 30px $font-secondary-color);
   }
   50% {
     transform: rotate(180deg);
-    filter: drop-shadow(0 0 10px $font-secondary-color-hover);
+    filter: drop-shadow(0 0 5px $font-secondary-color-hover);
   }
   75% {
     transform: rotate(270deg);
-    filter: drop-shadow(0 0 50px $font-secondary-color);
+    filter: drop-shadow(0 0 30px $font-secondary-color);
   }
   100% {
     transform: rotate(360deg);
-    filter: drop-shadow(0 0 10px $font-secondary-color-hover);
+    filter: drop-shadow(0 0 5px $font-secondary-color-hover);
   }
 }
 
 .animateSpinGlow {
   animation: subtleSpinGlow 10s linear infinite; // Animação contínua e sutil
+}
+
+@keyframes subtleGlow {
+  0% {
+    filter: drop-shadow(0 0 5px $font-secondary-color-hover);
+  }
+  50% {
+    filter: drop-shadow(0 0 30px $font-secondary-color);
+  }
+  100% {
+    filter: drop-shadow(0 0 5px $font-secondary-color-hover);
+  }
+}
+
+.animateGlow {
+  animation: subtleGlow 5s linear infinite; // Animação contínua e sutil
 }
