@@ -11,13 +11,22 @@ import Projects from "./pages/Admin/Projects";
 import Messages from "./pages/Admin/Messages";
 import NotFound from "./pages/Errors/NotFound";
 import Forbidden from "./pages/Errors/Forbidden";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route index path="/" element={<Client />} />
-        <Route path="/admin/" element={<Admin />}>
+
+        <Route
+          path="/admin/"
+          element={
+            <PrivateRoute roles={["ROLE_ADMIN"]}>
+              <Admin />
+            </PrivateRoute>
+          }
+        >
           <Route path="projects" element={<Projects />} />
           <Route path="educations" element={<Educations />} />
           <Route path="experiences" element={<Experiences />} />
