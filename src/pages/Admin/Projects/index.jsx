@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import * as projectService from "../../../services/projectService";
 import * as categoryService from "../../../services/categoryService";
+import * as projectService from "../../../services/projectService";
 import * as skillService from "../../../services/skillService";
-import Button from "../../../components/Button";
-import Skeleton from "react-loading-skeleton";
+
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
-import styles from "./styles.module.scss";
-import ImageField from "../../../components/ImageField";
+import { useEffect, useState } from "react";
+
+import Button from "../../../components/Button";
 import ImageCard from "../../../components/ImageCard";
+import ImageField from "../../../components/ImageField";
+import Skeleton from "react-loading-skeleton";
+import styles from "./styles.module.scss";
+import { useForm } from "react-hook-form";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);

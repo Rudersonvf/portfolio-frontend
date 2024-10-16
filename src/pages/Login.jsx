@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import "../sass/pages/page-login.scss";
+
 import * as authService from "../services/auth-service";
-import Button from "../components/Button";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
-import "../sass/pages/page-login.scss";
+import Button from "../components/Button";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = () => {
   const {

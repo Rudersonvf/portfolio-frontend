@@ -1,9 +1,11 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
 import * as cloudinaryService from "../../services/cloudinaryService";
-import styles from "./styles.module.scss";
+
+import PropTypes from "prop-types";
 import Spinner from "../Spinner";
 import { fi } from "@faker-js/faker";
+import styles from "./styles.module.scss";
+import { useState } from "react";
+
 const ImageCard = ({ imageLink, onImageDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
 

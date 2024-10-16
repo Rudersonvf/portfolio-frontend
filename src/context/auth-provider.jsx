@@ -1,6 +1,8 @@
-import PropTypes from "prop-types";
-import { createContext, useContext, useState, useEffect } from "react";
 import * as authService from "../services/auth-service";
+
+import { createContext, useContext, useEffect, useState } from "react";
+
+import PropTypes from "prop-types";
 
 const AuthContext = createContext();
 

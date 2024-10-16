@@ -1,23 +1,25 @@
-import {
-  Route,
-  Routes,
-  unstable_HistoryRouter as HistoryRouter,
-} from "react-router-dom";
-import Client from "./pages/Client";
 import "./sass/app.scss";
 import "react-loading-skeleton/dist/skeleton.css";
+
+import {
+  unstable_HistoryRouter as HistoryRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
+
 import Admin from "./pages/Admin";
+import { AuthProvider } from "./context/auth-provider";
 import Categories from "./pages/Admin/Categories";
+import Client from "./pages/Client";
 import Educations from "./pages/Admin/Educations";
-import Skills from "./pages/Admin/Skills";
 import Experiences from "./pages/Admin/Experiences";
-import Projects from "./pages/Admin/Projects";
+import Forbidden from "./pages/Errors/Forbidden";
+import Login from "./pages/Login";
 import Messages from "./pages/Admin/Messages";
 import NotFound from "./pages/Errors/NotFound";
-import Forbidden from "./pages/Errors/Forbidden";
 import PrivateRoute from "./components/PrivateRoute";
-import Login from "./pages/Login";
-import { AuthProvider } from "./context/auth-provider";
+import Projects from "./pages/Admin/Projects";
+import Skills from "./pages/Admin/Skills";
 import { history } from "./lib/history";
 
 function App() {

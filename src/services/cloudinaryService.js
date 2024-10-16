@@ -1,10 +1,11 @@
-import { requestCloudinary } from "../lib/axios";
 import {
-  CLOUDINARY_PRESET,
   CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET,
+  CLOUDINARY_PRESET,
 } from "../config";
+
 import CryptoJS from "crypto-js";
+import { requestCloudinary } from "../lib/axios";
 
 const getSignature = (publicId) => {
   const timestamp = Math.round(new Date().getTime() / 1000);

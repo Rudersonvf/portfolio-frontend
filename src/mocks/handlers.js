@@ -1,6 +1,6 @@
-import { rest } from "msw";
-import { db } from "./db";
 import { MOCK_URL } from "../config";
+import { db } from "./db";
+import { rest } from "msw";
 
 const ACCESS_TOKEN = "fake_access_token";
 

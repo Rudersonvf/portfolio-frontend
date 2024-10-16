@@ -1,6 +1,6 @@
 import { factory } from "@mswjs/data";
-import { models } from "./models";
 import { faker } from "@faker-js/faker";
+import { models } from "./models";
 
 export const db = factory(models);
 

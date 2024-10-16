@@ -1,13 +1,14 @@
-import { useState } from "react";
-import Skeleton from "react-loading-skeleton";
+import { FaEnvelope, FaEnvelopeOpen, FaRegTrashCan } from "react-icons/fa6";
+
 import Button from "../../../components/Button";
+import Skeleton from "react-loading-skeleton";
 import { formatDmy } from "../../../utils/dateFormat";
-import { FaRegTrashCan, FaEnvelope, FaEnvelopeOpen } from "react-icons/fa6";
 import styles from "./styles.module.scss";
 import { useOutletContext } from "react-router-dom";
+import { useState } from "react";
 
 const Messages = () => {
-  const { messages, setUnreadCount } = useOutletContext();
+  const { messages } = useOutletContext();
   const [openMessage, setOpenMessage] = useState(false);
   const [collapse, setCollapse] = useState(false);
 

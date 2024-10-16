@@ -1,32 +1,34 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import ClientHeader from "../../components/ClientHeader";
-import Button from "../../components/Button";
+import * as educationService from "../../services/educationService";
+import * as experienceService from "../../services/experienceService";
+import * as projectService from "../../services/projectService";
+import * as skillService from "../../services/skillService";
+
 import {
-  FaLinkedinIn,
-  FaInstagram,
-  FaGithub,
-  FaWhatsapp,
-  FaPhone,
   FaEnvelope,
+  FaGithub,
+  FaInstagram,
+  FaLinkedinIn,
   FaLocationDot,
+  FaPhone,
+  FaWhatsapp,
 } from "react-icons/fa6";
-import ExperienceCard from "../../components/ExperienceCard";
-import EducationCard from "../../components/EducationCard";
-import SkillCard from "../../components/SkillCard";
+import { useEffect, useState } from "react";
+
+import Button from "../../components/Button";
 import Carousel from "../../components/Carousel";
-import ProjectCard from "../../components/ProjectCard";
-import ContactForm from "../../components/ContactForm";
+import ClientFooter from "../../components/ClientFooter";
+import ClientHeader from "../../components/ClientHeader";
 import ContactCard from "../../components/ContactCard";
+import ContactForm from "../../components/ContactForm";
+import EducationCard from "../../components/EducationCard";
+import ExperienceCard from "../../components/ExperienceCard";
+import ProjectCard from "../../components/ProjectCard";
+import React from "react";
+import SkillCard from "../../components/SkillCard";
+import { formatDate } from "../../utils/dateFormat";
 import rudeImg from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
-import ClientFooter from "../../components/ClientFooter";
-import { useState, useEffect } from "react";
-import * as experienceService from "../../services/experienceService";
-import * as educationService from "../../services/educationService";
-import * as skillService from "../../services/skillService";
-import * as projectService from "../../services/projectService";
-import { formatDate } from "../../utils/dateFormat";
+import { useTranslation } from "react-i18next";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);

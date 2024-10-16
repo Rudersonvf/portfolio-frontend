@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import * as educationService from "../../../services/educationService";
-import Button from "../../../components/Button";
+
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
+import { useEffect, useState } from "react";
+
+import Button from "../../../components/Button";
 import Skeleton from "react-loading-skeleton";
+import { useForm } from "react-hook-form";
 
 const Educations = () => {
   const [education, setEducation] = useState([]);

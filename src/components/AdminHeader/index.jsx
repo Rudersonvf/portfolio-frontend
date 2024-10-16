@@ -1,10 +1,12 @@
-import { useState } from "react";
-import PropTypes from "prop-types";
-import { NavLink, useNavigate } from "react-router-dom";
+import * as accessTokenManager from "../../utils/access-token-manager";
+
 import { FaBell, FaNewspaper, FaPowerOff } from "react-icons/fa6";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import PropTypes from "prop-types";
 import imgOwner from "../../assets/ruderson.webp";
 import styles from "./styles.module.scss";
-import * as accessTokenManager from "../../utils/access-token-manager";
+import { useState } from "react";
 
 const AdminHeader = ({ onToggleAside, unreadCount }) => {
   const [isActive, setIsActive] = useState(false);

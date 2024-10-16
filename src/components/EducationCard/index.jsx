@@ -1,8 +1,8 @@
-import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
 import ButtonLink from "../ButtonLink";
 import { HiMiniArrowUpRight } from "react-icons/hi2";
+import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
+import { useTranslation } from "react-i18next";
 
 const EducationCard = ({
   courseName,

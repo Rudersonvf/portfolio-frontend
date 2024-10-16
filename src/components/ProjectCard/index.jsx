@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
-import { useTranslation } from "react-i18next";
 import ButtonLink from "../ButtonLink";
-import { HiMiniArrowUpRight } from "react-icons/hi2";
 import { FaGithub } from "react-icons/fa6";
-import styles from "./styles.module.scss";
+import { HiMiniArrowUpRight } from "react-icons/hi2";
+import PropTypes from "prop-types";
 import TechnologyIcon from "../TechnologyIcon";
+import styles from "./styles.module.scss";
+import { useTranslation } from "react-i18next";
 
 const ProjectCard = ({
   projectName,

@@ -1,8 +1,10 @@
-import QueryString from "qs";
-import { CLIENT_ID, CLIENT_SECRET } from "../config/index";
-import { requestBackend } from "../lib/axios";
 import * as accessTokenManager from "../utils/access-token-manager";
+
+import { CLIENT_ID, CLIENT_SECRET } from "../config/index";
+
+import QueryString from "qs";
 import { jwtDecode } from "jwt-decode";
+import { requestBackend } from "../lib/axios";
 
 export function loginRequest(loginData) {
   const headers = {
