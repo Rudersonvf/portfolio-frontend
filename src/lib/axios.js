@@ -1,68 +1,57 @@
 import axios from "axios";
 
 import { BASE_URL, CLOUDINARY_NAME, MOCK_URL, USE_MOCK } from "../config/index";
-import * as authService from "../services/auth-service.js";
+import * as authService from "../services/auth-service";
 
+import { history } from "./history";
 
+// Criar uma instância personalizada do Axios
+const api = axios.create({
+  baseURL: USE_MOCK === false ? MOCK_URL : BASE_URL,
+  timeout: 5000, // Timeout
+});
 
-import { history } from "./history.js";
+// Adicionar interceptor de requisição para incluir headers, como autenticação
+api.interceptors.request.use(
+  (config) => {
+    if (config.withCredentials) {
+      const token = authService.getAccessToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
+// Interceptor de resposta para lidar com erros globais, como 401 ou 403
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const { status } = error.response || {};
+    if (status === 401 || status === 403) {
+      history.push("/forbidden");
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Função genérica para simular atraso em ambientes de mock
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Função para requisições gerais
 export async function requestBackend(config) {
   if (USE_MOCK === true) {
-    await delay(1000);
+    await delay(1000); // Atraso para mock
   }
-
-  const headers = config.withCredentials
-    ? {
-        ...config.headers,
-        Authorization: "Bearer " + authService.getAccessToken(),
-      }
-    : config.headers;
-
-  return axios({
-    ...config,
-    baseURL: USE_MOCK === true ? MOCK_URL : BASE_URL,
-    headers,
-  });
+  return api(config); // Usa a instância personalizada do Axios
 }
 
+// Requisições para Cloudinary
 export function requestCloudinary(config) {
   const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CLOUDINARY_NAME}`;
-
   return axios({ ...config, baseURL: cloudinaryUrl });
 }
 
-//REQUEST INTERCECPTOR
-axios.interceptors.request.use(
-  function (config) {
-    // DO SOMETHING BEFORE REQUEST IS SENT
-    return config;
-  },
-  function (error) {
-    // DO SOMETHING WITH REQUEST ERROR
-    return Promise.reject(error);
-  }
-);
-
-// RESPONSE INTERCEPTOR
-axios.interceptors.response.use(
-  function (response) {
-    //DO SOMETHING WITH RESPONSE DATA IF STATUS IS 2XX
-    return response;
-  },
-  function (error) {
-    // DO SOMETHING WITH REQUEST ERROR
-    if (error.response.status === 401) {
-      console.log("entrou no 401");
-      history.push("/forbidden");
-    }
-    if (error.response.status === 403) {
-      console.log("entrou no 403");
-      history.push("/forbidden");
-    }
-
-    return Promise.reject(error);
-  }
-);
+export default api;

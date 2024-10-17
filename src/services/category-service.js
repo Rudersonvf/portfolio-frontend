@@ -1,30 +1,25 @@
 import { requestBackend } from "../lib/axios";
 
 export function findAllRequest() {
-  const config = {
+  return requestBackend({
     method: "GET",
     url: "/api/categories",
-  };
-  return requestBackend(config);
+  });
 }
 
 export function insertRequest(data) {
-  const config = {
+  return requestBackend({
     method: "POST",
     url: "/api/categories",
     withCredentials: true,
-    data: data,
-  };
-
-  return requestBackend(config);
+    data,
+  });
 }
 
 export function deleteRequest(id) {
-  const config = {
+  return requestBackend({
     method: "DELETE",
     url: `/api/categories/${id}`,
     withCredentials: true,
-  };
-
-  return requestBackend(config);
+  });
 }

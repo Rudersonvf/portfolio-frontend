@@ -12,7 +12,9 @@ import * as categoryService from "../../services/category-service";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isFetchingCategories, setIsFetchingCategories] = useState(false);
+  const [isInsertingCategory, setIsInsertingCategory] = useState(false);
+  const [isDeletingCategory, setIsDeletingCategory] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const { toasts, addToast } = useToast();
@@ -33,61 +35,92 @@ const Categories = () => {
   }, []);
 
   async function fetchCategories() {
-    setIsLoading(true);
+    setIsFetchingCategories(true);
     try {
       const categoryData = await categoryService.findAllRequest();
       setCategories(categoryData.data);
-      setIsLoading(false);
     } catch (error) {
-      console.error("Erro ao buscar dados ", error);
+      addToast(
+        "Error",
+        "Erro ao buscar categorias. Tente novamente mais tarde.",
+        "danger"
+      );
+    } finally {
+      setIsFetchingCategories(false);
     }
   }
 
   async function insertCategory(data) {
-    setIsLoading(true);
+    setIsInsertingCategory(true);
     try {
       const response = await categoryService.insertRequest(data);
-      setIsLoading(false);
-      console.log("response: ", response);
       addToast(
         "Sucesso!",
-        `Categoria ${response.data.name} foi criada !`,
+        `Categoria ${response.data.name} foi criada!`,
         "success"
       );
       reset();
       fetchCategories();
     } catch (error) {
-      console.error("Erro ao processar dados ", error);
+      addToast("Erro", "Erro ao criar categoria. Tente novamente.", "danger");
+    } finally {
+      setIsInsertingCategory(false);
     }
   }
 
   async function deleteCategory(id) {
-    setIsLoading(true);
+    setIsDeletingCategory(true);
     try {
       await categoryService.deleteRequest(id);
-      setIsLoading(false);
-      addToast("Sucesso!", `Categoria foi deletada com sucesso !`, "success");
-      fetchCategories();
+      addToast("Sucesso!", "Categoria foi deletada com sucesso!", "success");
+      setCategories((prevCategories) =>
+        prevCategories.filter((cat) => cat.id !== id)
+      );
     } catch (error) {
-      addToast("Error!", `${error.response.data.error}`, "danger");
-      fetchCategories();
+      addToast(
+        "Erro",
+        error.response?.data?.error || "Erro ao deletar a categoria.",
+        "danger"
+      );
+    } finally {
+      setIsDeletingCategory(false);
     }
   }
 
   function onSubmit(data) {
-    console.log("Criando nova categoria: ", data);
     insertCategory(data);
   }
 
-  function handleDeleteClick(id) {
-    deleteCategory(id);
+  function handleOpenModal(id) {
+    setCategoryToDelete(id);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmDelete() {
+    deleteCategory(categoryToDelete);
     setIsModalOpen(false);
   }
 
-  function handleOpenModal(id) {
-    setIsModalOpen(true);
-    setCategoryToDelete(id);
-  }
+  const LoadingSkeleton = () => (
+    <>
+      {Array.from({ length: 3 }).map((_, index) => (
+        <tr key={index}>
+          <th scope="row">
+            <Skeleton width={20} height={26} />
+          </th>
+          <td>
+            <Skeleton width={50} height={26} />
+          </td>
+          <td>
+            <Skeleton width={150} height={26} />
+          </td>
+          <td className="d-flex gap-3">
+            <Skeleton width={30} height={30} borderRadius={50} />
+          </td>
+        </tr>
+      ))}
+    </>
+  );
 
   return (
     <main>
@@ -128,11 +161,20 @@ const Categories = () => {
                       message: FIELD_ERROR_MAX_LENGTH,
                     },
                   })}
+                  className={
+                    errors.name ? "form-control is-invalid" : "form-control"
+                  }
                 />
-                {errors.name && <p>{errors.name.message}</p>}
+                {errors.name && (
+                  <p className="invalid-feedback">{errors.name.message}</p>
+                )}
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"salvar"} type="submit" />
+                <Button
+                  value={"Salvar"}
+                  type="submit"
+                  disabled={isInsertingCategory}
+                />
               </div>
             </form>
           </div>
@@ -141,49 +183,36 @@ const Categories = () => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">id</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
-                {isLoading
-                  ? Array.from({ length: 3 }).map((_, index) => (
-                      <tr key={index}>
-                        <th scope="row">
-                          <Skeleton width={20} height={26} />
-                        </th>
-                        <td>
-                          <Skeleton width={50} height={26} />
-                        </td>
-                        <td>
-                          <Skeleton width={150} height={26} />
-                        </td>
-                        <td className="d-flex gap-3">
-                          <Skeleton width={30} height={30} borderRadius={50} />
-                        </td>
-                      </tr>
-                    ))
-                  : categories.map((category, index) => (
-                      <tr key={category.id}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{category.id}</td>
-                        <td>{category.name}</td>
-                        <td className="d-flex gap-3">
-                          <Button
-                            value={<FaRegTrashCan size={14} />}
-                            classBtn="danger"
-                            onClick={() => handleOpenModal(category.id)}
-                            shape={"circle"}
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                              padding: "8px",
-                            }}
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                {isFetchingCategories ? (
+                  <LoadingSkeleton />
+                ) : (
+                  categories.map((category, index) => (
+                    <tr key={category.id}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{category.id}</td>
+                      <td>{category.name}</td>
+                      <td className="d-flex gap-3">
+                        <Button
+                          value={<FaRegTrashCan size={14} />}
+                          classBtn="danger"
+                          onClick={() => handleOpenModal(category.id)}
+                          shape="circle"
+                          style={{
+                            width: "30px",
+                            height: "30px",
+                            padding: "8px",
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -192,9 +221,16 @@ const Categories = () => {
         {isModalOpen && (
           <Modal
             title="Deletar Categoria"
-            message="Você tem certeza que deseja deletar esta categoria?"
+            message={
+              <>
+                Você tem certeza que deseja deletar esta categoria?
+                <br />
+                Essa ação será irreversível!
+              </>
+            }
             onClose={() => setIsModalOpen(false)}
-            onConfirm={() => handleDeleteClick(categoryToDelete)}
+            onConfirm={handleConfirmDelete}
+            loading={isDeletingCategory}
           />
         )}
       </section>
