@@ -1,0 +1,95 @@
+@import "../vars";
+@import "../mixins";
+
+.component-toast {
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.3s ease, transform 0.5s ease;
+
+  &.show {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  &.hide {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  .toast {
+    display: flex;
+    align-items: center;
+    background-color: $toast-bg-color;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 10px;
+    min-width: 300px;
+  }
+
+  .toast-icon-container {
+    @include all-center();
+    height: 45px;
+    width: 45px;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+
+  .toast-message-container {
+    height: 100% !important;
+
+    .toast-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: $toast-font-color;
+    }
+
+    .toast-message {
+      font-size: 14px;
+      color: $toast-font-color;
+    }
+  }
+
+  .toast-close-icon {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    fill: $toast-close-icon-color;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      fill: $color-danger;
+    }
+  }
+
+  .toast-success {
+    border: 2px solid $color-success;
+    .toast-icon-container {
+      background-color: $color-success-op3;
+
+      svg {
+        fill: $color-success;
+      }
+    }
+  }
+
+  .toast-danger {
+    border: 2px solid $color-danger;
+    .toast-icon-container {
+      background-color: $color-danger-op3;
+      svg {
+        fill: $color-danger;
+      }
+    }
+  }
+
+  .toast-warning {
+    border: 2px solid $color-warning;
+    .toast-icon-container {
+      background-color: $color-warning-op3;
+      svg {
+        fill: $color-warning;
+      }
+    }
+  }
+}

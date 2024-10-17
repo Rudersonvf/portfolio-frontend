@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
+import { useToast } from "../../hooks/useToast";
+import ToastContainer from "../../components/ToastContainer";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { toasts, addToast } = useToast();
 
   const FIELD_ERROR = "Campo requirido";
   const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
@@ -43,6 +46,11 @@ const Categories = () => {
       const response = await categoryService.insertRequest(data);
       setIsLoading(false);
       console.log("response: ", response);
+      addToast(
+        "Sucesso!",
+        `Categoria ${response.data.name} foi criada !`,
+        "success"
+      );
       reset();
       fetchCategories();
     } catch (error) {
@@ -53,12 +61,12 @@ const Categories = () => {
   async function deleteCategory(id) {
     setIsLoading(true);
     try {
-      const response = await categoryService.deleteRequest(id);
+      await categoryService.deleteRequest(id);
       setIsLoading(false);
-      console.log("response: ", response);
+      addToast("Sucesso!", `Categoria foi deletada com sucesso !`, "success");
       fetchCategories();
     } catch (error) {
-      console.error("Erro ao processar dados ", error);
+      addToast("Error!", `${error.response.data.error}`, "danger");
       fetchCategories();
     }
   }
@@ -171,6 +179,7 @@ const Categories = () => {
             </table>
           </div>
         </div>
+        <ToastContainer toasts={toasts} />
       </section>
     </main>
   );
