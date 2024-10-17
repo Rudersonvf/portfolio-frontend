@@ -1,7 +1,8 @@
+import { FaAngleDown } from "react-icons/fa6";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import { FaAngleDown } from "react-icons/fa6";
 import logoIcon from "../../assets/icon.svg";
+
 import styles from "./styles.module.scss";
 
 const AdminAside = () => {

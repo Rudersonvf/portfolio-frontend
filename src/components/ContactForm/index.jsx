@@ -1,7 +1,9 @@
-import Button from "../Button";
-import styles from "./styles.module.scss";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
+import Button from "../Button";
+
+import styles from "./styles.module.scss";
 
 const ContactForm = () => {
   const {

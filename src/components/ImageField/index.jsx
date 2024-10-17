@@ -1,7 +1,9 @@
+import PropTypes from "prop-types";
+import { FaImages } from "react-icons/fa6";
+
 import * as cloudinaryService from "../../services/cloudinaryService";
 
-import { FaImages } from "react-icons/fa6";
-import PropTypes from "prop-types";
+
 import styles from "./styles.module.scss";
 
 const ImageField = ({ onUploadImage }) => {

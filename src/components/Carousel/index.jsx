@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import styles from "./styles.module.scss";
 
 const Carousel = ({ images, projectName, id }) => {

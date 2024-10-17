@@ -1,8 +1,13 @@
-import ProgressBar from "../ProgressBar";
-import PropTypes from "prop-types";
-import styles from "./styles.module.scss";
 import { useState } from "react";
+
+import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
+
+import ProgressBar from "../ProgressBar";
+
+import styles from "./styles.module.scss";
+
+
 
 const SkillCard = ({ icon, name, level, docUrl }) => {
   const [isMouseOver, setIsMouseOver] = useState();

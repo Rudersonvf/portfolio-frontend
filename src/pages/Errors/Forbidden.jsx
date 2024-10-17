@@ -1,8 +1,9 @@
 import "../../sass/pages/error-pages.scss";
 
 import { BiSolidLock } from "react-icons/bi";
-import Button from "../../components/Button";
 import { useNavigate } from "react-router-dom";
+
+import Button from "../../components/Button";
 
 const Forbidden = () => {
   const navigate = useNavigate();

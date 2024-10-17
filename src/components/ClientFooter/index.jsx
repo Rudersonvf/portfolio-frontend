@@ -1,4 +1,5 @@
 import logoIcon from "../../assets/icon.svg";
+
 import styles from "./styles.module.scss";
 
 const ClientFooter = () => {

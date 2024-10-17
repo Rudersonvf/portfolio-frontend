@@ -1,13 +1,13 @@
-import * as categoryService from "../../services/category-service";
-
-import { FaRegTrashCan } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 
-import Button from "../../components/Button";
-import Skeleton from "react-loading-skeleton";
 import { useForm } from "react-hook-form";
-import { useToast } from "../../hooks/useToast";
+import { FaRegTrashCan } from "react-icons/fa6";
+import Skeleton from "react-loading-skeleton";
+
+import Button from "../../components/Button";
 import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
+import * as categoryService from "../../services/category-service";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);

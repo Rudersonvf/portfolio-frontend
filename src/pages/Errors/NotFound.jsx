@@ -1,8 +1,9 @@
 import "../../sass/pages/error-pages.scss";
 
-import Button from "../../components/Button";
 import { FaReact } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+
+import Button from "../../components/Button";
 
 const NotFound = () => {
   const navigate = useNavigate();

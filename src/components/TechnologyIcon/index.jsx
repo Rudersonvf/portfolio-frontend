@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import styles from "./styles.module.scss";
 
 const TechnologyIcon = ({ svgUrl, technologyName, size }) => {

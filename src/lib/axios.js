@@ -1,8 +1,10 @@
-import * as authService from "../services/auth-service.js";
+import axios from "axios";
 
 import { BASE_URL, CLOUDINARY_NAME, MOCK_URL, USE_MOCK } from "../config/index";
+import * as authService from "../services/auth-service.js";
 
-import axios from "axios";
+
+
 import { history } from "./history.js";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

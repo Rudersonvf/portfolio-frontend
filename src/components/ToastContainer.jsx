@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import Toast from "./Toast";
 
 const ToastContainer = ({ toasts }) => {

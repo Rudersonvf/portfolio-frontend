@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import styles from "./styles.module.scss"; // Ajuste o caminho conforme sua configuração
 
 const ProgressBar = ({ value }) => {

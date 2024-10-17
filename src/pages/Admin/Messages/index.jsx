@@ -1,11 +1,14 @@
+import { useState } from "react";
+
 import { FaEnvelope, FaEnvelopeOpen, FaRegTrashCan } from "react-icons/fa6";
+import Skeleton from "react-loading-skeleton";
+import { useOutletContext } from "react-router-dom";
 
 import Button from "../../../components/Button";
-import Skeleton from "react-loading-skeleton";
 import { formatDmy } from "../../../utils/dateFormat";
+
 import styles from "./styles.module.scss";
-import { useOutletContext } from "react-router-dom";
-import { useState } from "react";
+
 
 const Messages = () => {
   const { messages } = useOutletContext();

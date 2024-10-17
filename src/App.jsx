@@ -7,20 +7,20 @@ import {
   Routes,
 } from "react-router-dom";
 
-import Admin from "./pages/Admin";
+import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/auth-provider";
+import { history } from "./lib/history";
+import Admin from "./pages/Admin";
 import Categories from "./pages/Admin/Categories";
-import Client from "./pages/Client";
 import Educations from "./pages/Admin/Educations";
 import Experiences from "./pages/Admin/Experiences";
-import Forbidden from "./pages/Errors/Forbidden";
-import Login from "./pages/Login";
 import Messages from "./pages/Admin/Messages";
-import NotFound from "./pages/Errors/NotFound";
-import PrivateRoute from "./components/PrivateRoute";
 import Projects from "./pages/Admin/Projects";
 import Skills from "./pages/Admin/Skills";
-import { history } from "./lib/history";
+import Client from "./pages/Client";
+import Forbidden from "./pages/Errors/Forbidden";
+import NotFound from "./pages/Errors/NotFound";
+import Login from "./pages/Login";
 
 function App() {
   return (
