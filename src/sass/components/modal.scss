@@ -1,0 +1,61 @@
+@import "../vars";
+@import "../mixins";
+
+.component-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10%;
+
+  .modal-container {
+    min-width: 420px;
+    padding: 16px;
+    border-radius: 6px;
+    background-color: $modal-bg-color;
+
+    .modal-header {
+      @include all-center() {
+        justify-content: space-between;
+      }
+      margin-bottom: 16px;
+
+      span {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .modal-close-icon {
+        fill: $modal-close-icon-color;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          fill: $color-danger;
+        }
+      }
+    }
+
+    .modal-body {
+      margin-bottom: 28px;
+
+      p {
+        font-size: 16px;
+      }
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @include mobile() {
+      min-width: 320px;
+    }
+  }
+}

@@ -119,7 +119,7 @@ p {
 
 .btn-secondary {
   background-color: $btn-color-secondary !important;
-  border: 1px solid $btn-color-secondary !important;
+  border: 1px solid $btn-color-primary !important;
   color: $btn-content-secondary !important;
   font-weight: 700 !important;
 
@@ -129,7 +129,7 @@ p {
 
   &:hover {
     background-color: $btn-color-secondary-hover !important;
-    border: 1px solid $btn-color-secondary-hover !important;
+    border: 1px solid $btn-color-primary !important;
   }
 
   &:active {

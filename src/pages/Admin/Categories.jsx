@@ -5,6 +5,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 import ToastContainer from "../../components/ToastContainer";
 import { useToast } from "../../hooks/useToast";
 import * as categoryService from "../../services/category-service";
@@ -12,6 +13,8 @@ import * as categoryService from "../../services/category-service";
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState(null);
   const { toasts, addToast } = useToast();
 
   const FIELD_ERROR = "Campo requirido";
@@ -78,6 +81,12 @@ const Categories = () => {
 
   function handleDeleteClick(id) {
     deleteCategory(id);
+    setIsModalOpen(false);
+  }
+
+  function handleOpenModal(id) {
+    setIsModalOpen(true);
+    setCategoryToDelete(id);
   }
 
   return (
@@ -164,7 +173,7 @@ const Categories = () => {
                           <Button
                             value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
-                            onClick={() => handleDeleteClick(category.id)}
+                            onClick={() => handleOpenModal(category.id)}
                             shape={"circle"}
                             style={{
                               width: "30px",
@@ -180,6 +189,14 @@ const Categories = () => {
           </div>
         </div>
         <ToastContainer toasts={toasts} />
+        {isModalOpen && (
+          <Modal
+            title="Deletar Categoria"
+            message="Você tem certeza que deseja deletar esta categoria?"
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={() => handleDeleteClick(categoryToDelete)}
+          />
+        )}
       </section>
     </main>
   );
