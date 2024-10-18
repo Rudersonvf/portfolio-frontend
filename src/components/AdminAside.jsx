@@ -1,9 +1,9 @@
 import { FaAngleDown } from "react-icons/fa6";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
-import logoIcon from "../../assets/icon.svg";
+import logoIcon from "../assets/icon.svg";
 
-import styles from "./styles.module.scss";
+import "../sass/components/admin-aside.scss";
 
 const AdminAside = () => {
   const navLinks = [
@@ -26,30 +26,30 @@ const AdminAside = () => {
   }
 
   return (
-    <aside className={styles["admin-aside"]}>
-      <div className={styles["icon-container"]} onClick={handleLogoCLick}>
+    <aside className="admin-aside">
+      <div className="icon-container" onClick={handleLogoCLick}>
         <img src={logoIcon} alt="RF Logo" />
       </div>
       <nav>
-        <ul className={styles["nav-list"]}>
+        <ul className="nav-list">
           <li>
             <NavLink
-              className={isCrudActive ? styles["link-active"] : styles["link"]}
+              className={isCrudActive ? "link-active" : "link"}
               data-bs-toggle="collapse"
               data-bs-target="#crud"
-              aria-expanded="true"
+              aria-expanded="false"
               aria-controls="crud"
             >
               CRUD
               <FaAngleDown />
             </NavLink>
           </li>
-          <ul id="crud" className={`${styles["collapse-container"]} collapse`}>
+          <ul id="crud" className="collapse collapse-container">
             {navLinks.map((item, index) => (
               <li key={index}>
                 <NavLink
                   className={({ isActive }) =>
-                    isActive ? styles["link-active"] : styles["link"]
+                    isActive ? "link-active" : "link"
                   }
                   to={item.path}
                   end
@@ -61,9 +61,7 @@ const AdminAside = () => {
           </ul>
           <li className="mt-2">
             <NavLink
-              className={({ isActive }) =>
-                isActive ? styles["link-active"] : styles["link"]
-              }
+              className={({ isActive }) => (isActive ? "link-active" : "link")}
               to={"/admin/messages"}
               end
             >

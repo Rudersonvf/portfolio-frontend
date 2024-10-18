@@ -1,29 +1,47 @@
+import { useState } from "react";
+
+import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
+import * as messageService from "../../services/message-service";
 import Button from "../Button";
 
 import styles from "./styles.module.scss";
 
-const ContactForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+const ContactForm = ({ onError }) => {
+  const [isSending, setIsSending] = useState(false);
   const { t } = useTranslation();
 
   const FIELD_ERROR = t("form-error");
   const FIELD_ERROR_MIN_LENGTH = t("form-field-min-length");
   const FIELD_ERROR_MAX_LENGTH = t("form-field-max-length");
 
-  const onSubmit = (data) => console.log(data);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   const handleInput = (event) => {
     const textarea = event.target;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
+
+  async function onSubmit(data) {
+    setIsSending(true);
+    try {
+      await messageService.postRequest(data);
+      reset();
+    } catch (error) {
+      console.log("Error: ", error);
+      onError();
+    } finally {
+      setIsSending(false);
+    }
+  }
 
   return (
     <div className={styles["component-contact-form"]}>
@@ -100,11 +118,15 @@ const ContactForm = () => {
           {errors.message && <p>{errors.message.message}</p>}
         </div>
         <div style={{ maxWidth: "200px" }} className="mt-1">
-          <Button value={"enviar"} type="submit" />
+          <Button value={"enviar"} type="submit" disabled={isSending} />
         </div>
       </form>
     </div>
   );
+};
+
+ContactForm.propTypes = {
+  onError: PropTypes.func,
 };
 
 export default ContactForm;

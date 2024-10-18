@@ -23,6 +23,8 @@ import EducationCard from "../../components/EducationCard";
 import ExperienceCard from "../../components/ExperienceCard";
 import ProjectCard from "../../components/ProjectCard";
 import SkillCard from "../../components/SkillCard";
+import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
 import * as educationService from "../../services/education-service";
 import * as experienceService from "../../services/experience-service";
 import * as projectService from "../../services/projectService";
@@ -36,7 +38,7 @@ const Client = () => {
   const [educations, setEducations] = useState([]);
   const [skills, setSkills] = useState([]);
   const [projects, setProjects] = useState([]);
-
+  const { toasts, addToast } = useToast();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -72,6 +74,15 @@ const Client = () => {
 
     fetchProjects();
   }, [skills]);
+
+  function handleMessageError() {
+    console.log("Erro ao enviar mensagem, FAZ ALGUMA COISA!!!!");
+    addToast(
+      "Erro",
+      "Erro ao enviar mensagem, tente novamente mais tarde.",
+      "danger"
+    );
+  }
 
   return (
     <>
@@ -224,7 +235,7 @@ const Client = () => {
             <p className="mb-5">{t("contact-paragraph")}</p>
             <div className="row g-5">
               <div className="col-md-6">
-                <ContactForm />
+                <ContactForm onError={handleMessageError} />
               </div>
               <div className="col-md-6">
                 <div className="d-flex flex-column gap-4">
@@ -306,6 +317,7 @@ const Client = () => {
         </section>
       </main>
       <ClientFooter />
+      <ToastContainer toasts={toasts} />
     </>
   );
 };

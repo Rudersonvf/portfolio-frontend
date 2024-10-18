@@ -4,7 +4,10 @@ import Toast from "./Toast";
 
 const ToastContainer = ({ toasts }) => {
   return (
-    <div className="component-toast-container position-fixed top-0 end-0 p-3">
+    <div
+      className="component-toast-container position-fixed top-0 end-0"
+      style={{ zIndex: 1000, paddingTop: "100px" }}
+    >
       {toasts.map((toast) => (
         <Toast
           key={toast.id}
