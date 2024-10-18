@@ -9,7 +9,6 @@ import * as accessTokenManager from "../../utils/access-token-manager";
 
 import styles from "./styles.module.scss";
 
-
 const AdminHeader = ({ onToggleAside, unreadCount }) => {
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ const AdminHeader = ({ onToggleAside, unreadCount }) => {
         </div>
         <nav>
           <div className={styles["count-container"]} onClick={handleBellClick}>
-            {unreadCount > 1 && <span>{unreadCount}</span>}
+            {unreadCount > 0 && <span>{unreadCount}</span>}
             <FaBell />
           </div>
           <div

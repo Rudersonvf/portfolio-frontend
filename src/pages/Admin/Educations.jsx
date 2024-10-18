@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
@@ -272,7 +272,7 @@ const Educations = () => {
                 </div>
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"salvar"} type="submit" disabled={isLoading} />
+                <Button value={"salvar"} type="submit" disabled={isSending} />
               </div>
             </form>
           </div>

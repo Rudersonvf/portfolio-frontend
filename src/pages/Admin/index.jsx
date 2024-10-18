@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 import { Navigate, Outlet } from "react-router-dom";
@@ -6,7 +5,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import AdminAside from "../../components/AdminAside";
 import AdminHeader from "../../components/AdminHeader";
 import * as authService from "../../services/auth-service";
-import * as messageService from "../../services/messageService";
+import * as messageService from "../../services/message-service";
 
 const Admin = () => {
   const [isVisible, setIsVisble] = useState(true);
@@ -14,26 +13,26 @@ const Admin = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    async function fetchUnreadMessages() {
-      try {
-        const messageData = await messageService.findAllRequest();
-        setMessages(messageData.data);
-        const unreadMessages = messageData.data.filter(
-          (message) => !message.isRead
-        ).length;
-        setUnreadCount(unreadMessages);
-      } catch (error) {
-        console.error("Erro ao buscar dados de mensagens: ", error);
-      }
-    }
-
     fetchUnreadMessages();
-  }, []);
+  }, [unreadCount]);
 
   const isAuthenticated = authService.isAuthenticated();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" />;
+  }
+
+  async function fetchUnreadMessages() {
+    try {
+      const messageData = await messageService.findAllRequest();
+      setMessages(messageData.data);
+      const unreadMessages = messageData.data.filter(
+        (message) => !message.isRead
+      ).length;
+      setUnreadCount(unreadMessages);
+    } catch (error) {
+      console.error("Erro ao buscar dados de mensagens: ", error);
+    }
   }
 
   function handleToggleAside() {
