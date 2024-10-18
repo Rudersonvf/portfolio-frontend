@@ -4,14 +4,25 @@ import { useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
-import Button from "../../../components/Button";
-import * as experienceService from "../../../services/experienceService";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
+import * as experienceService from "../../services/experience-service";
 
 const Experiences = () => {
   const [experiences, setExperiences] = useState([]);
   const [editingExperiences, setEditingExperiences] = useState(null);
-  const [collapse, setCollapse] = useState(false);
+  const [expToDelete, setExpToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [collapse, setCollapse] = useState(false);
+  const { toasts, addToast } = useToast();
+
+  const FIELD_ERROR = "Campo requirido";
+  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
+  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const {
     register,
@@ -22,57 +33,94 @@ const Experiences = () => {
   } = useForm();
 
   useEffect(() => {
-    async function fetchCategories() {
-      setIsLoading(true);
-      try {
-        const experienceData = await experienceService.findAllRequest();
-        setExperiences(experienceData.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados ", error);
-      }
-    }
-
-    fetchCategories();
+    fetchExperiences();
   }, []);
 
-  const FIELD_ERROR = "Campo requirido";
-  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
-  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
+  async function fetchExperiences() {
+    setIsLoading(true);
+    try {
+      const expData = await experienceService.findAllRequest();
+      setExperiences(expData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar experiências. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function insertExperience(data) {
+    setIsLoading(true);
+    try {
+      await experienceService.insertRequest(data);
+      addToast("Sucesso", "Experiência adicionada.", "success");
+      reset();
+      fetchExperiences();
+    } catch (error) {
+      addToast("Erro", "Erro ao salvar experiência", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function updateExperience(id, data) {
+    setIsSending(true);
+    try {
+      await experienceService.updateRequest(id, data);
+      addToast("Sucesso", "Experiência atualizada", "success");
+      setEditingExperiences(null);
+      reset();
+      fetchExperiences();
+    } catch (error) {
+      addToast("Erro", "Erro ao atualizar experiência", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  async function deleteExperience(id) {
+    try {
+      await experienceService.deleteRequest(id);
+      addToast("Sucesso", "Experiência deletada", "success");
+      fetchExperiences();
+    } catch (error) {
+      addToast("Erro", error.response.data.error, "danger");
+      console.error("Error: ", error);
+    }
+  }
 
   const onSubmit = (data) => {
     if (editingExperiences) {
-      console.log("Editando categoria: ", data);
-      // Lógica para editar a categoria
+      updateExperience(editingExperiences.id, data);
     } else {
-      console.log("Criando nova categoria: ", data);
-      // Lógica para criar nova categoria
+      insertExperience(data);
     }
-    reset();
-    setEditingExperiences(null);
   };
 
-  function handleEditClick(experience) {
-    setEditingExperiences(experience);
-    setValue("position", experience.position);
-    setValue("company", experience.company);
-    setValue("startDate", experience.startDate);
-    setValue("endDate", experience.endDate);
-    setValue("description", experience.description);
-  }
-
-  function handleDeleteClick() {
-    console.log("CLICOU PARA APAGAR");
-  }
-
-  function handleCollapseClick() {
-    console.log("entrou na func", collapse);
+  function handleEditClick(exp) {
+    setEditingExperiences(exp);
+    setValue("company", exp.company);
+    setValue("description", exp.description);
+    setValue("endDate", exp.endDate);
+    setValue("startDate", exp.startDate);
+    setValue("position", exp.position);
     setCollapse(true);
   }
 
-  function handleCollapseResetClick() {
-    setCollapse(!collapse);
-    reset();
+  function handleOpenModal(id) {
+    setExpToDelete(id);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmDelete() {
+    deleteExperience(expToDelete);
+    setIsModalOpen(false);
   }
 
   function handleInput(event) {
@@ -95,22 +143,22 @@ const Experiences = () => {
                 fontWeight: "700",
               }}
               className="btn btn-success"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseCat"
-              aria-expanded="false"
-              aria-controls="collapseCat"
-              onClick={handleCollapseResetClick}
+              onClick={() => {
+                setCollapse((prev) => !prev);
+                reset();
+                setEditingExperiences(null);
+              }}
             >
               +
             </button>
           </div>
-          <div className="collapse mb-5" id="collapseCat">
+          <div className={`collapse mb-5 ${collapse ? "show" : ""}`}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">
                   <label htmlFor="position">Cargo</label>
                   <input
-                    id="company"
+                    id="position"
                     {...register("position", {
                       required: FIELD_ERROR,
                       minLength: {
@@ -132,11 +180,11 @@ const Experiences = () => {
                     {...register("company", {
                       required: FIELD_ERROR,
                       minLength: {
-                        value: 1,
+                        value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
                       },
                       maxLength: {
-                        value: 3,
+                        value: 80,
                         message: FIELD_ERROR_MAX_LENGTH,
                       },
                     })}
@@ -163,21 +211,7 @@ const Experiences = () => {
                 </div>
                 <div className="col-md-6">
                   <label htmlFor="endDate">Data final</label>
-                  <input
-                    id="endDate"
-                    {...register("endDate", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 3,
-                        message: FIELD_ERROR_MIN_LENGTH,
-                      },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
-                    })}
-                  />
-                  {errors.endDate && <p>{errors.endDate.message}</p>}
+                  <input id="endDate" {...register("endDate")} />
                 </div>
                 <div>
                   <label htmlFor="description">Descrição</label>
@@ -201,7 +235,7 @@ const Experiences = () => {
                 </div>
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"cadastrar"} type="submit" />
+                <Button value={"salvar"} type="submit" disabled={isSending} />
               </div>
             </form>
           </div>
@@ -212,6 +246,7 @@ const Experiences = () => {
                   <th scope="col">#</th>
                   <th scope="col">id</th>
                   <th scope="col">Empresa</th>
+                  <th scope="col">Cargo</th>
                   <th scope="col">Ações</th>
                 </tr>
               </thead>
@@ -222,6 +257,9 @@ const Experiences = () => {
                         <th scope="row">
                           <Skeleton width={20} height={26} />
                         </th>
+                        <td>
+                          <Skeleton width={50} height={26} />
+                        </td>
                         <td>
                           <Skeleton width={50} height={26} />
                         </td>
@@ -239,32 +277,23 @@ const Experiences = () => {
                         <th scope="row">{index + 1}</th>
                         <td>{experience.id}</td>
                         <td>{experience.company}</td>
+                        <td>{experience.position}</td>
                         <td className="d-flex gap-3">
-                          <div
-                            style={{ width: "30px", height: "30px" }}
-                            className="btn btn-success"
-                            data-bs-toggle="collapse"
-                            data-bs-target={collapse ? "" : "#collapseCat"}
-                            aria-expanded="false"
-                            aria-controls="collapseCat"
-                            onClick={handleCollapseClick}
-                          >
-                            <Button
-                              value={<FaPen size={14} />}
-                              classBtn="warning"
-                              onClick={() => handleEditClick(experience)}
-                              shape={"circle"}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                padding: "8px",
-                              }}
-                            />
-                          </div>
+                          <Button
+                            value={<FaPen size={14} />}
+                            classBtn="warning"
+                            onClick={() => handleEditClick(experience)}
+                            shape={"circle"}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              padding: "8px",
+                            }}
+                          />
                           <Button
                             value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
-                            onClick={handleDeleteClick}
+                            onClick={() => handleOpenModal(experience.id)}
                             shape={"circle"}
                             style={{
                               width: "30px",
@@ -280,6 +309,22 @@ const Experiences = () => {
           </div>
         </div>
       </section>
+      {isModalOpen && (
+        <Modal
+          title="Deletar Habilidade"
+          message={
+            <>
+              Você tem certeza que deseja deletar a habilidade?
+              <br />
+              Esta ação será irreversível!
+            </>
+          }
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+          loading={isLoading}
+        />
+      )}
+      <ToastContainer toasts={toasts} />
     </main>
   );
 };

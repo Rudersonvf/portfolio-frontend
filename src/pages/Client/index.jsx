@@ -24,7 +24,7 @@ import ExperienceCard from "../../components/ExperienceCard";
 import ProjectCard from "../../components/ProjectCard";
 import SkillCard from "../../components/SkillCard";
 import * as educationService from "../../services/educationService";
-import * as experienceService from "../../services/experienceService";
+import * as experienceService from "../../services/experience-service";
 import * as projectService from "../../services/projectService";
 import * as skillService from "../../services/skill-service";
 import { formatDate } from "../../utils/dateFormat";
