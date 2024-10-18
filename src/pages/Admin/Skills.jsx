@@ -1,18 +1,27 @@
-
 import { useEffect, useState } from "react";
-
 import { useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
-import Button from "../../../components/Button";
-import * as skillService from "../../../services/skillService";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
+import * as skillService from "../../services/skill-service";
 
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [editingSkills, setEditingSkills] = useState(null);
-  const [collapse, setCollapse] = useState(false);
+  const [skillToDelete, setSkillToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [collapse, setCollapse] = useState(false);
+  const { toasts, addToast } = useToast();
+
+  const FIELD_ERROR = "Campo requerido";
+  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
+  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const {
     register,
@@ -23,56 +32,94 @@ const Skills = () => {
   } = useForm();
 
   useEffect(() => {
-    async function fetchCategories() {
-      setIsLoading(true);
-      try {
-        const categoryData = await skillService.findAllRequest();
-        setSkills(categoryData.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados ", error);
-      }
-    }
-
-    fetchCategories();
+    fetchSkills();
   }, []);
 
-  const FIELD_ERROR = "Campo requirido";
-  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
-  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
+  async function fetchSkills() {
+    setIsLoading(true);
+    try {
+      const skillData = await skillService.findAllRequest();
+      setSkills(skillData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar habilidades. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function insertSkills(data) {
+    setIsLoading(true);
+    try {
+      await skillService.insertRequest(data);
+      addToast("Sucesso", "Habilidade adicionada.", "success");
+      reset();
+      fetchSkills();
+    } catch (error) {
+      addToast("Erro", "Erro ao salvar habilidade", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function updateSkills(id, data) {
+    setIsSending(true);
+    try {
+      await skillService.updateRequest(id, data);
+      addToast("Sucesso", "Habilidade atualizada", "success");
+      setEditingSkills(null);
+      reset();
+      fetchSkills();
+    } catch (error) {
+      addToast("Erro", "Erro ao atualizar habilidade", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  async function deleteSkills(id) {
+    try {
+      await skillService.deleteRequest(id);
+      addToast("Sucesso", "Habilidade deletada", "success");
+      fetchSkills();
+    } catch (error) {
+      addToast("Erro", error.response.data.error, "danger");
+      console.error("Error: ", error);
+    }
+  }
 
   const onSubmit = (data) => {
     if (editingSkills) {
-      console.log("Editando categoria: ", data);
-      // Lógica para editar a categoria
+      updateSkills(editingSkills.id, data);
     } else {
-      console.log("Criando nova categoria: ", data);
-      // Lógica para criar nova categoria
+      insertSkills(data);
     }
-    reset();
-    setEditingSkills(null);
   };
 
   function handleEditClick(skill) {
     setEditingSkills(skill);
     setValue("name", skill.name);
     setValue("level", skill.level);
-    setValue("icon", skill.icon);
+    setValue("iconUrl", skill.iconUrl);
     setValue("docUrl", skill.docUrl);
-  }
-
-  function handleDeleteClick() {
-    console.log("CLICOU PARA APAGAR");
-  }
-
-  function handleCollapseClick() {
-    console.log("entrou na func", collapse);
+    setValue("showAsAbility", skill.showAsAbility);
     setCollapse(true);
   }
 
-  function handleCollapseResetClick() {
-    setCollapse(!collapse);
-    reset();
+  function handleOpenModal(id) {
+    setSkillToDelete(id);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmDelete() {
+    deleteSkills(skillToDelete);
+    setIsModalOpen(false);
   }
 
   return (
@@ -89,16 +136,16 @@ const Skills = () => {
                 fontWeight: "700",
               }}
               className="btn btn-success"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseCat"
-              aria-expanded="false"
-              aria-controls="collapseCat"
-              onClick={handleCollapseResetClick}
+              onClick={() => {
+                setCollapse((prev) => !prev);
+                reset();
+                setEditingSkills(null);
+              }}
             >
               +
             </button>
           </div>
-          <div className="collapse mb-5" id="collapseCat">
+          <div className={`collapse mb-5 ${collapse ? "show" : ""}`}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">
@@ -120,14 +167,14 @@ const Skills = () => {
                   {errors.name && <p>{errors.name.message}</p>}
                 </div>
                 <div className="col-md-6">
-                  <label htmlFor="level">Level</label>
+                  <label htmlFor="level">Nível</label>
                   <input
                     id="level"
                     {...register("level", {
                       required: FIELD_ERROR,
                       minLength: {
                         value: 1,
-                        message: "Deve conter ao menos 1 caracteres",
+                        message: "Deve conter ao menos 1 caractere",
                       },
                       maxLength: {
                         value: 3,
@@ -138,25 +185,21 @@ const Skills = () => {
                   {errors.level && <p>{errors.level.message}</p>}
                 </div>
                 <div className="col-md-12">
-                  <label htmlFor="icon">Icone (url do devicon)</label>
+                  <label htmlFor="iconUrl">Ícone (URL do devicon)</label>
                   <input
-                    id="icon"
-                    {...register("icon", {
+                    id="iconUrl"
+                    {...register("iconUrl", {
                       required: FIELD_ERROR,
                       minLength: {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
                       },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
                     })}
                   />
-                  {errors.icon && <p>{errors.icon.message}</p>}
+                  {errors.iconUrl && <p>{errors.iconUrl.message}</p>}
                 </div>
                 <div className="col-md-12">
-                  <label htmlFor="docUrl">Documentação (url)</label>
+                  <label htmlFor="docUrl">Documentação (URL)</label>
                   <input
                     id="docUrl"
                     {...register("docUrl", {
@@ -165,17 +208,29 @@ const Skills = () => {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
                       },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
                     })}
                   />
                   {errors.docUrl && <p>{errors.docUrl.message}</p>}
                 </div>
+                <div className="col-md-12 d-flex align-items-center">
+                  <label htmlFor="showAsAbility">
+                    Mostrar como habilidade? (Site)
+                  </label>
+                  <input
+                    id="showAsAbility"
+                    type="checkbox"
+                    {...register("showAsAbility")}
+                    style={{
+                      height: "15px",
+                      width: "15px",
+                      marginBottom: "5px",
+                      marginLeft: "10px",
+                    }}
+                  />
+                </div>
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"cadastrar"} type="submit" />
+                <Button value={"Salvar"} type="submit" disabled={isSending} />
               </div>
             </form>
           </div>
@@ -184,7 +239,7 @@ const Skills = () => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">id</th>
+                  <th scope="col">ID</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Ações</th>
                 </tr>
@@ -214,31 +269,21 @@ const Skills = () => {
                         <td>{skill.id}</td>
                         <td>{skill.name}</td>
                         <td className="d-flex gap-3">
-                          <div
-                            style={{ width: "30px", height: "30px" }}
-                            className="btn btn-success"
-                            data-bs-toggle="collapse"
-                            data-bs-target={collapse ? "" : "#collapseCat"}
-                            aria-expanded="false"
-                            aria-controls="collapseCat"
-                            onClick={handleCollapseClick}
-                          >
-                            <Button
-                              value={<FaPen size={14} />}
-                              classBtn="warning"
-                              onClick={() => handleEditClick(skill)}
-                              shape={"circle"}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                padding: "8px",
-                              }}
-                            />
-                          </div>
+                          <Button
+                            value={<FaPen size={14} />}
+                            classBtn="warning"
+                            onClick={() => handleEditClick(skill)}
+                            shape={"circle"}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              padding: "8px",
+                            }}
+                          />
                           <Button
                             value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
-                            onClick={handleDeleteClick}
+                            onClick={() => handleOpenModal(skill.id)}
                             shape={"circle"}
                             style={{
                               width: "30px",
@@ -254,6 +299,22 @@ const Skills = () => {
           </div>
         </div>
       </section>
+      {isModalOpen && (
+        <Modal
+          title="Deletar Habilidade"
+          message={
+            <>
+              Você tem certeza que deseja deletar a habilidade?
+              <br />
+              Esta ação será irreversível!
+            </>
+          }
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+          loading={isLoading}
+        />
+      )}
+      <ToastContainer toasts={toasts} />
     </main>
   );
 };

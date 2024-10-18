@@ -26,11 +26,10 @@ import SkillCard from "../../components/SkillCard";
 import * as educationService from "../../services/educationService";
 import * as experienceService from "../../services/experienceService";
 import * as projectService from "../../services/projectService";
-import * as skillService from "../../services/skillService";
+import * as skillService from "../../services/skill-service";
 import { formatDate } from "../../utils/dateFormat";
 
 import styles from "./styles.module.scss";
-
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);

@@ -9,13 +9,9 @@ import ImageCard from "../../../components/ImageCard";
 import ImageField from "../../../components/ImageField";
 import * as categoryService from "../../../services/category-service";
 import * as projectService from "../../../services/projectService";
-import * as skillService from "../../../services/skillService";
-
-
-
+import * as skillService from "../../../services/skill-service";
 
 import styles from "./styles.module.scss";
-
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);

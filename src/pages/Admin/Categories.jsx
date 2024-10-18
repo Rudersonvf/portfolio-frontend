@@ -161,20 +161,11 @@ const Categories = () => {
                       message: FIELD_ERROR_MAX_LENGTH,
                     },
                   })}
-                  className={
-                    errors.name ? "form-control is-invalid" : "form-control"
-                  }
                 />
-                {errors.name && (
-                  <p className="invalid-feedback">{errors.name.message}</p>
-                )}
+                {errors.name && <p>{errors.name.message}</p>}
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button
-                  value={"Salvar"}
-                  type="submit"
-                  disabled={isInsertingCategory}
-                />
+                <Button value={"salvar"} type="submit" />
               </div>
             </form>
           </div>
