@@ -23,7 +23,7 @@ import EducationCard from "../../components/EducationCard";
 import ExperienceCard from "../../components/ExperienceCard";
 import ProjectCard from "../../components/ProjectCard";
 import SkillCard from "../../components/SkillCard";
-import * as educationService from "../../services/educationService";
+import * as educationService from "../../services/education-service";
 import * as experienceService from "../../services/experience-service";
 import * as projectService from "../../services/projectService";
 import * as skillService from "../../services/skill-service";

@@ -1,18 +1,28 @@
-
 import { useEffect, useState } from "react";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
-import Button from "../../../components/Button";
-import * as educationService from "../../../services/educationService";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
+import * as educationService from "../../services/education-service";
 
 const Educations = () => {
-  const [education, setEducation] = useState([]);
-  const [editingCategory, setEditingCategory] = useState(null);
-  const [collapse, setCollapse] = useState(false);
+  const [educations, setEducations] = useState([]);
+  const [editingEducations, setEditingEducations] = useState(null);
+  const [educToDelete, setEducToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [collapse, setCollapse] = useState(false);
+  const { toasts, addToast } = useToast();
+
+  const FIELD_ERROR = "Campo requirido";
+  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
+  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const {
     register,
@@ -23,59 +33,96 @@ const Educations = () => {
   } = useForm();
 
   useEffect(() => {
-    async function fetchCategories() {
-      setIsLoading(true);
-      try {
-        const categoryData = await educationService.findAllRequest();
-        setEducation(categoryData.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados ", error);
-      }
-    }
-
-    fetchCategories();
+    fetchEducations();
   }, []);
 
-  const FIELD_ERROR = "Campo requirido";
-  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
-  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
+  async function fetchEducations() {
+    setIsLoading(true);
+    try {
+      const educData = await educationService.findAllRequest();
+      setEducations(educData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar dados. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function insertEducation(data) {
+    setIsLoading(true);
+    try {
+      await educationService.insertRequest(data);
+      addToast("Sucesso", "Curso adicionado.", "success");
+      reset();
+      fetchEducations();
+    } catch (error) {
+      addToast("Erro", "Erro ao salvar curso", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function updateEducation(id, data) {
+    setIsSending(true);
+    try {
+      await educationService.updateRequest(id, data);
+      addToast("Sucesso", "Curso atualizado", "success");
+      setEditingEducations(null);
+      reset();
+      fetchEducations();
+    } catch (error) {
+      addToast("Erro", "Erro ao atualizar curso", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  async function deleteEducation(id) {
+    try {
+      await educationService.deleteRequest(id);
+      addToast("Sucesso", "Curso deletado", "success");
+      fetchEducations();
+    } catch (error) {
+      addToast("Erro", error.response.data.error, "danger");
+      console.error("Error: ", error);
+    }
+  }
 
   const onSubmit = (data) => {
-    if (editingCategory) {
-      console.log("Editando categoria: ", data);
-      // Lógica para editar a categoria
+    if (editingEducations) {
+      updateEducation(editingEducations.id, data);
     } else {
-      console.log("Criando nova categoria: ", data);
-      // Lógica para criar nova categoria
+      insertEducation(data);
     }
-    reset();
-    setEditingCategory(null);
   };
 
-  function handleEditClick(education) {
-    setEditingCategory(education);
-    setValue("courseName", education.courseName);
-    setValue("institution", education.institution);
-    setValue("startDate", education.startDate);
-    setValue("endDate", education.endDate);
-    setValue("workload", education.workload);
-    setValue("certificateUrl", education.certificateUrl);
-    setValue("description", education.description);
-  }
-
-  function handleDeleteClick() {
-    console.log("CLICOU PARA APAGAR");
-  }
-
-  function handleCollapseClick() {
-    console.log("entrou na func", collapse);
+  function handleEditClick(educ) {
+    setEditingEducations(educ);
+    setValue("courseName", educ.courseName);
+    setValue("institution", educ.institution);
+    setValue("description", educ.description);
+    setValue("workload", educ.workload);
+    setValue("certificateUrl", educ.certificateUrl);
+    setValue("startDate", educ.startDate);
+    setValue("endDate", educ.courseName);
     setCollapse(true);
   }
 
-  function handleCollapseResetClick() {
-    setCollapse(!collapse);
-    reset();
+  function handleOpenModal(id) {
+    setEducToDelete(id);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmDelete() {
+    deleteEducation(educToDelete);
+    setIsModalOpen(false);
   }
 
   function handleInput(event) {
@@ -83,7 +130,6 @@ const Educations = () => {
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
   }
-
   return (
     <main>
       <section>
@@ -98,16 +144,16 @@ const Educations = () => {
                 fontWeight: "700",
               }}
               className="btn btn-success"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseCat"
-              aria-expanded="false"
-              aria-controls="collapseCat"
-              onClick={handleCollapseResetClick}
+              onClick={() => {
+                setCollapse((prev) => !prev);
+                reset();
+                setEditingEducations(null);
+              }}
             >
               +
             </button>
           </div>
-          <div className="collapse mb-5" id="collapseCat">
+          <div className={`collapse mb-5 ${collapse ? "show" : ""}`}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row g-3">
                 <div className="col-md-6">
@@ -166,30 +212,15 @@ const Educations = () => {
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="endDate">Data final</label>
-                  <input
-                    id="endDate"
-                    {...register("endDate", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 3,
-                        message: FIELD_ERROR_MIN_LENGTH,
-                      },
-                      maxLength: {
-                        value: 80,
-                        message: FIELD_ERROR_MAX_LENGTH,
-                      },
-                    })}
-                  />
-                  {errors.endDate && <p>{errors.endDate.message}</p>}
+                  <input id="endDate" {...register("endDate")} />
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="workload">Carga horária</label>
                   <input
                     id="workload"
                     {...register("workload", {
-                      required: FIELD_ERROR,
                       minLength: {
-                        value: 3,
+                        value: 1,
                         message: FIELD_ERROR_MIN_LENGTH,
                       },
                       maxLength: {
@@ -205,7 +236,6 @@ const Educations = () => {
                   <input
                     id="certificateUrl"
                     {...register("certificateUrl", {
-                      required: FIELD_ERROR,
                       minLength: {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
@@ -242,7 +272,7 @@ const Educations = () => {
                 </div>
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"cadastrar"} type="submit" />
+                <Button value={"salvar"} type="submit" disabled={isLoading} />
               </div>
             </form>
           </div>
@@ -279,38 +309,28 @@ const Educations = () => {
                         </td>
                       </tr>
                     ))
-                  : education.map((education, index) => (
+                  : educations.map((education, index) => (
                       <tr key={education.id}>
                         <th scope="row">{index + 1}</th>
                         <td>{education.id}</td>
                         <td>{education.courseName}</td>
                         <td>{education.institution}</td>
                         <td className="d-flex gap-3">
-                          <div
-                            style={{ width: "30px", height: "30px" }}
-                            className="btn btn-success"
-                            data-bs-toggle="collapse"
-                            data-bs-target={collapse ? "" : "#collapseCat"}
-                            aria-expanded="false"
-                            aria-controls="collapseCat"
-                            onClick={handleCollapseClick}
-                          >
-                            <Button
-                              value={<FaPen size={14} />}
-                              classBtn="warning"
-                              onClick={() => handleEditClick(education)}
-                              shape={"circle"}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                padding: "8px",
-                              }}
-                            />
-                          </div>
+                          <Button
+                            value={<FaPen size={14} />}
+                            classBtn="warning"
+                            onClick={() => handleEditClick(education)}
+                            shape={"circle"}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              padding: "8px",
+                            }}
+                          />
                           <Button
                             value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
-                            onClick={handleDeleteClick}
+                            onClick={() => handleOpenModal(education.id)}
                             shape={"circle"}
                             style={{
                               width: "30px",
@@ -326,6 +346,22 @@ const Educations = () => {
           </div>
         </div>
       </section>
+      {isModalOpen && (
+        <Modal
+          title="Deletar Habilidade"
+          message={
+            <>
+              Você tem certeza que deseja deletar a habilidade?
+              <br />
+              Esta ação será irreversível!
+            </>
+          }
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+          loading={isLoading}
+        />
+      )}
+      <ToastContainer toasts={toasts} />
     </main>
   );
 };
