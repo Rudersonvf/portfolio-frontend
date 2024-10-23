@@ -111,7 +111,7 @@ const Educations = () => {
     setValue("workload", educ.workload);
     setValue("certificateUrl", educ.certificateUrl);
     setValue("startDate", educ.startDate);
-    setValue("endDate", educ.courseName);
+    setValue("endDate", educ.endDate);
     setCollapse(true);
   }
 
