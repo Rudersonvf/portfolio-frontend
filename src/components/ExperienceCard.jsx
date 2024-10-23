@@ -1,15 +1,15 @@
 import PropTypes from "prop-types";
 
-import styles from "./styles.module.scss";
+import "../sass/components/experience-card.scss";
 
 const ExperienceCard = ({ position, startDate, endDate, company, resume }) => {
   return (
-    <div className={styles["component-experience-card"]}>
-      <div className={styles["position-container"]}>
-        <span className={styles.position}>{position}</span>
-        <span className={styles.date}>{`${startDate} - ${endDate}`}</span>
+    <div className="component-experience-card">
+      <div className="position-container">
+        <span className="position">{position}</span>
+        <span className="date">{`${startDate} - ${endDate}`}</span>
       </div>
-      <span className={styles.company}>{company}</span>
+      <span className="company">{company}</span>
       <p>{resume}</p>
     </div>
   );

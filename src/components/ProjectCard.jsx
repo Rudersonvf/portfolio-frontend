@@ -3,11 +3,9 @@ import { useTranslation } from "react-i18next";
 import { FaGithub } from "react-icons/fa6";
 import { HiMiniArrowUpRight } from "react-icons/hi2";
 
-import ButtonLink from "../ButtonLink";
-import TechnologyIcon from "../TechnologyIcon";
-
-import styles from "./styles.module.scss";
-
+import ButtonLink from "./ButtonLink";
+import "../sass/components/project-card.scss";
+import TechnologyIcon from "./TechnologyIcon";
 
 const ProjectCard = ({
   projectName,
@@ -20,23 +18,23 @@ const ProjectCard = ({
   const { t } = useTranslation();
 
   return (
-    <div className={styles["component-project-card"]}>
+    <div className="component-project-card">
       <h2 className="h1 mb-3">{projectName}</h2>
       <p className="mb-2">{description}</p>
-      <div className={styles["info-container"]}>
-        <span className={styles.info}>{t("project-info")}</span>
+      <div className="info-container">
+        <span className="info">{t("project-info")}</span>
       </div>
-      <div className={styles["info-container"]}>
+      <div className="info-container">
         <span>{t("project-cat")}</span>
-        <div className={styles.wrapper}>
+        <div className="wrapper">
           {categories.map((cat, index) => (
             <span key={index}>{cat.name}</span>
           ))}
         </div>
       </div>
-      <div className={styles["info-container"]}>
+      <div className="info-container">
         <span>{t("project-tec")}</span>
-        <div className={styles.wrapper}>
+        <div className="wrapper">
           {technologies.map((tec, index) => (
             <TechnologyIcon
               key={index}

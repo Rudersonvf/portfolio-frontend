@@ -1,10 +1,9 @@
 import PropTypes from "prop-types";
 import { FaImages } from "react-icons/fa6";
 
-import * as cloudinaryService from "../../services/cloudinaryService";
+import * as cloudinaryService from "../services/cloudinaryService";
 
-
-import styles from "./styles.module.scss";
+import "../sass/components/image-field.scss";
 
 const ImageField = ({ onUploadImage }) => {
   async function handleImageChange(event) {
@@ -25,13 +24,11 @@ const ImageField = ({ onUploadImage }) => {
   }
 
   return (
-    <div className={styles["input-container"]}>
-      <label htmlFor="images-upload" className={styles["upload-label"]}>
-        <span className={styles["upload-text"]}>
-          Escolha os arquivos ou arraste aqui
-        </span>
+    <div className="input-container">
+      <label htmlFor="images-upload" className="upload-label">
+        <span className="upload-text">Escolha os arquivos ou arraste aqui</span>
         <FaImages />
-        <span className={styles.extensions}>.webp* .jpg* .jpeg* .png*</span>
+        <span className="extensions">.webp* .jpg* .jpeg* .png*</span>
         <input
           type="file"
           name="image"

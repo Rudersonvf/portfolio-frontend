@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import styles from "./styles.module.scss";
+import "../sass/components/contact-card.scss";
 
 const ContactCard = ({ logo, title, type, content, link }) => {
   function typeOfContent(type) {
@@ -27,9 +27,9 @@ const ContactCard = ({ logo, title, type, content, link }) => {
   }
 
   return (
-    <div className={styles["component-contact-card"]}>
-      <div className={styles["logo-container"]}>{logo}</div>
-      <div className={styles["content-container"]}>
+    <div className="component-contact-card">
+      <div className="logo-container">{logo}</div>
+      <div className="content-container">
         <span>{title}</span>
         {typeOfContent(type)}
       </div>

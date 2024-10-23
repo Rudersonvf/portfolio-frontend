@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import PropTypes from "prop-types";
 
-import * as cloudinaryService from "../../services/cloudinaryService";
-import Spinner from "../Spinner";
+import * as cloudinaryService from "../services/cloudinaryService";
 
-import styles from "./styles.module.scss";
+import Spinner from "./Spinner";
+import "../sass/components/image-card.scss";
 
 const ImageCard = ({ imageLink, onImageDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,13 +35,13 @@ const ImageCard = ({ imageLink, onImageDelete }) => {
   }
 
   return (
-    <div className={styles["component-image-card"]}>
+    <div className="component-image-card">
       {isLoading && <Spinner />}
       <img src={imageLink} alt="image" />
       <button
         type="button"
         onClick={() => handleImageDelete(imageLink)}
-        className={`btn btn-danger ${styles.delete}`}
+        className="btn btn-danger delete"
       >
         delete
       </button>

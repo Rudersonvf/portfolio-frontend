@@ -5,9 +5,9 @@ import { FaBell, FaNewspaper, FaPowerOff } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 
 import imgOwner from "../../assets/ruderson.webp";
-import * as accessTokenManager from "../../utils/access-token-manager";
+import * as accessTokenManager from "../utils/access-token-manager";
 
-import styles from "./styles.module.scss";
+import "../sass/components/admin-header.scss";
 
 const AdminHeader = ({ onToggleAside, unreadCount }) => {
   const [isActive, setIsActive] = useState(false);
@@ -27,26 +27,23 @@ const AdminHeader = ({ onToggleAside, unreadCount }) => {
   }
 
   return (
-    <header className={styles["component-admin-header"]}>
+    <header className="component-admin-header">
       <div className="container d-flex justify-content-between align-items-center">
-        <div className={styles["hamburger-menu"]} onClick={onToggleAside}>
-          <span className={styles["bar"]}></span>
-          <span className={styles["bar"]}></span>
-          <span className={styles["bar"]}></span>
+        <div className="hamburger-menu" onClick={onToggleAside}>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
         </div>
         <nav>
-          <div className={styles["count-container"]} onClick={handleBellClick}>
+          <div className="count-container" onClick={handleBellClick}>
             {unreadCount > 0 && <span>{unreadCount}</span>}
             <FaBell />
           </div>
-          <div
-            className={styles["img-container"]}
-            onClick={handleDropdownClick}
-          >
+          <div className="img-container" onClick={handleDropdownClick}>
             <img src={imgOwner} alt="Ruderson" />
           </div>
           {isActive && (
-            <div className={styles["dropdown-container"]}>
+            <div className="dropdown-container">
               <ul>
                 <li>
                   <NavLink to="/">

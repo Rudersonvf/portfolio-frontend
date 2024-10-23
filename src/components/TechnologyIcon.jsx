@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 
-import styles from "./styles.module.scss";
+import "../sass/components/technology-icon.scss";
 
 const TechnologyIcon = ({ svgUrl, technologyName, size }) => {
   return (
     <div
-      className={styles["component-technology-icon"]}
+      className="component-technology-icon"
       data-bs-toggle="tooltip"
       data-bs-placement="top"
       title={technologyName}

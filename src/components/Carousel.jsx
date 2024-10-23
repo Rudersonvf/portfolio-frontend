@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 
-import styles from "./styles.module.scss";
+import "../sass/components/carousel.scss";
 
 const Carousel = ({ images, projectName, id }) => {
   return (
-    <div className={styles["component-carousel"]}>
+    <div className="component-carousel">
       <div id={id} className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-inner">
           {images.map((image, index) => (

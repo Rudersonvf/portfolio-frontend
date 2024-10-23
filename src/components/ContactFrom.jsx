@@ -4,10 +4,9 @@ import PropTypes from "prop-types";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import * as messageService from "../../services/message-service";
-import Button from "../Button";
+import * as messageService from "../services/message-service";
 
-import styles from "./styles.module.scss";
+import Button from "./Button";
 
 const ContactForm = ({ onError }) => {
   const [isSending, setIsSending] = useState(false);
@@ -44,7 +43,7 @@ const ContactForm = ({ onError }) => {
   }
 
   return (
-    <div className={styles["component-contact-form"]}>
+    <div className="component-contact-form">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">{t("form-field-name")}</label>

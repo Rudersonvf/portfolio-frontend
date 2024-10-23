@@ -1,9 +1,8 @@
 import PropTypes from "prop-types";
 
-import styles from "./styles.module.scss"; // Ajuste o caminho conforme sua configuração
+import "../sass/components/progress-bar.scss";
 
 const ProgressBar = ({ value }) => {
-  // Define a cor com base no valor
   let barColor;
   let fontColor;
   if (value < 30) {
@@ -18,9 +17,9 @@ const ProgressBar = ({ value }) => {
   }
 
   return (
-    <div className={styles["progress-bar-container"]}>
+    <div className="progress-bar-container">
       <div
-        className={styles["progress-bar"]}
+        className="progress-bar"
         style={{
           width: `${value}%`,
           backgroundColor: barColor,

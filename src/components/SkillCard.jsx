@@ -3,11 +3,9 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 
-import ProgressBar from "../ProgressBar";
+import ProgressBar from "./ProgressBar";
 
-import styles from "./styles.module.scss";
-
-
+import "../sass/components/skill-card.scss";
 
 const SkillCard = ({ icon, name, level, docUrl }) => {
   const [isMouseOver, setIsMouseOver] = useState();
@@ -15,11 +13,11 @@ const SkillCard = ({ icon, name, level, docUrl }) => {
 
   return (
     <div
-      className={styles["component-skill-card"]}
+      className="component-skill-card"
       onMouseEnter={() => setIsMouseOver(true)}
       onMouseLeave={() => setIsMouseOver(false)}
     >
-      <div className={styles["logo-container"]}>
+      <div className="logo-container">
         <img src={icon} alt={name} />
       </div>
       <h4>{name}</h4>
@@ -28,8 +26,8 @@ const SkillCard = ({ icon, name, level, docUrl }) => {
         href={docUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${styles["skill-doc"]} ${
-          isMouseOver ? styles["animateSkillUp"] : styles["animateSkillDown"]
+        className={`skill-doc ${
+          isMouseOver ? "animateSkillUp" : "animateSkillDown"
         }`}
       >
         <h5>{t("skill-doc")}</h5>

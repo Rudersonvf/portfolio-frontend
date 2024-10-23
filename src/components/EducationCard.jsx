@@ -2,10 +2,8 @@ import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { HiMiniArrowUpRight } from "react-icons/hi2";
 
-import ButtonLink from "../ButtonLink";
-
-import styles from "./styles.module.scss";
-
+import ButtonLink from "./ButtonLink";
+import "../sass/components/education-card.scss";
 
 const EducationCard = ({
   courseName,
@@ -19,14 +17,14 @@ const EducationCard = ({
   const { t } = useTranslation();
 
   return (
-    <div className={styles["component-education-card"]}>
-      <div className={styles["course-container"]}>
-        <span className={styles.course}>{courseName}</span>
-        <span className={styles.date}>{`${startDate} - ${endDate}`}</span>
+    <div className="component-education-card">
+      <div className="course-container">
+        <span className="course">{courseName}</span>
+        <span className="date">{`${startDate} - ${endDate}`}</span>
       </div>
       <div className="d-flex justify-content-between align-items-center">
-        <span className={styles.institution}>{institution}</span>
-        <span className={styles.workload}>{`${workload} ${t(
+        <span className="institution">{institution}</span>
+        <span className="workload">{`${workload} ${t(
           "education-workload"
         )}`}</span>
       </div>
