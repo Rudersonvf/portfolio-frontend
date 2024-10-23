@@ -1,4 +1,4 @@
-import logoIcon from "../../assets/icon.svg";
+import logoIcon from "../assets/icon.svg";
 
 import "../sass/components/client-footer.scss";
 

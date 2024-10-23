@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import logoIcon from "../../assets/icon.svg";
+import logoIcon from "../assets/icon.svg";
 
 import "../sass/components/client-header.scss";
 

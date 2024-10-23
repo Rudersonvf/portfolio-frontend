@@ -18,7 +18,7 @@ import Carousel from "../../components/Carousel";
 import ClientFooter from "../../components/ClientFooter";
 import ClientHeader from "../../components/ClientHeader";
 import ContactCard from "../../components/ContactCard";
-import ContactForm from "../../components/ContactForm";
+import ContactForm from "../../components/ContactFrom";
 import EducationCard from "../../components/EducationCard";
 import ExperienceCard from "../../components/ExperienceCard";
 import ProjectCard from "../../components/ProjectCard";

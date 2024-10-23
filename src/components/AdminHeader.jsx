@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { FaBell, FaNewspaper, FaPowerOff } from "react-icons/fa6";
 import { NavLink, useNavigate } from "react-router-dom";
 
-import imgOwner from "../../assets/ruderson.webp";
+import imgOwner from "../assets/ruderson.webp";
 import * as accessTokenManager from "../utils/access-token-manager";
 
 import "../sass/components/admin-header.scss";
