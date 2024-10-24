@@ -1,0 +1,7 @@
+[build]
+  base = "."
+  publish = "dist"
+  command = "yarn run build && cp ./_redirects ./dist/"
+
+[functions]
+  directory = "netlify/functions"
