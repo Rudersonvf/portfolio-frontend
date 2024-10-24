@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
 
-import Button from "../../../components/Button";
-import ImageCard from "../../../components/ImageCard";
-import ImageField from "../../../components/ImageField";
-import * as categoryService from "../../../services/category-service";
-import * as projectService from "../../../services/projectService";
-import * as skillService from "../../../services/skill-service";
+import Button from "../../components/Button";
+import ImageCard from "../../components/ImageCard";
+import ImageField from "../../components/ImageField";
+import * as categoryService from "../../services/category-service";
+import * as projectService from "../../services/project-service";
+import * as skillService from "../../services/skill-service";
 
-import styles from "./styles.module.scss";
+import "../../sass/pages/projects.scss";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -286,10 +286,7 @@ const Projects = () => {
                 </div>
                 <div className="col-md-6 d-flex flex-wrap align-items-end gap-3">
                   {selectedCategories.map((category) => (
-                    <div
-                      key={category.id}
-                      className={`${styles["category-card"]}`}
-                    >
+                    <div key={category.id} className="category-card">
                       <span>{category.name}</span>
                       <button
                         type="button"
@@ -321,10 +318,7 @@ const Projects = () => {
                 </div>
                 <div className="col-md-6 d-flex flex-wrap align-items-end gap-3">
                   {selectedTechnologies.map((category) => (
-                    <div
-                      key={category.id}
-                      className={`${styles["category-card"]}`}
-                    >
+                    <div key={category.id} className="category-card">
                       <span>{category.name}</span>
                       <button
                         type="button"

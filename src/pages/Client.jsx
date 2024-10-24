@@ -12,26 +12,26 @@ import {
   FaWhatsapp,
 } from "react-icons/fa6";
 
-import rudeImg from "../../assets/ruderson.webp";
-import Button from "../../components/Button";
-import Carousel from "../../components/Carousel";
-import ClientFooter from "../../components/ClientFooter";
-import ClientHeader from "../../components/ClientHeader";
-import ContactCard from "../../components/ContactCard";
-import ContactForm from "../../components/ContactFrom";
-import EducationCard from "../../components/EducationCard";
-import ExperienceCard from "../../components/ExperienceCard";
-import ProjectCard from "../../components/ProjectCard";
-import SkillCard from "../../components/SkillCard";
-import ToastContainer from "../../components/ToastContainer";
-import { useToast } from "../../hooks/useToast";
-import * as educationService from "../../services/education-service";
-import * as experienceService from "../../services/experience-service";
-import * as projectService from "../../services/projectService";
-import * as skillService from "../../services/skill-service";
-import { formatDate } from "../../utils/dateFormat";
+import rudeImg from "../assets/ruderson.webp";
+import Button from "../components/Button";
+import Carousel from "../components/Carousel";
+import ClientFooter from "../components/ClientFooter";
+import ClientHeader from "../components/ClientHeader";
+import ContactCard from "../components/ContactCard";
+import ContactForm from "../components/ContactFrom";
+import EducationCard from "../components/EducationCard";
+import ExperienceCard from "../components/ExperienceCard";
+import ProjectCard from "../components/ProjectCard";
+import SkillCard from "../components/SkillCard";
+import ToastContainer from "../components/ToastContainer";
+import { useToast } from "../hooks/useToast";
+import * as educationService from "../services/education-service";
+import * as experienceService from "../services/experience-service";
+import * as projectService from "../services/project-service";
+import * as skillService from "../services/skill-service";
+import { formatDate } from "../utils/dateFormat";
 
-import styles from "./styles.module.scss";
+import "../sass/pages/page-client.scss";
 
 const Client = () => {
   const [experiences, setExperiences] = useState([]);
@@ -88,12 +88,10 @@ const Client = () => {
     <>
       <ClientHeader />
       <main>
-        <section id="#" className={styles["hero-section"]}>
+        <section id="#" className="hero-section">
           <div className="container">
             <div className="row gy-5">
-              <div
-                className={`${styles["col-text"]} col-md-6 d-flex flex-column justify-content-center`}
-              >
+              <div className="col-text col-md-6 d-flex flex-column justify-content-center">
                 <h1 className="display-2 text-nowrap">{t("welcome-title")}</h1>
                 <h1 className="display-2">{t("welcome-name")}</h1>
                 <h4 className="display-6">{t("welcome-position")}</h4>
@@ -134,7 +132,7 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section id="sobre" className={`${styles["about-section"]} bg-alter`}>
+        <section id="sobre" className="about-section bg-alter">
           <div className="container">
             <h1 className="display-2 text-nowrap mb-1">{t("about-title")}</h1>
             <h2 className="h3 mb-2">{t("about-subtitle")}</h2>
@@ -171,7 +169,7 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section id="habilidades" className={styles["skills-section"]}>
+        <section id="habilidades" className="skills-section">
           <div className="container">
             <h1 className="display-2 text-nowrap mb-1">{t("skill-title")}</h1>
             <p className="mb-5">{t("skill-paragraph")}</p>
@@ -195,10 +193,7 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section
-          id="projetos"
-          className={`${styles["project-section"]} bg-alter`}
-        >
+        <section id="projetos" className="project-section bg-alter">
           <div className="container">
             <h1 className="display-2 text-nowrap mb-1">
               {t("projects-title")}
@@ -229,7 +224,7 @@ const Client = () => {
             </div>
           </div>
         </section>
-        <section id="contato" className={styles["project-section"]}>
+        <section id="contato" className="project-section">
           <div className="container">
             <h1 className="display-2 text-nowrap mb-1">{t("contact-title")}</h1>
             <p className="mb-5">{t("contact-paragraph")}</p>
