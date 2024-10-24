@@ -6,7 +6,7 @@ const ExperienceCard = ({ position, startDate, endDate, company, resume }) => {
   return (
     <div className="component-experience-card">
       <div className="position-container">
-        <span className="position">{position}</span>
+        <span className="experience-position">{position}</span>
         <span className="date">{`${startDate} - ${endDate}`}</span>
       </div>
       <span className="company">{company}</span>
