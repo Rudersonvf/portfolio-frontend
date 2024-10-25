@@ -12,7 +12,11 @@ const Carousel = ({ images, projectName, id }) => {
               className={`carousel-item ${index === 0 ? "active" : ""}`}
               key={index}
             >
-              <img src={image} className="d-block w-100" alt={projectName} />
+              <img
+                src={image.url}
+                className="d-block w-100"
+                alt={projectName}
+              />
             </div>
           ))}
         </div>
