@@ -218,7 +218,6 @@ const Experiences = () => {
                   <textarea
                     id="description"
                     {...register("description", {
-                      required: FIELD_ERROR,
                       minLength: {
                         value: 15,
                         message: "Deve conter ao menos 15 caracteres",

@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 import PropTypes from "prop-types";
 import { FaImages } from "react-icons/fa6";
 
@@ -6,25 +8,43 @@ import * as cloudinaryService from "../services/cloudinaryService";
 import "../sass/components/image-field.scss";
 
 const ImageField = ({ onUploadImage }) => {
-  async function handleImageChange(event) {
-    const files = event.target.files;
+  const handleFiles = useCallback(
+    async (files) => {
+      const uploadPromises = Array.from(files).map(async (image) => {
+        try {
+          const response = await cloudinaryService.saveImagesToCloudinary([
+            image,
+          ]);
+          onUploadImage(response[0].data.url);
+        } catch (error) {
+          console.error("Erro ao enviar imagens para o Cloudinary:", error);
+        }
+      });
 
-    const uploadPromises = Array.from(files).map(async (image) => {
-      try {
-        const response = await cloudinaryService.saveImagesToCloudinary([
-          image,
-        ]);
-        onUploadImage(response[0].data.url);
-      } catch (error) {
-        console.error("Erro ao enviar imagens para o Cloudinary:", error);
-      }
-    });
+      await Promise.all(uploadPromises);
+    },
+    [onUploadImage]
+  );
 
-    await Promise.all(uploadPromises);
-  }
+  const handleImageChange = (event) => {
+    handleFiles(event.target.files);
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    handleFiles(event.dataTransfer.files);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
 
   return (
-    <div className="input-container">
+    <div
+      className="input-container"
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
       <label htmlFor="images-upload" className="upload-label">
         <span className="upload-text">Escolha os arquivos ou arraste aqui</span>
         <FaImages />

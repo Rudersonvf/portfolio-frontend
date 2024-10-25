@@ -107,12 +107,12 @@ const ContactForm = ({ onError }) => {
                 message: t("form-textarea-min-lenght"),
               },
               maxLength: {
-                value: 500,
+                value: 800,
                 message: t("form-textarea-max-lenght"),
               },
             })}
             style={{ overflow: "hidden", resize: "none" }}
-            onInput={handleInput} // Adjust height on input
+            onInput={handleInput}
           />
           {errors.message && <p>{errors.message.message}</p>}
         </div>
