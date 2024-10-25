@@ -147,7 +147,11 @@ const Client = () => {
                     position={experience.position}
                     resume={experience.description}
                     startDate={formatDate(experience.startDate)}
-                    endDate={formatDate(experience.endDate)}
+                    endDate={
+                      experience.endDate
+                        ? formatDate(experience.endDate)
+                        : "Atualmente"
+                    }
                   />
                 ))}
               </div>
@@ -162,7 +166,11 @@ const Client = () => {
                     workload={education.workload}
                     certificateUrl={education.certificateUrl}
                     startDate={formatDate(education.startDate)}
-                    endDate={formatDate(education.endDate)}
+                    endDate={
+                      education.endDate
+                        ? formatDate(education.endDate)
+                        : "Atualmente"
+                    }
                   />
                 ))}
               </div>
