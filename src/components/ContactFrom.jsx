@@ -10,6 +10,9 @@ import Button from "./Button";
 
 const ContactForm = ({ onError }) => {
   const [isSending, setIsSending] = useState(false);
+  //const [isSuccess, setIsSuccess] = useState(false);
+  //const [isError, setIsError] = useState(false);
+  const [charCount, setCharCount] = useState(0);
   const { t } = useTranslation();
 
   const FIELD_ERROR = t("form-error");
@@ -27,6 +30,7 @@ const ContactForm = ({ onError }) => {
     const textarea = event.target;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
+    setCharCount(event.target.value.length);
   };
 
   async function onSubmit(data) {
@@ -96,7 +100,7 @@ const ContactForm = ({ onError }) => {
           />
           {errors.subject && <p>{errors.subject.message}</p>}
         </div>
-        <div>
+        <div style={{ position: "relative" }}>
           <label htmlFor="message">{t("form-field-message")}</label>
           <textarea
             id="message"
@@ -113,7 +117,14 @@ const ContactForm = ({ onError }) => {
             })}
             style={{ overflow: "hidden", resize: "none" }}
             onInput={handleInput}
+            maxLength={800}
           />
+          <p className="contact-form-char-count">
+            <span className={`${charCount >= 800 ? "text-danger" : ""}`}>
+              {charCount}
+            </span>
+            /800
+          </p>
           {errors.message && <p>{errors.message.message}</p>}
         </div>
         <div style={{ maxWidth: "200px" }} className="mt-1">

@@ -234,6 +234,18 @@ form {
     padding-top: 4px;
   }
 
+  .contact-form-char-count {
+    color: $font-paragraph-color !important;
+    float: right;
+    position: absolute;
+    right: 0;
+    bottom: -10px;
+  }
+
+  .contact-form-count-danger {
+    color: $color-danger;
+  }
+
   input {
     // Estilo do autofill para o Chrome, Safari, e Edge
     &:-webkit-autofill {
