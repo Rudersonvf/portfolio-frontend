@@ -50,7 +50,7 @@ const ImageCard = ({ imageLink, onImageDelete }) => {
 };
 
 ImageCard.propTypes = {
-  imageLink: PropTypes.string.isRequired,
+  imageLink: PropTypes.any.isRequired,
   onImageDelete: PropTypes.func.isRequired,
 };
 
