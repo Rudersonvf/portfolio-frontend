@@ -17,18 +17,23 @@
     gap: 10px;
 
     .experience-position {
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 600;
+
+      @include mobile {
+        display: block;
+      }
     }
 
     .date {
       text-transform: capitalize;
+      font-size: 16px;
     }
   }
 
   .company {
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
     color: $font-secondary-color;
     margin-bottom: 10px;
   }

@@ -233,8 +233,10 @@ const Client = () => {
                 <ContactForm onError={handleMessageError} />
               </div>
               <div className="col-md-6">
-                <div className="d-flex flex-column gap-4">
-                  <h3>Ruderson Vinicius Florentino</h3>
+                <div
+                  className="d-flex flex-column gap-4"
+                  style={{ marginTop: "30px" }}
+                >
                   <ContactCard
                     type={"extLink"}
                     logo={<FaLocationDot />}
@@ -266,14 +268,7 @@ const Client = () => {
                   <span className="follow">
                     Baixe meu currículo e me siga nas redes socias!
                   </span>
-                  <div className="d-flex gap-4 mt-2 flex-wrap">
-                    <div style={{ width: "200px" }}>
-                      <Button
-                        value={"download cv"}
-                        type="link"
-                        link={"/rudersonCv.pdf"}
-                      />
-                    </div>
+                  <div className="d-flex gap-4 mt-4 flex-wrap">
                     <Button
                       value={<FaLinkedinIn />}
                       shape={"circle"}
@@ -303,6 +298,13 @@ const Client = () => {
                       link={
                         "https://api.whatsapp.com/send?phone=5544991057251&text=Ol%C3%A1%2C%20vamos%20marcar%20uma%20call%20%3F"
                       }
+                    />
+                  </div>
+                  <div className="mt-4" style={{ width: "200px" }}>
+                    <Button
+                      value={"download cv"}
+                      type="link"
+                      link={"/rudersonCv.pdf"}
                     />
                   </div>
                 </div>

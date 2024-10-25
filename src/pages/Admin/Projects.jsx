@@ -7,6 +7,9 @@ import Skeleton from "react-loading-skeleton";
 import Button from "../../components/Button";
 import ImageCard from "../../components/ImageCard";
 import ImageField from "../../components/ImageField";
+import Modal from "../../components/Modal";
+import ToastContainer from "../../components/ToastContainer";
+import { useToast } from "../../hooks/useToast";
 import * as categoryService from "../../services/category-service";
 import * as projectService from "../../services/project-service";
 import * as skillService from "../../services/skill-service";
@@ -21,8 +24,17 @@ const Projects = () => {
   const [selectedTechnologies, setSelectedTechnologies] = useState([]);
   const [allImages, setAllImages] = useState([]);
   const [editingProject, setEditingProject] = useState(null);
+  const [projectToDelete, setProjectToDelete] = useState(null);
   const [collapse, setCollapse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingById, setIsLoadingById] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { toasts, addToast } = useToast();
+
+  const FIELD_ERROR = "Campo requirido";
+  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
+  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
 
   const {
     register,
@@ -33,57 +45,163 @@ const Projects = () => {
   } = useForm();
 
   useEffect(() => {
-    async function fetchProjects() {
-      setIsLoading(true);
-      try {
-        const projectData = await projectService.findAllSummaryRequest();
-        setProjects(projectData.data);
-        const categoryData = await categoryService.findAllRequest();
-        setAllCategories(categoryData.data);
-        const technologyData = await skillService.findAllRequest();
-        setAllTechnologies(technologyData.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Erro ao buscar dados ", error);
-      }
-    }
-
-    fetchProjects();
+    fetchAllProjects();
+    fetchAllCategories();
+    fetchAllTechnologies();
   }, []);
 
-  const FIELD_ERROR = "Campo requirido";
-  const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
-  const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
+  async function fetchAllProjects() {
+    setIsLoading(true);
+    try {
+      const projectData = await projectService.findAllSummaryRequest();
+      setProjects(projectData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar dados. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function fetchAllCategories() {
+    setIsLoading(true);
+    try {
+      const categoryData = await categoryService.findAllRequest();
+      setAllCategories(categoryData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar dados. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function fetchAllTechnologies() {
+    setIsLoading(true);
+    try {
+      const technologyData = await skillService.findAllRequest();
+      setAllTechnologies(technologyData.data);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar dados. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  async function findProjectById(id) {
+    setIsLoadingById(true);
+    try {
+      return await projectService.findByIdRequest(id);
+    } catch (error) {
+      addToast(
+        "Erro",
+        "Erro ao buscar dados. Tente novamente mais tarde.",
+        "danger"
+      );
+      console.error("Error: ", error);
+    } finally {
+      setIsLoadingById(false);
+    }
+  }
+
+  async function insertProject(data) {
+    setIsSending(true);
+    try {
+      await projectService.insertRequest(data);
+      addToast("Sucesso", "Projeto adicionado.", "success");
+      handleDataReset();
+      setCollapse(false);
+      fetchAllProjects();
+    } catch (error) {
+      addToast("Erro", "Erro ao salvar projeto", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  async function updateProject(id, data) {
+    setIsSending(true);
+    try {
+      await projectService.updateRequest(id, data);
+      addToast("Sucesso", "Projeto atualizado", "success");
+      setEditingProject(null);
+      handleDataReset();
+      setCollapse(false);
+      fetchAllProjects();
+    } catch (error) {
+      addToast("Erro", "Erro ao atualizar projeto", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
+
+  async function deleteProject(id) {
+    setIsSending(true);
+    try {
+      await projectService.deleteRequest(id);
+      addToast("Sucesso", "Projeto deletado", "success");
+      setProjectToDelete(null);
+      handleDataReset();
+      setCollapse(false);
+      fetchAllProjects();
+    } catch (error) {
+      addToast("Erro", "Erro ao deletar projeto", "danger");
+      console.error("Error: ", error);
+    } finally {
+      setIsSending(false);
+    }
+  }
 
   const onSubmit = (data) => {
+    data.categories = selectedCategories.map((category) => ({
+      id: category.id,
+    }));
+    data.skills = selectedTechnologies.map((technology) => ({
+      id: technology.id,
+    }));
+    data.images = allImages;
+
+    console.log("saudgayusdgyasgdyagsdy", allImages);
+
     if (editingProject) {
-      console.log("Editando categoria: ", data);
-      // Lógica para editar a categoria
+      updateProject(editingProject.id, data);
     } else {
       console.log("Criando nova categoria: ", data);
-      // Lógica para criar nova categoria
+      insertProject(data);
     }
-    reset();
-    setEditingProject(null);
   };
 
-  function handleEditClick(project) {
-    setEditingProject(project);
-    setValue("projectName", project.projectName);
-    setValue("description", project.description);
-    setValue("gitUrl", project.gitUrl);
-    setValue("liveUrl", project.liveUrl);
-    setSelectedCategories(project.categories);
-    setSelectedTechnologies(project.technologies);
-    setAllImages(project.images);
-  }
+  async function handleEditClick(id) {
+    const response = await findProjectById(id);
+    const projectData = response.data;
 
-  function handleDeleteClick() {
-    console.log("CLICOU PARA APAGAR");
-  }
-
-  function handleCollapseClick() {
-    setCollapse(true);
+    if (projectData) {
+      setValue("title", projectData.title);
+      setValue("description", projectData.description);
+      setValue("repositoryUrl", projectData.repositoryUrl);
+      setValue("liveUrl", projectData.liveUrl);
+      setSelectedCategories(projectData.categories);
+      setSelectedTechnologies(projectData.skills);
+      setAllImages(projectData.images);
+      setCollapse(true);
+      setEditingProject(projectData);
+      console.log("CLICOU PARA EDITAR", allImages);
+    }
   }
 
   function handleCollapseResetClick() {
@@ -145,13 +263,33 @@ const Projects = () => {
   }
 
   function handleImageUpload(image) {
-    setAllImages((prevImages) => [...prevImages, image]);
+    console.log("Image uploaded:", image);
+    setAllImages((prevImages) => [...prevImages, { url: image }]);
   }
 
   function handleImageDelete(imageLink) {
+    console.log("Image deleted:", imageLink);
     setAllImages((prevImages) =>
-      prevImages.filter((image) => image !== imageLink)
+      prevImages.filter((image) => image.url !== imageLink)
     );
+  }
+
+  function handleOpenModal(id) {
+    setProjectToDelete(id);
+    setIsModalOpen(true);
+  }
+
+  function handleConfirmDelete() {
+    deleteProject(projectToDelete);
+    setIsModalOpen(false);
+  }
+
+  function handleDataReset() {
+    reset();
+    setSelectedCategories([]);
+    setSelectedTechnologies([]);
+    setAllImages([]);
+    setEditingProject(null);
   }
 
   return (
@@ -177,14 +315,25 @@ const Projects = () => {
               +
             </button>
           </div>
-          <div className="collapse mb-5" id="collapseCat">
+          {isLoadingById && (
+            <div
+              className="spinner-border d-flex mb-5"
+              style={{
+                margin: "0 auto",
+              }}
+              role="status"
+            >
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          )}
+          <div className={`collapse mb-5 ${collapse ? "show" : ""}`}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row g-3">
                 <div className="col-md-12">
-                  <label htmlFor="projectName">Nome do projeto</label>
+                  <label htmlFor="title">Nome do projeto</label>
                   <input
-                    id="projectName"
-                    {...register("projectName", {
+                    id="title"
+                    {...register("title", {
                       required: FIELD_ERROR,
                       minLength: {
                         value: 3,
@@ -196,7 +345,7 @@ const Projects = () => {
                       },
                     })}
                   />
-                  {errors.projectName && <p>{errors.projectName.message}</p>}
+                  {errors.title && <p>{errors.title.message}</p>}
                 </div>
                 <div>
                   <label htmlFor="description">Descrição</label>
@@ -219,10 +368,10 @@ const Projects = () => {
                   {errors.description && <p>{errors.description.message}</p>}
                 </div>
                 <div className="col-md-12">
-                  <label htmlFor="gitUrl">Link do repositório</label>
+                  <label htmlFor="repositoryUrl">Link do repositório</label>
                   <input
-                    id="gitUrl"
-                    {...register("gitUrl", {
+                    id="repositoryUrl"
+                    {...register("repositoryUrl", {
                       required: FIELD_ERROR,
                       minLength: {
                         value: 3,
@@ -234,7 +383,9 @@ const Projects = () => {
                       },
                     })}
                   />
-                  {errors.gitUrl && <p>{errors.gitUrl.message}</p>}
+                  {errors.repositoryUrl && (
+                    <p>{errors.repositoryUrl.message}</p>
+                  )}
                 </div>
                 <div className="col-md-12">
                   <label htmlFor="liveUrl">Link online </label>
@@ -260,7 +411,7 @@ const Projects = () => {
                     {allImages.map((image, index) => (
                       <ImageCard
                         key={index}
-                        imageLink={image}
+                        imageLink={image.url}
                         onImageDelete={handleImageDelete}
                       />
                     ))}
@@ -301,11 +452,11 @@ const Projects = () => {
 
                 {/* Technology select */}
                 <div className="col-md-6">
-                  <label htmlFor="technologies">Tecnologias</label>
+                  <label htmlFor="skills">Tecnologias</label>
                   <select
                     onClick={handleTechnologyChange}
-                    id="technologies"
-                    {...register("technologies")}
+                    id="skills"
+                    {...register("skills")}
                   >
                     <option value="">Selecione uma tecnologia</option>
                     {allTechnologies.map((category) => (
@@ -314,7 +465,7 @@ const Projects = () => {
                       </option>
                     ))}
                   </select>
-                  {errors.technologies && <p>{errors.technologies.message}</p>}
+                  {errors.skills && <p>{errors.skills.message}</p>}
                 </div>
                 <div className="col-md-6 d-flex flex-wrap align-items-end gap-3">
                   {selectedTechnologies.map((category) => (
@@ -332,7 +483,7 @@ const Projects = () => {
                 </div>
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"salvar"} type="submit" />
+                <Button value={"salvar"} type="submit" disabled={isSending} />
               </div>
             </form>
           </div>
@@ -369,33 +520,23 @@ const Projects = () => {
                       <tr key={project.id}>
                         <th scope="row">{index + 1}</th>
                         <td>{project.id}</td>
-                        <td>{project.projectName}</td>
+                        <td>{project.title}</td>
                         <td className="d-flex gap-3">
-                          <div
-                            style={{ width: "30px", height: "30px" }}
-                            className="btn btn-success"
-                            data-bs-toggle="collapse"
-                            data-bs-target={collapse ? "" : "#collapseCat"}
-                            aria-expanded="false"
-                            aria-controls="collapseCat"
-                            onClick={handleCollapseClick}
-                          >
-                            <Button
-                              value={<FaPen size={14} />}
-                              classBtn="warning"
-                              onClick={() => handleEditClick(project)}
-                              shape={"circle"}
-                              style={{
-                                width: "30px",
-                                height: "30px",
-                                padding: "8px",
-                              }}
-                            />
-                          </div>
+                          <Button
+                            value={<FaPen size={14} />}
+                            classBtn="warning"
+                            onClick={() => handleEditClick(project.id)}
+                            shape={"circle"}
+                            style={{
+                              width: "30px",
+                              height: "30px",
+                              padding: "8px",
+                            }}
+                          />
                           <Button
                             value={<FaRegTrashCan size={14} />}
                             classBtn="danger"
-                            onClick={handleDeleteClick}
+                            onClick={() => handleOpenModal(project.id)}
                             shape={"circle"}
                             style={{
                               width: "30px",
@@ -411,6 +552,22 @@ const Projects = () => {
           </div>
         </div>
       </section>
+      {isModalOpen && (
+        <Modal
+          title="Deletar Habilidade"
+          message={
+            <>
+              Você tem certeza que deseja deletar a habilidade?
+              <br />
+              Esta ação será irreversível!
+            </>
+          }
+          onClose={() => setIsModalOpen(false)}
+          onConfirm={handleConfirmDelete}
+          loading={isLoading}
+        />
+      )}
+      <ToastContainer toasts={toasts} />
     </main>
   );
 };
