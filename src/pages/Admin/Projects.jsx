@@ -358,8 +358,8 @@ const Projects = () => {
                         message: "Deve conter ao menos 15 caracteres",
                       },
                       maxLength: {
-                        value: 500,
-                        message: "Deve conter no máximo 500 caracteres",
+                        value: 700,
+                        message: "Deve conter no máximo 700 caracteres",
                       },
                     })}
                     style={{ overflow: "hidden", resize: "none" }}
@@ -372,7 +372,6 @@ const Projects = () => {
                   <input
                     id="repositoryUrl"
                     {...register("repositoryUrl", {
-                      required: FIELD_ERROR,
                       minLength: {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
@@ -392,7 +391,6 @@ const Projects = () => {
                   <input
                     id="liveUrl"
                     {...register("liveUrl", {
-                      required: FIELD_ERROR,
                       minLength: {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,

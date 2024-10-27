@@ -12,13 +12,11 @@ import * as categoryService from "../../services/category-service";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
-  const [isFetchingCategories, setIsFetchingCategories] = useState(false);
-  const [isInsertingCategory, setIsInsertingCategory] = useState(false);
-  const [isDeletingCategory, setIsDeletingCategory] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [categoryToDelete, setCategoryToDelete] = useState(null);
   const { toasts, addToast } = useToast();
-
   const FIELD_ERROR = "Campo requirido";
   const FIELD_ERROR_MIN_LENGTH = "Deve conter ao menos 3 caracteres";
   const FIELD_ERROR_MAX_LENGTH = "Deve conter no máximo 80 caracteres";
@@ -35,7 +33,7 @@ const Categories = () => {
   }, []);
 
   async function fetchCategories() {
-    setIsFetchingCategories(true);
+    setIsLoading(true);
     try {
       const categoryData = await categoryService.findAllRequest();
       setCategories(categoryData.data);
@@ -45,13 +43,14 @@ const Categories = () => {
         "Erro ao buscar categorias. Tente novamente mais tarde.",
         "danger"
       );
+      console.error("Error: ", error);
     } finally {
-      setIsFetchingCategories(false);
+      setIsLoading(false);
     }
   }
 
   async function insertCategory(data) {
-    setIsInsertingCategory(true);
+    setIsSending(true);
     try {
       const response = await categoryService.insertRequest(data);
       addToast(
@@ -63,13 +62,14 @@ const Categories = () => {
       fetchCategories();
     } catch (error) {
       addToast("Erro", "Erro ao criar categoria. Tente novamente.", "danger");
+      console.error("Error: ", error);
     } finally {
-      setIsInsertingCategory(false);
+      setIsSending(false);
     }
   }
 
   async function deleteCategory(id) {
-    setIsDeletingCategory(true);
+    setIsSending(true);
     try {
       await categoryService.deleteRequest(id);
       addToast("Sucesso!", "Categoria foi deletada com sucesso!", "success");
@@ -82,8 +82,9 @@ const Categories = () => {
         error.response?.data?.error || "Erro ao deletar a categoria.",
         "danger"
       );
+      console.error("Error: ", error);
     } finally {
-      setIsDeletingCategory(false);
+      setIsSending(false);
     }
   }
 
@@ -165,7 +166,7 @@ const Categories = () => {
                 {errors.name && <p>{errors.name.message}</p>}
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
-                <Button value={"salvar"} type="submit" />
+                <Button value={"salvar"} type="submit" disabled={isSending} />
               </div>
             </form>
           </div>
@@ -180,7 +181,7 @@ const Categories = () => {
                 </tr>
               </thead>
               <tbody>
-                {isFetchingCategories ? (
+                {isLoading ? (
                   <LoadingSkeleton />
                 ) : (
                   categories.map((category, index) => (
@@ -221,7 +222,7 @@ const Categories = () => {
             }
             onClose={() => setIsModalOpen(false)}
             onConfirm={handleConfirmDelete}
-            loading={isDeletingCategory}
+            loading={isSending}
           />
         )}
       </section>

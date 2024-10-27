@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { FaPen, FaRegTrashCan } from "react-icons/fa6";
 import Skeleton from "react-loading-skeleton";
@@ -203,7 +204,6 @@ const Skills = () => {
                   <input
                     id="docUrl"
                     {...register("docUrl", {
-                      required: FIELD_ERROR,
                       minLength: {
                         value: 3,
                         message: FIELD_ERROR_MIN_LENGTH,
