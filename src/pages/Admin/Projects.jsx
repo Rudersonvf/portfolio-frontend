@@ -30,6 +30,7 @@ const Projects = () => {
   const [isLoadingById, setIsLoadingById] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [charCount, setCharCount] = useState(0);
   const { toasts, addToast } = useToast();
 
   const FIELD_ERROR = "Campo requirido";
@@ -216,6 +217,7 @@ const Projects = () => {
     const textarea = event.target;
     textarea.style.height = "auto";
     textarea.style.height = `${textarea.scrollHeight}px`;
+    setCharCount(event.target.value.length);
   }
 
   function handleCategoryChange(event) {
@@ -347,7 +349,7 @@ const Projects = () => {
                   />
                   {errors.title && <p>{errors.title.message}</p>}
                 </div>
-                <div>
+                <div style={{ position: "relative" }}>
                   <label htmlFor="description">Descrição</label>
                   <textarea
                     id="description"
@@ -364,7 +366,19 @@ const Projects = () => {
                     })}
                     style={{ overflow: "hidden", resize: "none" }}
                     onInput={handleInput}
+                    maxLength={700}
                   />
+                  <p
+                    className="contact-form-char-count"
+                    style={{ right: "10px" }}
+                  >
+                    <span
+                      className={`${charCount >= 700 ? "text-danger" : ""}`}
+                    >
+                      {charCount}
+                    </span>
+                    /700
+                  </p>
                   {errors.description && <p>{errors.description.message}</p>}
                 </div>
                 <div className="col-md-12">
