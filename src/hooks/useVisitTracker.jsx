@@ -13,7 +13,10 @@ function useVisitTracker() {
     const endTime = Date.now();
     const timeSpent = (endTime - startTimeRef.current) / 1000;
 
-    if (previousPath.current !== location.pathname) {
+    if (
+      previousPath.current !== location.pathname &&
+      !location.pathname.includes("#")
+    ) {
       sendVisitData(timeSpent);
       previousPath.current = location.pathname;
       startTimeRef.current = Date.now();
@@ -51,4 +54,5 @@ function useVisitTracker() {
     }
   };
 }
+
 export default useVisitTracker;
