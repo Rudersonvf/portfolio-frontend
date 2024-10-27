@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/auth-provider";
+import useVisitTracker from "./hooks/useVisitTracker";
 import Admin from "./pages/Admin";
 import Categories from "./pages/Admin/Categories";
 import Educations from "./pages/Admin/Educations";
@@ -18,6 +19,8 @@ import NotFound from "./pages/Errors/NotFound";
 import Login from "./pages/Login";
 
 function App() {
+  useVisitTracker();
+
   return (
     <AuthProvider>
       <Routes>
