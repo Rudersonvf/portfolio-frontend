@@ -6,6 +6,7 @@ import Skeleton from "react-loading-skeleton";
 
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
+import TextAreaField from "../../components/TextareaField";
 import ToastContainer from "../../components/ToastContainer";
 import { useToast } from "../../hooks/useToast";
 import * as educationService from "../../services/education-service";
@@ -125,11 +126,6 @@ const Educations = () => {
     setIsModalOpen(false);
   }
 
-  function handleInput(event) {
-    const textarea = event.target;
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  }
   return (
     <main>
       <section>
@@ -196,6 +192,7 @@ const Educations = () => {
                   <label htmlFor="startDate">Data inicio</label>
                   <input
                     id="startDate"
+                    type="date"
                     {...register("startDate", {
                       required: FIELD_ERROR,
                       minLength: {
@@ -212,7 +209,7 @@ const Educations = () => {
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="endDate">Data final</label>
-                  <input id="endDate" {...register("endDate")} />
+                  <input id="endDate" type="date" {...register("endDate")} />
                 </div>
                 <div className="col-md-4">
                   <label htmlFor="workload">Carga horária</label>
@@ -250,25 +247,24 @@ const Educations = () => {
                     <p>{errors.certificateUrl.message}</p>
                   )}
                 </div>
-                <div>
-                  <label htmlFor="description">Descrição</label>
-                  <textarea
-                    id="description"
-                    {...register("description", {
-                      minLength: {
-                        value: 15,
-                        message: "Deve conter ao menos 15 caracteres",
-                      },
-                      maxLength: {
-                        value: 500,
-                        message: "Deve conter no máximo 500 caracteres",
-                      },
-                    })}
-                    style={{ overflow: "hidden", resize: "none" }}
-                    onInput={handleInput}
-                  />
-                  {errors.description && <p>{errors.description.message}</p>}
-                </div>
+                <TextAreaField
+                  id="description"
+                  label="Descrição"
+                  register={register}
+                  rules={{
+                    required: FIELD_ERROR,
+                    minLength: {
+                      value: 30,
+                      message: "Deve conter ao menos 30 caracteres",
+                    },
+                    maxLength: {
+                      value: 700,
+                      message: "Deve conter no máximo 700 caracteres",
+                    },
+                  }}
+                  errors={errors}
+                  maxLength={700}
+                />
               </div>
               <div style={{ maxWidth: "200px" }} className="mt-1">
                 <Button value={"salvar"} type="submit" disabled={isSending} />

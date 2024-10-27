@@ -7,12 +7,12 @@ import { useTranslation } from "react-i18next";
 import * as messageService from "../services/message-service";
 
 import Button from "./Button";
+import TextAreaField from "./TextareaField";
 
 const ContactForm = ({ onError }) => {
   const [isSending, setIsSending] = useState(false);
   //const [isSuccess, setIsSuccess] = useState(false);
   //const [isError, setIsError] = useState(false);
-  const [charCount, setCharCount] = useState(0);
   const { t } = useTranslation();
 
   const FIELD_ERROR = t("form-error");
@@ -25,13 +25,6 @@ const ContactForm = ({ onError }) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  const handleInput = (event) => {
-    const textarea = event.target;
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-    setCharCount(event.target.value.length);
-  };
 
   async function onSubmit(data) {
     setIsSending(true);
@@ -100,33 +93,24 @@ const ContactForm = ({ onError }) => {
           />
           {errors.subject && <p>{errors.subject.message}</p>}
         </div>
-        <div style={{ position: "relative" }}>
-          <label htmlFor="message">{t("form-field-message")}</label>
-          <textarea
-            id="message"
-            {...register("message", {
-              required: FIELD_ERROR,
-              minLength: {
-                value: 15,
-                message: t("form-textarea-min-lenght"),
-              },
-              maxLength: {
-                value: 800,
-                message: t("form-textarea-max-lenght"),
-              },
-            })}
-            style={{ overflow: "hidden", resize: "none" }}
-            onInput={handleInput}
-            maxLength={800}
-          />
-          <p className="contact-form-char-count">
-            <span className={`${charCount >= 800 ? "text-danger" : ""}`}>
-              {charCount}
-            </span>
-            /800
-          </p>
-          {errors.message && <p>{errors.message.message}</p>}
-        </div>
+        <TextAreaField
+          id="description"
+          label="Descrição"
+          register={register}
+          rules={{
+            required: FIELD_ERROR,
+            minLength: {
+              value: 30,
+              message: "Deve conter ao menos 30 caracteres",
+            },
+            maxLength: {
+              value: 800,
+              message: "Deve conter no máximo 700 caracteres",
+            },
+          }}
+          errors={errors}
+          maxLength={800}
+        />
         <div style={{ maxWidth: "200px" }} className="mt-1">
           <Button value={"enviar"} type="submit" disabled={isSending} />
         </div>

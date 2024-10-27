@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import ImageCard from "../../components/ImageCard";
 import ImageField from "../../components/ImageField";
 import Modal from "../../components/Modal";
+import TextAreaField from "../../components/TextareaField";
 import ToastContainer from "../../components/ToastContainer";
 import { useToast } from "../../hooks/useToast";
 import * as categoryService from "../../services/category-service";
@@ -30,7 +31,6 @@ const Projects = () => {
   const [isLoadingById, setIsLoadingById] = useState(false);
   const [isSending, setIsSending] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [charCount, setCharCount] = useState(0);
   const { toasts, addToast } = useToast();
 
   const FIELD_ERROR = "Campo requirido";
@@ -213,13 +213,6 @@ const Projects = () => {
     setAllImages([]);
   }
 
-  function handleInput(event) {
-    const textarea = event.target;
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-    setCharCount(event.target.value.length);
-  }
-
   function handleCategoryChange(event) {
     if (event.target.value === "") {
       return;
@@ -349,38 +342,24 @@ const Projects = () => {
                   />
                   {errors.title && <p>{errors.title.message}</p>}
                 </div>
-                <div style={{ position: "relative" }}>
-                  <label htmlFor="description">Descrição</label>
-                  <textarea
-                    id="description"
-                    {...register("description", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 30,
-                        message: "Deve conter ao menos 30 caracteres",
-                      },
-                      maxLength: {
-                        value: 700,
-                        message: "Deve conter no máximo 700 caracteres",
-                      },
-                    })}
-                    style={{ overflow: "hidden", resize: "none" }}
-                    onInput={handleInput}
-                    maxLength={700}
-                  />
-                  <p
-                    className="contact-form-char-count"
-                    style={{ right: "10px" }}
-                  >
-                    <span
-                      className={`${charCount >= 700 ? "text-danger" : ""}`}
-                    >
-                      {charCount}
-                    </span>
-                    /700
-                  </p>
-                  {errors.description && <p>{errors.description.message}</p>}
-                </div>
+                <TextAreaField
+                  id="description"
+                  label="Descrição"
+                  register={register}
+                  rules={{
+                    required: FIELD_ERROR,
+                    minLength: {
+                      value: 3,
+                      message: FIELD_ERROR_MIN_LENGTH,
+                    },
+                    maxLength: {
+                      value: 80,
+                      message: FIELD_ERROR_MAX_LENGTH,
+                    },
+                  }}
+                  errors={errors}
+                  maxLength={700}
+                />
                 <div className="col-md-12">
                   <label htmlFor="repositoryUrl">Link do repositório</label>
                   <input
