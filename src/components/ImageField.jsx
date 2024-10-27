@@ -1,5 +1,3 @@
-import { useCallback } from "react";
-
 import PropTypes from "prop-types";
 import { FaImages } from "react-icons/fa6";
 
@@ -8,28 +6,21 @@ import * as cloudinaryService from "../services/cloudinaryService";
 import "../sass/components/image-field.scss";
 
 const ImageField = ({ onUploadImage }) => {
-  const handleFiles = useCallback(
-    async (files) => {
-      const uploadPromises = Array.from(files).map(async (image) => {
-        try {
-          const response = await cloudinaryService.saveImagesToCloudinary([
-            image,
-          ]);
-          onUploadImage(response[0].data.url);
-        } catch (error) {
-          console.error("Erro ao enviar imagens para o Cloudinary:", error);
-        }
-      });
-
-      await Promise.all(uploadPromises);
-    },
-    [onUploadImage]
-  );
-
-  const handleImageChange = (event) => {
-    handleFiles(event.target.files);
+  const handleFiles = async (files) => {
+    const uploadPromises = Array.from(files).map(async (image) => {
+      try {
+        const response = await cloudinaryService.saveImagesToCloudinary([
+          image,
+        ]);
+        onUploadImage(response[0].data.url);
+      } catch (error) {
+        console.error("Erro ao enviar imagens para o Cloudinary:", error);
+      }
+    });
+    await Promise.all(uploadPromises);
   };
 
+  const handleImageChange = (event) => handleFiles(event.target.files);
   const handleDrop = (event) => {
     event.preventDefault();
     handleFiles(event.dataTransfer.files);

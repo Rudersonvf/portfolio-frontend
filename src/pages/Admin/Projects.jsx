@@ -354,8 +354,8 @@ const Projects = () => {
                     {...register("description", {
                       required: FIELD_ERROR,
                       minLength: {
-                        value: 15,
-                        message: "Deve conter ao menos 15 caracteres",
+                        value: 30,
+                        message: "Deve conter ao menos 30 caracteres",
                       },
                       maxLength: {
                         value: 700,
@@ -380,6 +380,11 @@ const Projects = () => {
                         value: 80,
                         message: FIELD_ERROR_MAX_LENGTH,
                       },
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$/,
+                        message: "Insira um link válido",
+                      },
                     })}
                   />
                   {errors.repositoryUrl && (
@@ -398,6 +403,11 @@ const Projects = () => {
                       maxLength: {
                         value: 80,
                         message: FIELD_ERROR_MAX_LENGTH,
+                      },
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$/,
+                        message: "Insira um link válido",
                       },
                     })}
                   />
