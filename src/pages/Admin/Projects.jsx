@@ -8,6 +8,7 @@ import Button from "../../components/Button";
 import ImageCard from "../../components/ImageCard";
 import ImageField from "../../components/ImageField";
 import Modal from "../../components/Modal";
+import TextAreaField from "../../components/TextareaField";
 import ToastContainer from "../../components/ToastContainer";
 import { useToast } from "../../hooks/useToast";
 import * as categoryService from "../../services/category-service";
@@ -212,12 +213,6 @@ const Projects = () => {
     setAllImages([]);
   }
 
-  function handleInput(event) {
-    const textarea = event.target;
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight}px`;
-  }
-
   function handleCategoryChange(event) {
     if (event.target.value === "") {
       return;
@@ -347,26 +342,24 @@ const Projects = () => {
                   />
                   {errors.title && <p>{errors.title.message}</p>}
                 </div>
-                <div>
-                  <label htmlFor="description">Descrição</label>
-                  <textarea
-                    id="description"
-                    {...register("description", {
-                      required: FIELD_ERROR,
-                      minLength: {
-                        value: 15,
-                        message: "Deve conter ao menos 15 caracteres",
-                      },
-                      maxLength: {
-                        value: 700,
-                        message: "Deve conter no máximo 700 caracteres",
-                      },
-                    })}
-                    style={{ overflow: "hidden", resize: "none" }}
-                    onInput={handleInput}
-                  />
-                  {errors.description && <p>{errors.description.message}</p>}
-                </div>
+                <TextAreaField
+                  id="description"
+                  label="Descrição"
+                  register={register}
+                  rules={{
+                    required: FIELD_ERROR,
+                    minLength: {
+                      value: 3,
+                      message: FIELD_ERROR_MIN_LENGTH,
+                    },
+                    maxLength: {
+                      value: 80,
+                      message: FIELD_ERROR_MAX_LENGTH,
+                    },
+                  }}
+                  errors={errors}
+                  maxLength={700}
+                />
                 <div className="col-md-12">
                   <label htmlFor="repositoryUrl">Link do repositório</label>
                   <input
@@ -379,6 +372,11 @@ const Projects = () => {
                       maxLength: {
                         value: 80,
                         message: FIELD_ERROR_MAX_LENGTH,
+                      },
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$/,
+                        message: "Insira um link válido",
                       },
                     })}
                   />
@@ -398,6 +396,11 @@ const Projects = () => {
                       maxLength: {
                         value: 80,
                         message: FIELD_ERROR_MAX_LENGTH,
+                      },
+                      pattern: {
+                        value:
+                          /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)$/,
+                        message: "Insira um link válido",
                       },
                     })}
                   />
