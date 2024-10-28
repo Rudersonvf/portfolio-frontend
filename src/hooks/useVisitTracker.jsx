@@ -16,43 +16,67 @@ function useVisitTracker() {
     const timeSpent = (endTime - startTimeRef.current) / 1000;
 
     if (previousPath.current !== location.pathname) {
-      console.log("Entrou na lógica de envio de dados");
       sendVisitData(timeSpent);
       previousPath.current = location.pathname;
       startTimeRef.current = Date.now();
     }
 
-    const handleBeforeUnload = () => {
-      const totalTimeSpent = (Date.now() - startTimeRef.current) / 1000;
-      sendVisitData(totalTimeSpent);
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        const totalTimeSpent = (Date.now() - startTimeRef.current) / 1000;
+        sendVisitData(totalTimeSpent, true);
+      }
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      console.log("useVisitTracker desmontado e chama na crocancia");
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      sendVisitData((Date.now() - startTimeRef.current) / 1000);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      sendVisitData((Date.now() - startTimeRef.current) / 1000, true);
     };
   }, [location.pathname]);
 
-  const sendVisitData = async (timeSpent) => {
-    console.log("Enviando dados de visita...");
-    try {
-      await requestBackend({
-        method: "POST",
-        url: "/api/visitors",
-        data: {
-          pageVisited: location.pathname,
-          timeSpent,
-          browser: navigator.userAgent,
-          device: /Mobi|Android/i.test(navigator.userAgent)
-            ? "Mobile"
-            : "Desktop",
-        },
-      });
-    } catch (error) {
-      console.error("Erro ao enviar dados de visita:", error);
+  useEffect(() => {
+    const pendingData = JSON.parse(localStorage.getItem("pendingVisitData"));
+    if (pendingData) {
+      sendVisitData(pendingData.timeSpent, false, true);
+      localStorage.removeItem("pendingVisitData");
+    }
+  }, []);
+
+  const sendVisitData = async (
+    timeSpent,
+    useBeacon = false,
+    isRetry = false
+  ) => {
+    const data = {
+      pageVisited: location.pathname,
+      timeSpent,
+      browser: navigator.userAgent,
+      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
+    };
+
+    if (useBeacon) {
+      const success = navigator.sendBeacon(
+        "/api/visitors",
+        JSON.stringify(data)
+      );
+      if (!success) {
+        localStorage.setItem("pendingVisitData", JSON.stringify(data));
+      }
+    } else {
+      try {
+        await requestBackend({
+          method: "POST",
+          url: "/api/visitors",
+          data,
+        });
+      } catch (error) {
+        if (!isRetry) {
+          localStorage.setItem("pendingVisitData", JSON.stringify(data));
+        }
+        console.error("Erro ao enviar dados de visita:", error);
+      }
     }
   };
 }
