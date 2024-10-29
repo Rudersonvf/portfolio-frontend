@@ -32,7 +32,7 @@ const ContactForm = ({ onError }) => {
       await messageService.postRequest(data);
       reset();
     } catch (error) {
-      console.log("Error: ", error);
+      console.error("Error: ", error);
       onError();
     } finally {
       setIsSending(false);

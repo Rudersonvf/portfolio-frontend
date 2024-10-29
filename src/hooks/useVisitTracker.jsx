@@ -8,15 +8,19 @@ function useVisitTracker() {
   const location = useLocation();
   const previousPath = useRef(location.pathname);
   const startTimeRef = useRef(Date.now());
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    console.log("useVisitTracker chamado: ", location);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      previousPath.current = location.pathname;
+      return;
+    }
 
     const endTime = Date.now();
     const timeSpent = (endTime - startTimeRef.current) / 1000;
 
     if (previousPath.current !== location.pathname) {
-      console.log("Entrou na lógica de envio de dados");
       sendVisitData(timeSpent);
       previousPath.current = location.pathname;
       startTimeRef.current = Date.now();
@@ -30,14 +34,12 @@ function useVisitTracker() {
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      console.log("useVisitTracker desmontado e chama na crocancia");
       window.removeEventListener("beforeunload", handleBeforeUnload);
       sendVisitData((Date.now() - startTimeRef.current) / 1000);
     };
   }, [location.pathname]);
 
   const sendVisitData = async (timeSpent) => {
-    console.log("Enviando dados de visita...");
     try {
       await requestBackend({
         method: "POST",
