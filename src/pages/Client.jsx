@@ -76,7 +76,6 @@ const Client = () => {
   }, [skills]);
 
   function handleMessageError() {
-    console.log("Erro ao enviar mensagem, FAZ ALGUMA COISA!!!!");
     addToast(
       "Erro",
       "Erro ao enviar mensagem, tente novamente mais tarde.",

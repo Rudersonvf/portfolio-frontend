@@ -8,9 +8,14 @@ function useVisitTracker() {
   const location = useLocation();
   const previousPath = useRef(location.pathname);
   const startTimeRef = useRef(Date.now());
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    console.log("useVisitTracker chamado: ", location);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      previousPath.current = location.pathname;
+      return;
+    }
 
     const endTime = Date.now();
     const timeSpent = (endTime - startTimeRef.current) / 1000;
@@ -21,62 +26,35 @@ function useVisitTracker() {
       startTimeRef.current = Date.now();
     }
 
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "hidden") {
-        const totalTimeSpent = (Date.now() - startTimeRef.current) / 1000;
-        sendVisitData(totalTimeSpent, true);
-      }
+    const handleBeforeUnload = () => {
+      const totalTimeSpent = (Date.now() - startTimeRef.current) / 1000;
+      sendVisitData(totalTimeSpent);
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      sendVisitData((Date.now() - startTimeRef.current) / 1000, true);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      sendVisitData((Date.now() - startTimeRef.current) / 1000);
     };
   }, [location.pathname]);
 
-  useEffect(() => {
-    const pendingData = JSON.parse(localStorage.getItem("pendingVisitData"));
-    if (pendingData) {
-      sendVisitData(pendingData.timeSpent, false, true);
-      localStorage.removeItem("pendingVisitData");
-    }
-  }, []);
-
-  const sendVisitData = async (
-    timeSpent,
-    useBeacon = false,
-    isRetry = false
-  ) => {
-    const data = {
-      pageVisited: location.pathname,
-      timeSpent,
-      browser: navigator.userAgent,
-      device: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "Desktop",
-    };
-
-    if (useBeacon) {
-      const success = navigator.sendBeacon(
-        "/api/visitors",
-        JSON.stringify(data)
-      );
-      if (!success) {
-        localStorage.setItem("pendingVisitData", JSON.stringify(data));
-      }
-    } else {
-      try {
-        await requestBackend({
-          method: "POST",
-          url: "/api/visitors",
-          data,
-        });
-      } catch (error) {
-        if (!isRetry) {
-          localStorage.setItem("pendingVisitData", JSON.stringify(data));
-        }
-        console.error("Erro ao enviar dados de visita:", error);
-      }
+  const sendVisitData = async (timeSpent) => {
+    try {
+      await requestBackend({
+        method: "POST",
+        url: "/api/visitors",
+        data: {
+          pageVisited: location.pathname,
+          timeSpent,
+          browser: navigator.userAgent,
+          device: /Mobi|Android/i.test(navigator.userAgent)
+            ? "Mobile"
+            : "Desktop",
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao enviar dados de visita:", error);
     }
   };
 }

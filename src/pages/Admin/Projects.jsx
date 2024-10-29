@@ -177,12 +177,9 @@ const Projects = () => {
     }));
     data.images = allImages;
 
-    console.log("saudgayusdgyasgdyagsdy", allImages);
-
     if (editingProject) {
       updateProject(editingProject.id, data);
     } else {
-      console.log("Criando nova categoria: ", data);
       insertProject(data);
     }
   };
@@ -201,7 +198,6 @@ const Projects = () => {
       setAllImages(projectData.images);
       setCollapse(true);
       setEditingProject(projectData);
-      console.log("CLICOU PARA EDITAR", allImages);
     }
   }
 
@@ -258,12 +254,10 @@ const Projects = () => {
   }
 
   function handleImageUpload(image) {
-    console.log("Image uploaded:", image);
     setAllImages((prevImages) => [...prevImages, { url: image }]);
   }
 
   function handleImageDelete(imageLink) {
-    console.log("Image deleted:", imageLink);
     setAllImages((prevImages) =>
       prevImages.filter((image) => image.url !== imageLink)
     );
