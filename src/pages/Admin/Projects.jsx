@@ -343,11 +343,11 @@ const Projects = () => {
                   rules={{
                     required: FIELD_ERROR,
                     minLength: {
-                      value: 3,
+                      value: 30,
                       message: FIELD_ERROR_MIN_LENGTH,
                     },
                     maxLength: {
-                      value: 80,
+                      value: 700,
                       message: FIELD_ERROR_MAX_LENGTH,
                     },
                   }}
