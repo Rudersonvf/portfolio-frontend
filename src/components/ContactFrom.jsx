@@ -109,7 +109,6 @@ const ContactForm = ({ onError }) => {
                 message: "Deve conter no máximo 700 caracteres",
               },
             }}
-            errors={errors}
             maxLength={800}
           />
           {errors.message && <p>{errors.message.message}</p>}
