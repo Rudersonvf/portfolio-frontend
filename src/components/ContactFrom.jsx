@@ -93,24 +93,27 @@ const ContactForm = ({ onError }) => {
           />
           {errors.subject && <p>{errors.subject.message}</p>}
         </div>
-        <TextAreaField
-          id="description"
-          label="Descrição"
-          register={register}
-          rules={{
-            required: FIELD_ERROR,
-            minLength: {
-              value: 30,
-              message: "Deve conter ao menos 30 caracteres",
-            },
-            maxLength: {
-              value: 800,
-              message: "Deve conter no máximo 700 caracteres",
-            },
-          }}
-          errors={errors}
-          maxLength={800}
-        />
+        <div>
+          <TextAreaField
+            id="message"
+            label="Mensagem"
+            register={register}
+            rules={{
+              required: FIELD_ERROR,
+              minLength: {
+                value: 30,
+                message: "Deve conter ao menos 30 caracteres",
+              },
+              maxLength: {
+                value: 800,
+                message: "Deve conter no máximo 700 caracteres",
+              },
+            }}
+            errors={errors}
+            maxLength={800}
+          />
+          {errors.message && <p>{errors.message.message}</p>}
+        </div>
         <div style={{ maxWidth: "200px" }} className="mt-1">
           <Button value={"enviar"} type="submit" disabled={isSending} />
         </div>
